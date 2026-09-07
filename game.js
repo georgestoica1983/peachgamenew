@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // DOM References
   const stageTitleText = document.getElementById('stage-title-text');
   const bpmIndicator = document.getElementById('bpm-indicator');
+  const bpmHeartIcon = document.getElementById('bpm-heart-icon');
+  const bpmValText = document.getElementById('bpm-val-text');
+  const btnBreathText = document.getElementById('btn-breath-text');
   const btnAudioToggle = document.getElementById('btn-audio-toggle');
   const turnPlayerName = document.getElementById('turn-player-name');
   const turnPillIndicator = document.getElementById('turn-pill-indicator');
@@ -74,6 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const p2FinalScore = document.getElementById('p2-final-score');
   const p1FinalAcc = document.getElementById('p1-final-acc');
   const p2FinalAcc = document.getElementById('p2-final-acc');
+  const p1FinalBpm = document.getElementById('p1-final-bpm');
+  const p2FinalBpm = document.getElementById('p2-final-bpm');
   const duelAwardedWagerText = document.getElementById('duel-awarded-wager-text');
   const duelSigCanvas = document.getElementById('duel-signature-canvas');
   const btnClearDuelSig = document.getElementById('btn-clear-duel-sig');
@@ -153,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let isCustomWager = false;
 
   // Stats for Player 1 and Player 2
-  let p1Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
-  let p2Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
+  let p1Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0, maxBpm: 0 };
+  let p2Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0, maxBpm: 0 };
 
   // Current Turn Active Variables
   let currentMovementIdx = 0;
@@ -173,6 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeCharacter = 'peach'; // 'peach' | 'cucumber'
   let isFeverActive = false;
   let currentTurnMaxRpm = 0;
+
+  // Dynamic Arousal BPM & Stamina States
+  let baseBpm = 85;
+  let dynamicBpm = 85;
+  let maxTurnBpm = 85;
+  let isExhausted = false;
+  let lastExhaustedGaspTime = 0;
+  let isKissBoostActive = false;
+  let kissBoostTimer = null;
 
   function setCharacter(charName) {
     activeCharacter = charName;
@@ -591,31 +605,106 @@ document.addEventListener('DOMContentLoaded', () => {
     const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
     valAccuracy.textContent = `${acc}%`;
 
-    // Multiplier
+    // Multiplier Calculation (Base + Kiss Boost, halved if Exhausted)
+    let baseMult = 1;
     if (isFeverActive) {
-      multiplier = combo >= 30 ? 16 : 8;
+      baseMult = combo >= 30 ? 16 : 8;
     } else {
-      if (combo >= 40) multiplier = 8;
-      else if (combo >= 20) multiplier = 4;
-      else if (combo >= 10) multiplier = 2;
-      else multiplier = 1;
+      if (combo >= 40) baseMult = 8;
+      else if (combo >= 20) baseMult = 4;
+      else if (combo >= 10) baseMult = 2;
+      else baseMult = 1;
     }
 
-    valMultiplier.textContent = `${multiplier}x MULTI`;
+    if (isKissBoostActive) {
+      baseMult += 1;
+    }
+
+    // Exhaustion penalty: if breath <= 20, multiplier is halved (minimum 0.5x)
+    if (breath <= 20) {
+      multiplier = Math.max(0.5, Number((baseMult * 0.5).toFixed(1)));
+    } else {
+      multiplier = baseMult;
+    }
+
+    let multSuffix = '';
+    if (isKissBoostActive) multSuffix += ' 💋';
+    if (breath <= 20) multSuffix += ' ⚠️';
+    valMultiplier.textContent = `${multiplier}x MULTI${multSuffix}`;
 
     // Pleasure Gauge
     barPleasure.style.width = `${Math.min(100, kpi)}%`;
     labelKpiVal.textContent = `${Math.round(kpi)}%`;
 
-    // Breath Gauge
+    // Breath Gauge & Exhaustion State Handling
     barBreath.style.width = `${Math.max(0, Math.min(100, breath))}%`;
     labelBreathVal.textContent = `${Math.round(breath)}%`;
 
-    if (breath < 35) {
+    if (breath <= 20) {
+      if (!isExhausted) {
+        isExhausted = true;
+        document.body.classList.add('breath-exhausted');
+        showRating('⚠️ Epuizare! Scor 0.5x • Sărut!', 'miss');
+        vibrate([40, 30, 50]);
+      }
       barBreath.classList.add('danger');
-      window.symphonyAudio.playHeartbeat();
+      if (btnBreathCatch) btnBreathCatch.classList.add('urgent');
+      const now = Date.now();
+      if (now - lastExhaustedGaspTime > 1400) {
+        lastExhaustedGaspTime = now;
+        window.symphonyAudio.playHeartbeat(true);
+      }
     } else {
+      if (isExhausted) {
+        isExhausted = false;
+        document.body.classList.remove('breath-exhausted');
+      }
       barBreath.classList.remove('danger');
+      if (btnBreathCatch && !isKissBoostActive) {
+        btnBreathCatch.classList.remove('urgent');
+      }
+    }
+
+    // Update real-time Arousal BPM
+    updateDynamicBPM();
+  }
+
+  // Dynamic Arousal BPM Engine (Pulsul Plăcerii)
+  function updateDynamicBPM() {
+    if (!isGameActive) return;
+    const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
+    const movement = SONG_MOVEMENTS[currentMovementIdx];
+    if (!movement) return;
+    baseBpm = Math.round(movement.bpm * diffCfg.bpmMultiplier);
+
+    // Dynamic bonus: combo boost (up to +25 BPM) and swirl RPM boost (up to +20 BPM)
+    const comboBpmBonus = Math.min(25, Math.floor(combo * 0.45));
+    const rpmBpmBonus = Math.min(20, Math.floor(currentTurnMaxRpm * 0.08));
+
+    const targetBpm = Math.min(185, baseBpm + comboBpmBonus + rpmBpmBonus);
+    dynamicBpm = Math.round(dynamicBpm * 0.82 + targetBpm * 0.18);
+
+    if (dynamicBpm > maxTurnBpm) {
+      maxTurnBpm = dynamicBpm;
+    }
+
+    if (bpmValText) {
+      bpmValText.textContent = `${dynamicBpm} BPM`;
+    } else if (bpmIndicator) {
+      bpmIndicator.textContent = `⚡ ${dynamicBpm} BPM`;
+    }
+
+    window.symphonyAudio.setBPM(dynamicBpm);
+
+    const pulseSec = (60 / Math.max(50, dynamicBpm)).toFixed(2);
+    if (bpmHeartIcon) {
+      bpmHeartIcon.style.setProperty('--pulse-speed', `${pulseSec}s`);
+    }
+    if (peachWrap) {
+      peachWrap.style.setProperty('--pulse-speed', `${pulseSec}s`);
+      if (!peachWrap.classList.contains('arousal-pulse')) {
+        peachWrap.classList.add('arousal-pulse');
+      }
     }
   }
 
@@ -736,7 +825,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const gain = Math.round(300 * multiplier * diffCfg.scoreMultiplier);
       score += gain;
       kpi = Math.min(100, kpi + 2.5);
-      breath = Math.max(5, breath - (diffCfg.breathDrain * 0.8));
+      breath = Math.max(0, breath - (diffCfg.breathDrain * 0.9));
       showRating('PERFECT!', 'perfect');
       window.symphonyAudio.playPerfectHit();
       vibrate(28);
@@ -747,14 +836,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const gain = Math.round(150 * multiplier * diffCfg.scoreMultiplier);
       score += gain;
       kpi = Math.min(100, kpi + 1.4);
-      breath = Math.max(5, breath - diffCfg.breathDrain);
+      breath = Math.max(0, breath - (diffCfg.breathDrain * 1.2));
       showRating('GREAT!', 'great');
       window.symphonyAudio.playGreatHit();
       vibrate(18);
       addParticles(noteObj.x, noteObj.y, 10, 'circle');
     } else {
       combo = 0;
-      breath = Math.max(0, breath - (diffCfg.breathDrain * 2.2));
+      breath = Math.max(0, breath - (diffCfg.breathDrain * 2.5));
+      if (isExhausted) {
+        score = Math.max(0, score - 150);
+      }
       showRating('MISS', 'miss');
       window.symphonyAudio.playMiss();
       vibrate(45);
@@ -805,13 +897,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const movement = SONG_MOVEMENTS[idx];
     const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
 
-    const actualBpm = Math.round(movement.bpm * diffCfg.bpmMultiplier);
+    baseBpm = Math.round(movement.bpm * diffCfg.bpmMultiplier);
+    dynamicBpm = baseBpm;
+    if (dynamicBpm > maxTurnBpm) maxTurnBpm = dynamicBpm;
+
     stageTitleText.textContent = `${currentTurnPlayer} • ${movement.name}`;
-    bpmIndicator.textContent = `⚡ ${actualBpm} BPM`;
     instructionTitle.textContent = movement.intro;
     instructionSub.textContent = movement.sub;
 
-    window.symphonyAudio.setBPM(actualBpm);
+    updateDynamicBPM();
 
     if (idx >= 1) {
       swirlGuideRing.style.display = 'block';
@@ -845,6 +939,18 @@ document.addEventListener('DOMContentLoaded', () => {
     kpi = 0;
     breath = 100;
     currentTurnMaxRpm = 0;
+    baseBpm = 85;
+    dynamicBpm = 85;
+    maxTurnBpm = 85;
+    isExhausted = false;
+    isKissBoostActive = false;
+    if (kissBoostTimer) clearTimeout(kissBoostTimer);
+    document.body.classList.remove('breath-exhausted');
+    if (btnBreathCatch) {
+      btnBreathCatch.classList.remove('urgent');
+      btnBreathCatch.classList.remove('boost-active');
+      if (btnBreathText) btnBreathText.textContent = '🫁 Pauză de sărut (+35% oxigen)';
+    }
     deactivateFeverMode();
 
     if (btnOpenDuelModal) btnOpenDuelModal.style.display = 'none';
@@ -867,6 +973,15 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(movementTimer);
     window.symphonyAudio.stopBeatLoop();
     deactivateFeverMode();
+    if (kissBoostTimer) clearTimeout(kissBoostTimer);
+    isKissBoostActive = false;
+    isExhausted = false;
+    document.body.classList.remove('breath-exhausted');
+    if (btnBreathCatch) {
+      btnBreathCatch.classList.remove('urgent');
+      btnBreathCatch.classList.remove('boost-active');
+      if (btnBreathText) btnBreathText.textContent = '🫁 Pauză de sărut (+35% oxigen)';
+    }
 
     if (btnOpenDuelModal) btnOpenDuelModal.style.display = 'flex';
 
@@ -878,7 +993,8 @@ document.addEventListener('DOMContentLoaded', () => {
         score: score,
         maxCombo: maxCombo,
         accuracy: acc,
-        maxRpm: currentTurnMaxRpm
+        maxRpm: currentTurnMaxRpm,
+        maxBpm: maxTurnBpm || dynamicBpm
       };
 
       window.symphonyAudio.playTurnChangeChime();
@@ -899,7 +1015,8 @@ document.addEventListener('DOMContentLoaded', () => {
         score: score,
         maxCombo: maxCombo,
         accuracy: acc,
-        maxRpm: currentTurnMaxRpm
+        maxRpm: currentTurnMaxRpm,
+        maxBpm: maxTurnBpm || dynamicBpm
       };
 
       finishDuelCeremony();
@@ -916,9 +1033,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     p1FinalScore.textContent = p1Stats.score.toLocaleString();
     p1FinalAcc.textContent = `${p1Stats.accuracy}% Acc (Max ${p1Stats.maxCombo}x)`;
+    if (p1FinalBpm) p1FinalBpm.textContent = `💓 Max ${p1Stats.maxBpm || 85} BPM`;
 
     p2FinalScore.textContent = p2Stats.score.toLocaleString();
     p2FinalAcc.textContent = `${p2Stats.accuracy}% Acc (Max ${p2Stats.maxCombo}x)`;
+    if (p2FinalBpm) p2FinalBpm.textContent = `💓 Max ${p2Stats.maxBpm || 85} BPM`;
 
     if (isCustomWager) {
       duelAwardedWagerText.innerHTML = `🔒 <strong>Miză secretă dezvăluită:</strong><br><span style="font-style:italic; font-size:0.95rem; color:#be123c;">„${selectedWager}”</span>`;
@@ -1219,9 +1338,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btnBreathCatch.addEventListener('click', () => {
-    breath = Math.min(100, breath + 35);
-    window.symphonyAudio.playGlideTone(680);
-    vibrate(25);
+    window.symphonyAudio.init();
+    breath = Math.min(100, breath + 45);
+    if (isExhausted) {
+      isExhausted = false;
+      document.body.classList.remove('breath-exhausted');
+    }
+
+    // Trigger Respiro Senzual Boost (+1x Multiplier for 6 seconds)
+    isKissBoostActive = true;
+    btnBreathCatch.classList.add('boost-active');
+    btnBreathCatch.classList.remove('urgent');
+    if (btnBreathText) btnBreathText.textContent = '💋 Respiro activ! (+1x Multiplier)';
+    window.symphonyAudio.playKissRecovery();
+    showRating('💋 Respiro senzual! +1x MULTI', 'perfect');
+    vibrate([35, 40, 60]);
+
+    if (kissBoostTimer) clearTimeout(kissBoostTimer);
+    kissBoostTimer = setTimeout(() => {
+      isKissBoostActive = false;
+      btnBreathCatch.classList.remove('boost-active');
+      if (btnBreathText) btnBreathText.textContent = '🫁 Pauză de sărut (+35% oxigen)';
+      updateHUD();
+    }, 6000);
+
     updateHUD();
   });
 

@@ -34,7 +34,7 @@
         <div class="hud-actions">
           <button id="btn-char-toggle" class="icon-button" title="Schimbă între Piersică și Castravete">🍑</button>
           <button id="btn-diff-badge" class="diff-badge-btn" title="Schimbă Dificultatea">🟡 Mediu</button>
-          <div class="bpm-indicator" id="bpm-indicator">⚡ 85 BPM</div>
+          <div class="bpm-indicator" id="bpm-indicator"><span class="bpm-heart-icon" id="bpm-heart-icon">💓</span> <span id="bpm-val-text">85 BPM</span></div>
           <button id="btn-audio-toggle" class="icon-button" title="Sunet">🔔</button>
         </div>
       </div>
@@ -245,7 +245,7 @@
 
       <!-- Breath Catch Button -->
       <button id="btn-breath-catch" class="btn-breath-recovery">
-        <span>🫁 Pauză de sărut (+35% oxigen)</span>
+        <span id="btn-breath-text">🫁 Pauză de sărut (+35% oxigen)</span>
       </button>
 
       <!-- Stage Progression Button -->
@@ -416,6 +416,7 @@
           <span class="name">Prestatorul</span>
           <span class="score-num" id="p1-final-score">0</span>
           <span style="font-size:0.68rem; color:#78350f;" id="p1-final-acc">0% Acc</span>
+          <span style="font-size:0.68rem; color:#be123c; font-weight:700; margin-top:2px;" id="p1-final-bpm">💓 Max 0 BPM</span>
         </div>
         
         <div class="duel-vs-badge">VS</div>
@@ -425,6 +426,7 @@
           <span class="name">Otter</span>
           <span class="score-num" id="p2-final-score">0</span>
           <span style="font-size:0.68rem; color:#78350f;" id="p2-final-acc">0% Acc</span>
+          <span style="font-size:0.68rem; color:#be123c; font-weight:700; margin-top:2px;" id="p2-final-bpm">💓 Max 0 BPM</span>
         </div>
       </div>
 

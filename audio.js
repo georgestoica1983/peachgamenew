@@ -30,11 +30,7 @@ class SymphonyAudioEngine {
   }
 
   setBPM(newBPM) {
-    this.bpm = newBPM;
-    if (this.isPlayingBeat) {
-      this.stopBeatLoop();
-      this.startBeatLoop();
-    }
+    this.bpm = Math.max(50, Math.min(200, newBPM));
   }
 
   setFever(enabled) {
@@ -139,38 +135,46 @@ class SymphonyAudioEngine {
     this.init();
     this.isPlayingBeat = true;
 
-    const intervalMs = (60 / this.bpm) * 1000;
-    this.beatInterval = setInterval(() => {
-      if (this.isMuted) return;
-      const now = this.ctx.currentTime;
-      const step = this.currentStep % 16;
+    const tick = () => {
+      if (!this.isPlayingBeat) return;
+      if (!this.isMuted && this.ctx) {
+        const now = this.ctx.currentTime;
+        const step = this.currentStep % 16;
 
-      // Kick on beats 0, 4, 8, 12 (and extra off-beats in Fever Mode)
-      if (step % 4 === 0 || (this.isFeverMode && (step === 6 || step === 14))) {
-        this.playKick(now);
-      }
-      // Snare on beats 2, 6, 10, 14
-      if (step % 4 === 2) {
-        this.playSnare(now);
-      }
-      // Fever synth bass
-      if (this.isFeverMode) {
-        this.playFeverBass(step, now);
-      }
-      // Chord pad every 4 beats
-      if (step % 4 === 0) {
-        this.playChordPad(step, now);
+        // Kick on beats 0, 4, 8, 12 (and extra off-beats in Fever Mode)
+        if (step % 4 === 0 || (this.isFeverMode && (step === 6 || step === 14))) {
+          this.playKick(now);
+        }
+        // Snare on beats 2, 6, 10, 14
+        if (step % 4 === 2) {
+          this.playSnare(now);
+        }
+        // Fever synth bass
+        if (this.isFeverMode) {
+          this.playFeverBass(step, now);
+        }
+        // Chord pad every 4 beats
+        if (step % 4 === 0) {
+          this.playChordPad(step, now);
+        }
+
+        this.currentStep++;
       }
 
-      this.currentStep++;
-    }, intervalMs);
+      // Next tick scheduled dynamically according to real-time BPM
+      const nextIntervalMs = (60 / Math.max(50, this.bpm)) * 1000;
+      this.beatTimeout = setTimeout(tick, nextIntervalMs);
+    };
+
+    const initialIntervalMs = (60 / Math.max(50, this.bpm)) * 1000;
+    this.beatTimeout = setTimeout(tick, initialIntervalMs);
   }
 
   stopBeatLoop() {
     this.isPlayingBeat = false;
-    if (this.beatInterval) {
-      clearInterval(this.beatInterval);
-      this.beatInterval = null;
+    if (this.beatTimeout) {
+      clearTimeout(this.beatTimeout);
+      this.beatTimeout = null;
     }
   }
 
@@ -288,20 +292,22 @@ class SymphonyAudioEngine {
     osc.stop(now + 0.12);
   }
 
-  playHeartbeat() {
+  playHeartbeat(isFast = false) {
     if (this.isMuted) return;
     this.init();
     const now = this.ctx.currentTime;
+    const spacing = isFast ? 0.09 : 0.12;
+    const vol = isFast ? 0.42 : 0.28;
 
-    [0, 0.12].forEach((offset, idx) => {
+    [0, spacing].forEach((offset, idx) => {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(idx === 0 ? 80 : 65, now + offset);
-      osc.frequency.exponentialRampToValueAtTime(36, now + offset + 0.09);
+      osc.frequency.setValueAtTime(idx === 0 ? (isFast ? 95 : 80) : (isFast ? 75 : 65), now + offset);
+      osc.frequency.exponentialRampToValueAtTime(34, now + offset + 0.09);
 
-      gain.gain.setValueAtTime(0.3, now + offset);
+      gain.gain.setValueAtTime(vol, now + offset);
       gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.1);
 
       osc.connect(gain);
@@ -309,6 +315,28 @@ class SymphonyAudioEngine {
 
       osc.start(now + offset);
       osc.stop(now + offset + 0.1);
+    });
+  }
+
+  playKissRecovery() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+    // Harmonic romantic chime & soft breath shimmer: F5, A5, C6, E6
+    const freqs = [698.46, 880.00, 1046.50, 1318.51];
+    freqs.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + (idx * 0.06));
+      gain.gain.setValueAtTime(0.001, now + (idx * 0.06));
+      gain.gain.linearRampToValueAtTime(0.28, now + (idx * 0.06) + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.06) + 0.35);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + (idx * 0.06));
+      osc.stop(now + (idx * 0.06) + 0.38);
     });
   }
 
