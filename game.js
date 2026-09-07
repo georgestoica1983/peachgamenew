@@ -549,6 +549,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function tryHitTarget(targetName, e) {
     window.symphonyAudio.init();
+    if (!isGameActive) {
+      if (wagerModal && wagerModal.classList.contains('open')) {
+        wagerModal.classList.remove('open');
+      }
+      currentTurnPlayer = 'Prestatorul';
+      startPlayerTurn();
+      return;
+    }
+
     const now = Date.now();
     const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
 
@@ -594,6 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearInterval(noteSpawnTimer);
     const actualInterval = Math.round(movement.noteIntervalMs * diffCfg.spawnMultiplier);
+    spawnRhythmNode(); // Spawn note immediately so circle is visible right away!
     noteSpawnTimer = setInterval(spawnRhythmNode, actualInterval);
 
     movementTimer = setTimeout(() => {
@@ -860,6 +870,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handlePleasureSpotTap(e) {
+    if (!isGameActive) {
+      if (wagerModal && wagerModal.classList.contains('open')) {
+        wagerModal.classList.remove('open');
+      }
+      currentTurnPlayer = 'Prestatorul';
+      startPlayerTurn();
+      return;
+    }
+
     if (isOverheated) {
       showRating('OVERHEAT!', 'overheat');
       window.symphonyAudio.playMiss();
