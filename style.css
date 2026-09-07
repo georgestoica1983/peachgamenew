@@ -664,11 +664,32 @@ body {
   margin-bottom: 8px;
 }
 
+.wager-spice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.wager-spice-badge {
+  background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+  border: 1px solid #fecdd3;
+  color: #e11d48;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(225, 29, 72, 0.1);
+  transition: all 0.3s ease;
+}
+
 .wagers-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 16px 0;
+  margin: 6px 0 16px 0;
   text-align: left;
 }
 
@@ -682,6 +703,12 @@ body {
   align-items: flex-start;
   gap: 12px;
   transition: all 0.2s ease;
+  animation: fadeInWager 0.22s ease-out;
+}
+
+@keyframes fadeInWager {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .wager-card-option:active, .wager-card-option.selected {

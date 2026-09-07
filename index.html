@@ -236,27 +236,27 @@
       <!-- Tool Switcher: 👆 Deget vs 👅 Limbă -->
       <div class="tool-selector-bar">
         <button id="tab-finger" class="tool-tab-btn active">
-          <span>👆 Vârful Degetului (Tap)</span>
+          <span>👆 Vârful degetului (tap)</span>
         </button>
         <button id="tab-tongue" class="tool-tab-btn">
-          <span>👅 Vârful Limbii (Glide & Swirl)</span>
+          <span>👅 Vârful limbii (glide & swirl)</span>
         </button>
       </div>
 
       <!-- Breath Catch Button -->
       <button id="btn-breath-catch" class="btn-breath-recovery">
-        <span>🫁 Pauză de Sărut (+35% Oxigen)</span>
+        <span>🫁 Pauză de sărut (+35% oxigen)</span>
       </button>
 
       <!-- Stage Progression Button -->
       <button id="btn-next-stage" class="btn-level-action" style="display: none;">
-        <span id="btn-next-stage-text">Treci la Etapa Următoare</span>
+        <span id="btn-next-stage-text">Treci la etapa următoare</span>
         <span>✨</span>
       </button>
 
       <!-- Open Duel & Settings Button (Visible when idle) -->
       <button id="btn-open-duel-modal" class="btn-level-action" style="width: 100%; margin-top: 6px;">
-        <span>⚔️ Alege Dificultatea & Miza Duelului</span>
+        <span>⚔️ Alege dificultatea și miza duelului</span>
         <span>🔥</span>
       </button>
     </footer>
@@ -268,7 +268,7 @@
   <div class="modal-overlay" id="victory-modal">
     <div class="cert-card">
       <div class="rank-badge" id="modal-rank-badge">★ S RANK • EXCELLENT ★</div>
-      <h2 class="cert-title">Acord de Ritm Îndeplinit</h2>
+      <h2 class="cert-title">Acord de ritm îndeplinit</h2>
       <p class="cert-subtitle">
         Toate cele 5 etape ale simfoniei senzoriale au fost desăvârșite! KPI 100% atins cu brio.
       </p>
@@ -276,11 +276,11 @@
       <div class="stats-summary-grid">
         <div class="summary-item">
           <span class="num" id="modal-final-score">0</span>
-          <span class="desc">Scor Total</span>
+          <span class="desc">Scor total</span>
         </div>
         <div class="summary-item">
           <span class="num" id="modal-max-combo">0x</span>
-          <span class="desc">Max Combo</span>
+          <span class="desc">Combo maxim</span>
         </div>
         <div class="summary-item">
           <span class="num" id="modal-final-accuracy">100%</span>
@@ -290,14 +290,14 @@
 
       <div class="signature-box">
         <div style="font-size:0.75rem; color:#8d6e63; font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between;">
-          <span>Semnătura Clientului Activ (Otter):</span>
+          <span>Semnătura clientului activ (Otter):</span>
           <button id="btn-clear-sig" style="background:none; border:none; color:var(--primary-rose); font-size:0.75rem; font-weight:700; cursor:pointer;">Șterge</button>
         </div>
         <canvas id="signature-canvas" width="340" height="75"></canvas>
       </div>
 
       <button id="btn-sign-complete" class="btn-level-action" style="width:100%; margin-top:0;">
-        <span>Aprobă & Validează Parteneriatul</span>
+        <span>Aprobă și validează parteneriatul</span>
         <span>💮</span>
       </button>
     </div>
@@ -308,23 +308,23 @@
   <!-- ========================================= -->
   <div class="modal-overlay open" id="wager-modal">
     <div class="wager-modal-content">
-      <span class="wager-badge-tag">⚔️ MODUL DUEL 1V1 • MIZE SPICY</span>
-      <h2 style="font-size:1.3rem; font-weight:900; color:#4c0519; margin-bottom:4px;">Alegeți Miza Meciului</h2>
+      <span class="wager-badge-tag">⚔️ Modul duel 1v1 • Mize spicy</span>
+      <h2 style="font-size:1.3rem; font-weight:900; color:#4c0519; margin-bottom:4px;">Alegeți miza meciului</h2>
       <p style="font-size:0.8rem; color:#9f1239; margin-bottom:12px;">Cine pierde jocul are obligația să onoreze miza aleasă în această seară!</p>
 
       <!-- Character Choice: Peach vs Cucumber -->
       <div style="margin-bottom:12px;">
         <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
-          Alegeți Activul Ritmului:
+          Alegeți activul ritmului:
         </label>
         <div class="character-toggle-bar" id="character-toggle-bar">
           <button type="button" class="char-tab-btn active" data-char="peach">
             <span style="font-size:1.2rem;">🍑</span>
-            <span>Piersica Catifelată</span>
+            <span>Piersica catifelată</span>
           </button>
           <button type="button" class="char-tab-btn" data-char="cucumber">
             <span style="font-size:1.2rem;">🥒</span>
-            <span>Castravetele Ferm</span>
+            <span>Castravetele ferm</span>
           </button>
         </div>
       </div>
@@ -333,74 +333,44 @@
       <div style="margin-bottom:14px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px;">
-            Grad de Dificultate:
+            Grad de dificultate:
           </label>
           <span id="diff-desc-label" style="font-size:0.7rem; color:#9f1239; font-weight:700;">Standard • Ritm echilibrat</span>
         </div>
         <div class="difficulty-toggle-bar" id="difficulty-toggle-bar">
           <button type="button" class="diff-tab-btn" data-diff="easy">
             <span>🟢</span>
-            <span>Sensual (Ușor)</span>
+            <span>Sensual (ușor)</span>
           </button>
           <button type="button" class="diff-tab-btn active" data-diff="medium">
             <span>🟡</span>
-            <span>Pasiune (Mediu)</span>
+            <span>Pasiune (mediu)</span>
           </button>
           <button type="button" class="diff-tab-btn" data-diff="hard">
             <span>🔴</span>
-            <span>Extaz (Intens)</span>
+            <span>Extaz (intens)</span>
           </button>
           <button type="button" class="diff-tab-btn" data-diff="hardcore">
             <span>🔥</span>
-            <span>Hardcore (Sălbatic)</span>
+            <span>Hardcore (sălbatic)</span>
           </button>
         </div>
       </div>
 
+      <!-- Dynamic Spicy Wagers Container -->
+      <div class="wager-spice-header">
+        <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px;">
+          Mize recomandate:
+        </label>
+        <span class="wager-spice-badge" id="wager-spice-badge">🌶️🌶️ Pasiune și tentație</span>
+      </div>
+
       <div class="wagers-list" id="wagers-list">
-        <div class="wager-card-option selected" data-wager="20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă">
-          <div class="wager-icon">🔥</div>
-          <div class="wager-info">
-            <h4>Masaj Senzual Fără Grabă</h4>
-            <p>20 de minute de masaj cu ulei cald la lumina lumânărilor</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="Câștigătorul dictează scenariul, ritmul și poziția în pat în această seară">
-          <div class="wager-icon">👑</div>
-          <div class="wager-info">
-            <h4>Comandă Totală în Pat</h4>
-            <p>Câștigătorul dictează scenariul, ritmul și poziția în pat</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="Mângâieri și sărutări dedicate în zonele fierbinți fără limită de timp">
-          <div class="wager-icon">💋</div>
-          <div class="wager-info">
-            <h4>Răsfăț Oral Dedicat</h4>
-            <p>Mângâieri și sărutări în zonele fierbinți fără limită de timp</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="Joc intim senzorial cu căpșuni, ciocolată sau frișcă direct pe piele">
-          <div class="wager-icon">🍓</div>
-          <div class="wager-info">
-            <h4>Fructe & Dulceață</h4>
-            <p>Joc intim senzorial cu frișcă, ciocolată sau fructe pe corp</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="custom">
-          <div class="wager-icon">✍️</div>
-          <div class="wager-info" style="width:100%;">
-            <h4>Miză Secretă Personalizată</h4>
-            <input type="text" id="custom-wager-text" class="custom-wager-input" placeholder="Scrieți aici propria miză spicy..." />
-          </div>
-        </div>
+        <!-- Dynamically rendered based on chosen difficulty -->
       </div>
 
       <button id="btn-start-duel" class="btn-level-action" style="width:100%; margin-top:6px;">
-        <span>Confirmă Miza & Începe Runda Prestatorului</span>
+        <span>Confirmă miza și începe runda Prestatorului</span>
         <span>🔥</span>
       </button>
     </div>
@@ -437,8 +407,8 @@
   <!-- ========================================= -->
   <div class="modal-overlay" id="duel-winner-modal">
     <div class="cert-card" style="max-width:410px;">
-      <div class="rank-badge" id="duel-winner-badge" style="background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">👑 VICTORIE TOTALĂ!</div>
-      <h2 class="cert-title" id="duel-winner-headline">Otter a Câștigat Duelul!</h2>
+      <div class="rank-badge" id="duel-winner-badge" style="background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">👑 Victorie totală!</div>
+      <h2 class="cert-title" id="duel-winner-headline">Otter a câștigat duelul!</h2>
       
       <div class="duel-vs-grid">
         <div class="player-duel-column" id="p1-duel-col">
@@ -459,7 +429,7 @@
       </div>
 
       <div class="wager-awarded-box">
-        <h4>★ RECOMPENSA CÂȘTIGATĂ ★</h4>
+        <h4>★ Recompensa câștigată ★</h4>
         <p id="duel-awarded-wager-text"></p>
       </div>
 
@@ -472,7 +442,7 @@
       </div>
 
       <button id="btn-finish-duel" class="btn-level-action" style="width:100%; margin-top:0;">
-        <span>Onorează Miza & Reia Duelul</span>
+        <span>Onorează miza și reia duelul</span>
         <span>💋</span>
       </button>
     </div>

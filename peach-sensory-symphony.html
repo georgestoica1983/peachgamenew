@@ -671,11 +671,32 @@ body {
   margin-bottom: 8px;
 }
 
+.wager-spice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.wager-spice-badge {
+  background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+  border: 1px solid #fecdd3;
+  color: #e11d48;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(225, 29, 72, 0.1);
+  transition: all 0.3s ease;
+}
+
 .wagers-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 16px 0;
+  margin: 6px 0 16px 0;
   text-align: left;
 }
 
@@ -689,6 +710,12 @@ body {
   align-items: flex-start;
   gap: 12px;
   transition: all 0.2s ease;
+  animation: fadeInWager 0.22s ease-out;
+}
+
+@keyframes fadeInWager {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .wager-card-option:active, .wager-card-option.selected {
@@ -1294,27 +1321,27 @@ body.fever-active .fever-banner {
       <!-- Tool Switcher: 👆 Deget vs 👅 Limbă -->
       <div class="tool-selector-bar">
         <button id="tab-finger" class="tool-tab-btn active">
-          <span>👆 Vârful Degetului (Tap)</span>
+          <span>👆 Vârful degetului (tap)</span>
         </button>
         <button id="tab-tongue" class="tool-tab-btn">
-          <span>👅 Vârful Limbii (Glide & Swirl)</span>
+          <span>👅 Vârful limbii (glide & swirl)</span>
         </button>
       </div>
 
       <!-- Breath Catch Button -->
       <button id="btn-breath-catch" class="btn-breath-recovery">
-        <span>🫁 Pauză de Sărut (+35% Oxigen)</span>
+        <span>🫁 Pauză de sărut (+35% oxigen)</span>
       </button>
 
       <!-- Stage Progression Button -->
       <button id="btn-next-stage" class="btn-level-action" style="display: none;">
-        <span id="btn-next-stage-text">Treci la Etapa Următoare</span>
+        <span id="btn-next-stage-text">Treci la etapa următoare</span>
         <span>✨</span>
       </button>
 
       <!-- Open Duel & Settings Button (Visible when idle) -->
       <button id="btn-open-duel-modal" class="btn-level-action" style="width: 100%; margin-top: 6px;">
-        <span>⚔️ Alege Dificultatea & Miza Duelului</span>
+        <span>⚔️ Alege dificultatea și miza duelului</span>
         <span>🔥</span>
       </button>
     </footer>
@@ -1326,7 +1353,7 @@ body.fever-active .fever-banner {
   <div class="modal-overlay" id="victory-modal">
     <div class="cert-card">
       <div class="rank-badge" id="modal-rank-badge">★ S RANK • EXCELLENT ★</div>
-      <h2 class="cert-title">Acord de Ritm Îndeplinit</h2>
+      <h2 class="cert-title">Acord de ritm îndeplinit</h2>
       <p class="cert-subtitle">
         Toate cele 5 etape ale simfoniei senzoriale au fost desăvârșite! KPI 100% atins cu brio.
       </p>
@@ -1334,11 +1361,11 @@ body.fever-active .fever-banner {
       <div class="stats-summary-grid">
         <div class="summary-item">
           <span class="num" id="modal-final-score">0</span>
-          <span class="desc">Scor Total</span>
+          <span class="desc">Scor total</span>
         </div>
         <div class="summary-item">
           <span class="num" id="modal-max-combo">0x</span>
-          <span class="desc">Max Combo</span>
+          <span class="desc">Combo maxim</span>
         </div>
         <div class="summary-item">
           <span class="num" id="modal-final-accuracy">100%</span>
@@ -1348,14 +1375,14 @@ body.fever-active .fever-banner {
 
       <div class="signature-box">
         <div style="font-size:0.75rem; color:#8d6e63; font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between;">
-          <span>Semnătura Clientului Activ (Otter):</span>
+          <span>Semnătura clientului activ (Otter):</span>
           <button id="btn-clear-sig" style="background:none; border:none; color:var(--primary-rose); font-size:0.75rem; font-weight:700; cursor:pointer;">Șterge</button>
         </div>
         <canvas id="signature-canvas" width="340" height="75"></canvas>
       </div>
 
       <button id="btn-sign-complete" class="btn-level-action" style="width:100%; margin-top:0;">
-        <span>Aprobă & Validează Parteneriatul</span>
+        <span>Aprobă și validează parteneriatul</span>
         <span>💮</span>
       </button>
     </div>
@@ -1366,23 +1393,23 @@ body.fever-active .fever-banner {
   <!-- ========================================= -->
   <div class="modal-overlay open" id="wager-modal">
     <div class="wager-modal-content">
-      <span class="wager-badge-tag">⚔️ MODUL DUEL 1V1 • MIZE SPICY</span>
-      <h2 style="font-size:1.3rem; font-weight:900; color:#4c0519; margin-bottom:4px;">Alegeți Miza Meciului</h2>
+      <span class="wager-badge-tag">⚔️ Modul duel 1v1 • Mize spicy</span>
+      <h2 style="font-size:1.3rem; font-weight:900; color:#4c0519; margin-bottom:4px;">Alegeți miza meciului</h2>
       <p style="font-size:0.8rem; color:#9f1239; margin-bottom:12px;">Cine pierde jocul are obligația să onoreze miza aleasă în această seară!</p>
 
       <!-- Character Choice: Peach vs Cucumber -->
       <div style="margin-bottom:12px;">
         <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
-          Alegeți Activul Ritmului:
+          Alegeți activul ritmului:
         </label>
         <div class="character-toggle-bar" id="character-toggle-bar">
           <button type="button" class="char-tab-btn active" data-char="peach">
             <span style="font-size:1.2rem;">🍑</span>
-            <span>Piersica Catifelată</span>
+            <span>Piersica catifelată</span>
           </button>
           <button type="button" class="char-tab-btn" data-char="cucumber">
             <span style="font-size:1.2rem;">🥒</span>
-            <span>Castravetele Ferm</span>
+            <span>Castravetele ferm</span>
           </button>
         </div>
       </div>
@@ -1391,74 +1418,44 @@ body.fever-active .fever-banner {
       <div style="margin-bottom:14px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
           <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px;">
-            Grad de Dificultate:
+            Grad de dificultate:
           </label>
           <span id="diff-desc-label" style="font-size:0.7rem; color:#9f1239; font-weight:700;">Standard • Ritm echilibrat</span>
         </div>
         <div class="difficulty-toggle-bar" id="difficulty-toggle-bar">
           <button type="button" class="diff-tab-btn" data-diff="easy">
             <span>🟢</span>
-            <span>Sensual (Ușor)</span>
+            <span>Sensual (ușor)</span>
           </button>
           <button type="button" class="diff-tab-btn active" data-diff="medium">
             <span>🟡</span>
-            <span>Pasiune (Mediu)</span>
+            <span>Pasiune (mediu)</span>
           </button>
           <button type="button" class="diff-tab-btn" data-diff="hard">
             <span>🔴</span>
-            <span>Extaz (Intens)</span>
+            <span>Extaz (intens)</span>
           </button>
           <button type="button" class="diff-tab-btn" data-diff="hardcore">
             <span>🔥</span>
-            <span>Hardcore (Sălbatic)</span>
+            <span>Hardcore (sălbatic)</span>
           </button>
         </div>
       </div>
 
+      <!-- Dynamic Spicy Wagers Container -->
+      <div class="wager-spice-header">
+        <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px;">
+          Mize recomandate:
+        </label>
+        <span class="wager-spice-badge" id="wager-spice-badge">🌶️🌶️ Pasiune și tentație</span>
+      </div>
+
       <div class="wagers-list" id="wagers-list">
-        <div class="wager-card-option selected" data-wager="20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă">
-          <div class="wager-icon">🔥</div>
-          <div class="wager-info">
-            <h4>Masaj Senzual Fără Grabă</h4>
-            <p>20 de minute de masaj cu ulei cald la lumina lumânărilor</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="Câștigătorul dictează scenariul, ritmul și poziția în pat în această seară">
-          <div class="wager-icon">👑</div>
-          <div class="wager-info">
-            <h4>Comandă Totală în Pat</h4>
-            <p>Câștigătorul dictează scenariul, ritmul și poziția în pat</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="Mângâieri și sărutări dedicate în zonele fierbinți fără limită de timp">
-          <div class="wager-icon">💋</div>
-          <div class="wager-info">
-            <h4>Răsfăț Oral Dedicat</h4>
-            <p>Mângâieri și sărutări în zonele fierbinți fără limită de timp</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="Joc intim senzorial cu căpșuni, ciocolată sau frișcă direct pe piele">
-          <div class="wager-icon">🍓</div>
-          <div class="wager-info">
-            <h4>Fructe & Dulceață</h4>
-            <p>Joc intim senzorial cu frișcă, ciocolată sau fructe pe corp</p>
-          </div>
-        </div>
-
-        <div class="wager-card-option" data-wager="custom">
-          <div class="wager-icon">✍️</div>
-          <div class="wager-info" style="width:100%;">
-            <h4>Miză Secretă Personalizată</h4>
-            <input type="text" id="custom-wager-text" class="custom-wager-input" placeholder="Scrieți aici propria miză spicy..." />
-          </div>
-        </div>
+        <!-- Dynamically rendered based on chosen difficulty -->
       </div>
 
       <button id="btn-start-duel" class="btn-level-action" style="width:100%; margin-top:6px;">
-        <span>Confirmă Miza & Începe Runda Prestatorului</span>
+        <span>Confirmă miza și începe runda Prestatorului</span>
         <span>🔥</span>
       </button>
     </div>
@@ -1495,8 +1492,8 @@ body.fever-active .fever-banner {
   <!-- ========================================= -->
   <div class="modal-overlay" id="duel-winner-modal">
     <div class="cert-card" style="max-width:410px;">
-      <div class="rank-badge" id="duel-winner-badge" style="background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">👑 VICTORIE TOTALĂ!</div>
-      <h2 class="cert-title" id="duel-winner-headline">Otter a Câștigat Duelul!</h2>
+      <div class="rank-badge" id="duel-winner-badge" style="background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">👑 Victorie totală!</div>
+      <h2 class="cert-title" id="duel-winner-headline">Otter a câștigat duelul!</h2>
       
       <div class="duel-vs-grid">
         <div class="player-duel-column" id="p1-duel-col">
@@ -1517,7 +1514,7 @@ body.fever-active .fever-banner {
       </div>
 
       <div class="wager-awarded-box">
-        <h4>★ RECOMPENSA CÂȘTIGATĂ ★</h4>
+        <h4>★ Recompensa câștigată ★</h4>
         <p id="duel-awarded-wager-text"></p>
       </div>
 
@@ -1530,7 +1527,7 @@ body.fever-active .fever-banner {
       </div>
 
       <button id="btn-finish-duel" class="btn-level-action" style="width:100%; margin-top:0;">
-        <span>Onorează Miza & Reia Duelul</span>
+        <span>Onorează miza și reia duelul</span>
         <span>💋</span>
       </button>
     </div>
@@ -1956,7 +1953,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Modals References
   const wagerModal = document.getElementById('wager-modal');
   const wagersList = document.getElementById('wagers-list');
-  const customWagerText = document.getElementById('custom-wager-text');
   const btnStartDuel = document.getElementById('btn-start-duel');
 
   const handoverModal = document.getElementById('handover-modal');
@@ -2014,7 +2010,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================
   const SONG_MOVEMENTS = [
     {
-      name: 'Mișcarea 1: Încălzire Senzorială',
+      name: 'Mișcarea 1: Încălzire senzorială',
       bpm: 85,
       durationMs: 18000,
       noteIntervalMs: 1000,
@@ -2022,23 +2018,23 @@ document.addEventListener('DOMContentLoaded', () => {
       sub: 'Pregătește ritmul pentru runda decisivă.'
     },
     {
-      name: 'Mișcarea 2: Ritm & Swirls pe Punctul de Plăcere',
+      name: 'Mișcarea 2: Ritm și rotiri pe punctul de plăcere',
       bpm: 105,
       durationMs: 20000,
       noteIntervalMs: 800,
-      intro: 'Rotiri circulare pe Punctul de Plăcere de sub codiță!',
+      intro: 'Rotiri circulare pe punctul de plăcere!',
       sub: 'Măsoară viteza RPM și activează multiplicatorul 3x.'
     },
     {
-      name: 'Mișcarea 3: FEVER DROP & Valuri de Foc',
+      name: 'Mișcarea 3: Fever drop și valuri de foc',
       bpm: 125,
       durationMs: 20000,
       noteIntervalMs: 600,
-      intro: 'Menține combo-ul peste 15x pentru FEVER MODE!',
+      intro: 'Menține combo-ul peste 15x pentru Fever Mode!',
       sub: 'Multiplicatori uriași 8x și 16x pe ecran.'
     },
     {
-      name: 'Mișcarea 4: CLIMAX OVERDRIVE • Gâfâit Garantat',
+      name: 'Mișcarea 4: Climax overdrive • sprint final',
       bpm: 140,
       durationMs: 20000,
       noteIntervalMs: 440,
@@ -2050,7 +2046,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Game Engine & Duel State
   let isGameActive = false;
   let currentTurnPlayer = 'Prestatorul'; // 'Prestatorul' | 'Otter'
-  let selectedWager = '20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă';
+  let selectedWager = '20 de minute de masaj senzual pe spate și umeri cu ulei cald la lumina lumânărilor fără nicio grabă';
+  let isCustomWager = false;
 
   // Stats for Player 1 and Player 2
   let p1Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
@@ -2094,7 +2091,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================
   const DIFFICULTY_CONFIG = {
     easy: {
-      name: '🟢 Sensual (Ușor)',
+      name: '🟢 Sensual (ușor)',
       shortName: '🟢 Ușor',
       desc: 'Ritm relaxat • Ferestre mari de reacție',
       spawnMultiplier: 1.35,
@@ -2106,7 +2103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bpmMultiplier: 0.9
     },
     medium: {
-      name: '🟡 Pasiune (Mediu)',
+      name: '🟡 Pasiune (mediu)',
       shortName: '🟡 Mediu',
       desc: 'Standard • Ritm dinamic echilibrat',
       spawnMultiplier: 1.0,
@@ -2118,7 +2115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bpmMultiplier: 1.0
     },
     hard: {
-      name: '🔴 Extaz (Intens)',
+      name: '🔴 Extaz (intens)',
       shortName: '🔴 Intens',
       desc: 'Ritm alert • Ferestre strânse • Viteză mare',
       spawnMultiplier: 0.72,
@@ -2130,9 +2127,9 @@ document.addEventListener('DOMContentLoaded', () => {
       bpmMultiplier: 1.15
     },
     hardcore: {
-      name: '🔥 Hardcore (Sălbatic)',
+      name: '🔥 Hardcore (sălbatic)',
       shortName: '🔥 Hardcore',
-      desc: 'Viteză fulger • Penalizări mari • Doar pt campioni!',
+      desc: 'Viteză fulger • Penalizări mari • Doar pentru campioni!',
       spawnMultiplier: 0.52,
       approachTimeMs: 390,
       hitWindowMs: 95,
@@ -2144,6 +2141,221 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let selectedDifficulty = 'medium'; // 'easy' | 'medium' | 'hard' | 'hardcore'
+
+  // =========================================
+  // SPICY WAGERS BY DIFFICULTY TIER
+  // =========================================
+  const SPICY_WAGERS_BY_DIFF = {
+    easy: {
+      spiceLevel: '🌶️ Blând și dulce',
+      wagers: [
+        {
+          icon: '🌸',
+          title: 'Masaj lent cu ulei cald',
+          desc: '20 de minute de masaj senzual pe spate și umeri la lumina lumânărilor',
+          full: '20 de minute de masaj senzual pe spate și umeri cu ulei cald la lumina lumânărilor fără nicio grabă'
+        },
+        {
+          icon: '📸',
+          title: 'Ședință foto erotică',
+          desc: 'O ședință foto privată și senzuală realizată de învingător',
+          full: 'O ședință foto erotică privată și senzuală realizată de învingător'
+        },
+        {
+          icon: '🕯️',
+          title: 'Baie fierbinte cu spumă',
+          desc: 'Pregătirea unei băi relaxante cu lumânări și servirea băuturii preferate',
+          full: 'Pregătirea unei băi fierbinți cu spumă, lumânări și servirea băuturii preferate'
+        },
+        {
+          icon: '💆',
+          title: 'Masaj pe frunte',
+          desc: '15 minute de masaj delicat și relaxant pe frunte și tâmple',
+          full: '15 minute de masaj delicat și relaxant pe frunte și tâmple până la relaxare totală'
+        }
+      ]
+    },
+    medium: {
+      spiceLevel: '🌶️🌶️ Pasiune și tentație',
+      wagers: [
+        {
+          icon: '🔥',
+          title: 'Masaj erotic pe tot corpul',
+          desc: '25 de minute de masaj fără granițe, explorând fiecare curbă intimă',
+          full: '25 de minute de masaj erotic pe tot corpul, explorând fiecare curbă intimă fără nicio grabă'
+        },
+        {
+          icon: '💃',
+          title: 'Dans privat senzual (lap dance)',
+          desc: 'Un dans intim de 2 minute pe melodia aleasă special de învingător',
+          full: 'Un dans privat senzual de 2 minute pe melodia aleasă de învingător, cu contact vizual neîntrerupt'
+        },
+        {
+          icon: '💋',
+          title: '10 minute de săruturi pasionale',
+          desc: 'Săruturi neîntrerupte pe buze, gât, piept și zone erogene',
+          full: '10 minute de săruturi pasionale neîntrerupte pe buze, gât, piept și zone erogene dictate de învingător'
+        },
+        {
+          icon: '🚿',
+          title: 'Duș fierbinte în doi',
+          desc: 'Un duș prelungit și senzual în doi, cu săpunire reciprocă fără grabă',
+          full: 'Un duș fierbinte și senzual în doi, cu săpunire reciprocă lentă și mângâieri fără grabă'
+        }
+      ]
+    },
+    hard: {
+      spiceLevel: '🌶️🌶️🌶️ Foarte fierbinte',
+      wagers: [
+        {
+          icon: '💋',
+          title: 'Răsfăț oral',
+          desc: 'Mângâieri și sărutări în zonele erogene fără limită de timp',
+          full: 'Mângâieri și sărutări în zonele erogene fără limită de timp, ghidate de învingător'
+        },
+        {
+          icon: '✨',
+          title: 'Săruturi pe tot corpul',
+          desc: 'Mângâieri și sărutări lente din cap până în picioare pe toate zonele erogene',
+          full: 'Mângâieri și sărutări lente din cap până în picioare pe toate zonele erogene ale învingătorului'
+        },
+        {
+          icon: '🙈',
+          title: 'Legat la ochi (senzații oarbe)',
+          desc: 'Învinsul stă legat la ochi 15 minute și acceptă atingerile neașteptate ale partenerului',
+          full: 'Învinsul stă legat la ochi 15 minute și acceptă atingerile neașteptate ale partenerului'
+        },
+        {
+          icon: '👑',
+          title: 'Ghidarea serii în dormitor',
+          desc: 'Învingătorul alege ritmul, atmosfera și pozițiile preferate în această seară',
+          full: 'Învingătorul alege ritmul, atmosfera și pozițiile preferate în dormitor în această seară'
+        }
+      ]
+    },
+    hardcore: {
+      spiceLevel: '🌶️🌶️🌶️🌶️ Hardcore extrem',
+      wagers: [
+        {
+          icon: '😈',
+          title: 'Supunere senzuală (3 fantezii)',
+          desc: 'Învinsul îndeplinește cu dăruire 3 dorințe intime secrete alese de învingător',
+          full: 'Supunere senzuală: Învinsul îndeplinește cu dăruire 3 dorințe intime secrete alese pe loc de învingător'
+        },
+        {
+          icon: '💦',
+          title: 'Controlul orgasmului (edging)',
+          desc: 'Învinsul este adus pe marginea plăcerii de 3 ori înainte de permisiunea să termine',
+          full: 'Controlul orgasmului (edging): Învinsul este adus pe marginea plăcerii de 3 ori înainte de permisiunea finală'
+        },
+        {
+          icon: '✨',
+          title: 'Fantezie nouă explorată împreună',
+          desc: 'Învingătorul alege o experiență sau fantezie nouă pe care o explorați cu acord reciproc',
+          full: 'Fantezie nouă explorată împreună: Învingătorul alege o experiență sau fantezie nouă încercată cu acord reciproc'
+        },
+        {
+          icon: '🫦',
+          title: 'Joc de rol (roleplay)',
+          desc: 'Învinsul intră în rolul senzual agreat împreună pe tot parcursul serii',
+          full: 'Joc de rol (roleplay): Învinsul intră în rolul senzual agreat împreună pe tot parcursul serii'
+        }
+      ]
+    }
+  };
+
+  let savedCustomWager = '';
+
+  function renderWagers(diff) {
+    if (!wagersList) return;
+    const tier = SPICY_WAGERS_BY_DIFF[diff] || SPICY_WAGERS_BY_DIFF.medium;
+    const spiceBadge = document.getElementById('wager-spice-badge');
+    if (spiceBadge) {
+      spiceBadge.textContent = tier.spiceLevel;
+    }
+
+    const customInputNow = document.getElementById('custom-wager-text');
+    if (customInputNow && customInputNow.value.trim()) {
+      savedCustomWager = customInputNow.value.trim();
+    }
+
+    let html = '';
+    tier.wagers.forEach((w, index) => {
+      const isSelected = (!isCustomWager && index === 0) ? 'selected' : '';
+      html += `
+        <div class="wager-card-option ${isSelected}" data-wager="${w.full}">
+          <div class="wager-icon">${w.icon}</div>
+          <div class="wager-info">
+            <h4>${w.title}</h4>
+            <p>${w.desc}</p>
+          </div>
+        </div>
+      `;
+    });
+
+    const customSelected = isCustomWager ? 'selected' : '';
+    html += `
+      <div class="wager-card-option ${customSelected}" data-wager="custom">
+        <div class="wager-icon">✍️</div>
+        <div class="wager-info" style="width:100%;">
+          <h4>Miză secretă personalizată</h4>
+          <input type="text" id="custom-wager-text" class="custom-wager-input" placeholder="Scrieți aici propria miză secretă (se dezvăluie doar la final)..." value="${savedCustomWager}" />
+        </div>
+      </div>
+    `;
+
+    wagersList.innerHTML = html;
+    if (!isCustomWager) {
+      selectedWager = tier.wagers[0].full;
+    }
+    setupWagerCardListeners();
+  }
+
+  function setupWagerCardListeners() {
+    const customInput = document.getElementById('custom-wager-text');
+    const cards = wagersList.querySelectorAll('.wager-card-option');
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target === customInput) return;
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+
+        const wagerType = card.dataset.wager;
+        if (wagerType === 'custom') {
+          isCustomWager = true;
+          if (customInput) {
+            customInput.focus();
+            selectedWager = customInput.value.trim() || 'Miză secretă confidențială';
+          }
+        } else {
+          isCustomWager = false;
+          selectedWager = wagerType;
+        }
+        window.symphonyAudio.playGlideTone(580);
+        vibrate(15);
+      });
+    });
+
+    if (customInput) {
+      customInput.addEventListener('input', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        const parentCard = customInput.closest('.wager-card-option');
+        if (parentCard) parentCard.classList.add('selected');
+        isCustomWager = true;
+        savedCustomWager = customInput.value.trim();
+        selectedWager = savedCustomWager || 'Miză secretă confidențială';
+      });
+
+      customInput.addEventListener('focus', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        const parentCard = customInput.closest('.wager-card-option');
+        if (parentCard) parentCard.classList.add('selected');
+        isCustomWager = true;
+        selectedWager = customInput.value.trim() || 'Miză secretă confidențială';
+      });
+    }
+  }
 
   function setDifficulty(diff) {
     if (!DIFFICULTY_CONFIG[diff]) return;
@@ -2161,6 +2373,9 @@ document.addEventListener('DOMContentLoaded', () => {
     diffTabBtns.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.diff === diff);
     });
+
+    // Render increasingly spicy wagers for this difficulty level!
+    renderWagers(diff);
   }
 
   // Pleasure Spot Mechanics
@@ -2568,7 +2783,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Show Handover Modal
       handoverTargetScore.textContent = p1Stats.score.toLocaleString();
-      handoverWagerText.textContent = selectedWager;
+      if (isCustomWager) {
+        handoverWagerText.textContent = '🔒 Miză secretă confidențială (se dezvăluie doar la final!)';
+      } else {
+        handoverWagerText.textContent = selectedWager;
+      }
       handoverModal.classList.add('open');
 
     } else {
@@ -2598,20 +2817,24 @@ document.addEventListener('DOMContentLoaded', () => {
     p2FinalScore.textContent = p2Stats.score.toLocaleString();
     p2FinalAcc.textContent = `${p2Stats.accuracy}% Acc (Max ${p2Stats.maxCombo}x)`;
 
-    duelAwardedWagerText.textContent = selectedWager;
+    if (isCustomWager) {
+      duelAwardedWagerText.innerHTML = `🔒 <strong>Miză secretă dezvăluită:</strong><br><span style="font-style:italic; font-size:0.95rem; color:#be123c;">„${selectedWager}”</span>`;
+    } else {
+      duelAwardedWagerText.textContent = selectedWager;
+    }
 
     const isOtterWinner = p2Stats.score >= p1Stats.score;
 
     if (isOtterWinner) {
-      duelWinnerHeadline.textContent = 'Otter a Câștigat Duelul!';
-      duelWinnerBadge.textContent = '👑 OTTER ESTE REGINA RITMULUI!';
+      duelWinnerHeadline.textContent = 'Otter a câștigat duelul!';
+      duelWinnerBadge.textContent = '👑 Otter este regina ritmului!';
       p2DuelCol.classList.add('winner');
       p1DuelCol.classList.remove('winner');
       p2Crown.style.visibility = 'visible';
       p1Crown.style.visibility = 'hidden';
     } else {
-      duelWinnerHeadline.textContent = 'Prestatorul a Câștigat Duelul!';
-      duelWinnerBadge.textContent = '👑 PRESTATORUL A TRIUMFAT!';
+      duelWinnerHeadline.textContent = 'Prestatorul a câștigat duelul!';
+      duelWinnerBadge.textContent = '👑 Prestatorul a triumfat!';
       p1DuelCol.classList.add('winner');
       p2DuelCol.classList.remove('winner');
       p1Crown.style.visibility = 'visible';
@@ -2627,32 +2850,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================
   // SPICY WAGER SELECTION LOGIC
   // =========================================
-  const wagerOptions = document.querySelectorAll('.wager-card-option');
-  wagerOptions.forEach(card => {
-    card.addEventListener('click', () => {
-      wagerOptions.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-
-      const wagerType = card.dataset.wager;
-      if (wagerType === 'custom') {
-        customWagerText.focus();
-        selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
-      } else {
-        selectedWager = wagerType;
-      }
-      window.symphonyAudio.playGlideTone(580);
-      vibrate(15);
-    });
-  });
-
-  customWagerText.addEventListener('input', () => {
-    selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
-  });
-
   btnStartDuel.addEventListener('click', () => {
+    const customInput = document.getElementById('custom-wager-text');
     const selectedOption = document.querySelector('.wager-card-option.selected');
     if (selectedOption && selectedOption.dataset.wager === 'custom') {
-      selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+      isCustomWager = true;
+      selectedWager = (customInput && customInput.value.trim()) || 'Miză secretă confidențială';
+    } else {
+      isCustomWager = false;
     }
     wagerModal.classList.remove('open');
     currentTurnPlayer = 'Prestatorul';
