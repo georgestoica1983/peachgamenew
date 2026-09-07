@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Peach Sensory Symphony • Rhythm & Mastery</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#fff8f5">
+</head>
+<body>
+
+  <!-- Background Particle Effects Layer -->
+  <canvas id="particles-canvas"></canvas>
+
+  <div id="symphony-app">
+    <!-- ========================================= -->
+    <!-- TOP HUD: STAGE, BPM & LIVE STATS          -->
+    <!-- ========================================= -->
+    <header class="top-hud">
+      <div class="hud-header-row">
+        <div class="stage-pill" id="stage-pill">
+          <span>🌸</span>
+          <span id="stage-title-text">Stage 1: First Light</span>
+        </div>
+        <div class="hud-actions">
+          <div class="bpm-indicator" id="bpm-indicator">⚡ 75 BPM</div>
+          <button id="btn-audio-toggle" class="icon-button" title="Sunet">🔔</button>
+        </div>
+      </div>
+
+      <!-- Stats: Score, Combo & Accuracy -->
+      <div class="stats-dashboard">
+        <div class="stat-box">
+          <span class="stat-label">Scor Ritm</span>
+          <span class="stat-value" id="val-score">0</span>
+        </div>
+
+        <div class="stat-box combo" id="stat-combo-box">
+          <span class="stat-label">Combo</span>
+          <span class="stat-value" id="val-combo">0x</span>
+        </div>
+
+        <div class="stat-box" style="align-items: flex-end;">
+          <span class="stat-label">Acuratețe</span>
+          <span class="stat-value" id="val-accuracy">100%</span>
+          <span class="multiplier-tag" id="val-multiplier">1x MULTI</span>
+        </div>
+      </div>
+
+      <!-- Dual Resource Gauges: Pleasure / KPI & Breath -->
+      <div class="gauges-container">
+        <div class="gauge-wrap">
+          <div class="gauge-header">
+            <span>⚡ KPI Plăcere</span>
+            <span id="label-kpi-val">0%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="bar-pleasure" class="gauge-bar-fill pleasure"></div>
+          </div>
+        </div>
+
+        <div class="gauge-wrap">
+          <div class="gauge-header">
+            <span>🫁 Respirație & Oxigen</span>
+            <span id="label-breath-val">100%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="bar-breath" class="gauge-bar-fill breath"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================= -->
+    <!-- CENTER STAGE: THE SENSORY PEACH           -->
+    <!-- ========================================= -->
+    <main class="rhythm-stage" id="rhythm-stage">
+      <div class="peach-ambient-aura"></div>
+
+      <!-- Rating Popup Feedback Container (*PERFECT!*, *GREAT!*, *MISS*) -->
+      <div id="rating-container"></div>
+
+      <!-- Rhythm Approach Rings & Node Layer -->
+      <div id="rhythm-nodes-layer" style="position:absolute; width:100%; height:100%; pointer-events:none; z-index:15;"></div>
+
+      <div class="peach-interactive-wrap" id="peach-interactive-wrap">
+        <svg viewBox="0 0 200 200" width="100%" height="100%" id="peach-svg">
+          <defs>
+            <!-- Gradient for Left Cheek -->
+            <radialGradient id="grad-left" cx="38%" cy="46%" r="65%">
+              <stop offset="0%" stop-color="#ffb3a1" />
+              <stop offset="55%" stop-color="#ff6b8b" />
+              <stop offset="100%" stop-color="#e03856" />
+            </radialGradient>
+
+            <!-- Gradient for Right Cheek -->
+            <radialGradient id="grad-right" cx="62%" cy="46%" r="65%">
+              <stop offset="0%" stop-color="#ffb3a1" />
+              <stop offset="55%" stop-color="#ff6b8b" />
+              <stop offset="100%" stop-color="#e03856" />
+            </radialGradient>
+
+            <!-- Gold/Pearl Shimmer for the Pleasure Spot -->
+            <radialGradient id="grad-pleasure-spot" cx="45%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="35%" stop-color="#fef08a" />
+              <stop offset="70%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#b45309" />
+            </radialGradient>
+
+            <!-- Leaf Gradient -->
+            <linearGradient id="grad-leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#86efac" />
+              <stop offset="100%" stop-color="#22c55e" />
+            </linearGradient>
+          </defs>
+
+          <!-- Stem & Leaf -->
+          <g class="peach-stem-group">
+            <path d="M 100 46 C 100 24, 126 14, 144 20 C 144 36, 124 48, 100 46 Z" fill="url(#grad-leaf)" />
+            <path d="M 100 46 Q 102 36 100 30" stroke="#5c3d2e" stroke-width="3" stroke-linecap="round" fill="none" />
+          </g>
+
+          <!-- Zone 1: Left Cheek (🍓) -->
+          <path id="peach-left" class="cheek-zone"
+                d="M 100 46 C 64 42, 24 74, 24 118 C 24 162, 68 186, 100 190 C 96 150, 96 82, 100 46 Z"
+                fill="url(#grad-left)" />
+
+          <!-- Zone 2: Right Cheek (🍑) -->
+          <path id="peach-right" class="cheek-zone"
+                d="M 100 46 C 136 42, 176 74, 176 118 C 176 162, 132 186, 100 190 C 104 150, 104 82, 100 46 Z"
+                fill="url(#grad-right)" />
+
+          <!-- Central Cleft Shadow -->
+          <path d="M 100 46 Q 98 118 100 190" stroke="#b91c1c" stroke-width="2" fill="none" opacity="0.45" />
+
+          <!-- ============================================== -->
+          <!-- ZONE 3: THE PLEASURE SPOT (RIGHT BELOW STEM)   -->
+          <!-- ============================================== -->
+          <g id="pleasure-spot-group" class="pleasure-spot-group">
+            <!-- Pulsing Golden Aura -->
+            <circle class="pleasure-spot-aura" cx="100" cy="74" r="19" fill="#fef08a" opacity="0.35" />
+            <circle class="pleasure-spot-aura" cx="100" cy="74" r="14" fill="#f59e0b" opacity="0.45" />
+
+            <!-- Core Jewel Spot -->
+            <circle id="pleasure-spot-core" class="pleasure-spot-core" cx="100" cy="74" r="9.5" fill="url(#grad-pleasure-spot)" />
+
+            <!-- Star Highlight -->
+            <circle cx="98" cy="71.5" r="2.2" fill="#ffffff" opacity="0.9" />
+          </g>
+        </svg>
+
+        <!-- Swirl Guide Ring Overlay for Stage 2+ -->
+        <div id="swirl-guide-ring" class="swirl-guide-ring"></div>
+      </div>
+    </main>
+
+    <!-- ========================================= -->
+    <!-- BOTTOM CONTROLS & DYNAMIC INSTRUCTIONS    -->
+    <!-- ========================================= -->
+    <footer class="bottom-controls-card">
+      <div class="instruction-bar">
+        <div class="instruction-title" id="instruction-title">Atinge notele de ritm când inelul se micșorează!</div>
+        <div class="instruction-sub" id="instruction-sub">Punctul de plăcere de sub codiță activează multiplicatorul 2x.</div>
+      </div>
+
+      <!-- Tool Switcher: 👆 Deget vs 👅 Limbă -->
+      <div class="tool-selector-bar">
+        <button id="tab-finger" class="tool-tab-btn active">
+          <span>👆 Vârful Degetului (Tap)</span>
+        </button>
+        <button id="tab-tongue" class="tool-tab-btn">
+          <span>👅 Vârful Limbii (Glide & Swirl)</span>
+        </button>
+      </div>
+
+      <!-- Breath Catch Button -->
+      <button id="btn-breath-catch" class="btn-breath-recovery">
+        <span>🫁 Pauză de Sărut (+35% Oxigen)</span>
+      </button>
+
+      <!-- Stage Progression Button -->
+      <button id="btn-next-stage" class="btn-level-action" style="display: none;">
+        <span id="btn-next-stage-text">Treci la Etapa Următoare</span>
+        <span>✨</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- ========================================= -->
+  <!-- VICTORY & GRADE CERTIFICATE MODAL         -->
+  <!-- ========================================= -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="cert-card">
+      <div class="rank-badge" id="modal-rank-badge">★ S RANK • EXCELLENT ★</div>
+      <h2 class="cert-title">Acord de Ritm Îndeplinit</h2>
+      <p class="cert-subtitle">
+        Toate cele 5 etape ale simfoniei senzoriale au fost desăvârșite! KPI 100% atins cu brio.
+      </p>
+
+      <div class="stats-summary-grid">
+        <div class="summary-item">
+          <span class="num" id="modal-final-score">0</span>
+          <span class="desc">Scor Total</span>
+        </div>
+        <div class="summary-item">
+          <span class="num" id="modal-max-combo">0x</span>
+          <span class="desc">Max Combo</span>
+        </div>
+        <div class="summary-item">
+          <span class="num" id="modal-final-accuracy">100%</span>
+          <span class="desc">Acuratețe</span>
+        </div>
+      </div>
+
+      <div class="signature-box">
+        <div style="font-size:0.75rem; color:#8d6e63; font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between;">
+          <span>Semnătura Clientului Activ (Otter):</span>
+          <button id="btn-clear-sig" style="background:none; border:none; color:var(--primary-rose); font-size:0.75rem; font-weight:700; cursor:pointer;">Șterge</button>
+        </div>
+        <canvas id="signature-canvas" width="340" height="75"></canvas>
+      </div>
+
+      <button id="btn-sign-complete" class="btn-level-action" style="width:100%; margin-top:0;">
+        <span>Aprobă & Validează Parteneriatul</span>
+        <span>💮</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

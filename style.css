@@ -1,0 +1,628 @@
+/* style.css - Luxury Pastel Rhythm Aesthetics for Peach Sensory Symphony */
+
+:root {
+  --bg-gradient: linear-gradient(155deg, #fffbf8 0%, #fff0ec 40%, #ffebf3 100%);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(255, 210, 215, 0.7);
+  --shadow-main: 0 14px 35px rgba(255, 130, 140, 0.15);
+  
+  --primary-rose: #ff5e7e;
+  --peach-warm: #ff8a7a;
+  --gold-shimmer: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.45);
+  --mint-accent: #10b981;
+  --danger-breath: #ef4444;
+  --text-dark: #2e1c20;
+  --text-muted: #7d656a;
+  
+  --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  color: var(--text-dark);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: env(safe-area-inset-top, 12px) 14px env(safe-area-inset-bottom, 16px) 14px;
+  overflow-x: hidden;
+  touch-action: manipulation;
+}
+
+#symphony-app {
+  width: 100%;
+  max-width: 440px;
+  min-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ========================================= */
+/* TOP HUD: STAGE, BPM & DASHBOARD           */
+/* ========================================= */
+.top-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.hud-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stage-pill {
+  background: #ffffff;
+  border: 1.5px solid #ffd4cc;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--primary-rose);
+  box-shadow: 0 2px 8px rgba(255, 94, 126, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bpm-indicator {
+  background: #fff6e5;
+  border: 1px solid #fde68a;
+  color: #b45309;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.icon-button {
+  background: #ffffff;
+  border: 1px solid #ffd4cc;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.icon-button:active {
+  transform: scale(0.92);
+}
+
+/* Score, Combo & Accuracy Grid */
+.stats-dashboard {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  align-items: center;
+  box-shadow: var(--shadow-main);
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1f2937;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-box.combo .stat-value {
+  color: var(--primary-rose);
+  transition: transform 0.1s;
+}
+
+.stat-box.combo.hype .stat-value {
+  animation: comboPulse 0.4s ease;
+  color: #ec4899;
+}
+
+@keyframes comboPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.multiplier-tag {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* Dual Resource Gauges (Pleasure/KPI & Breath) */
+.gauges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.gauge-bar-bg {
+  height: 10px;
+  background: #f5e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gauge-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.2s cubic-bezier(0.1, 0.6, 0.3, 1);
+}
+
+.gauge-bar-fill.pleasure {
+  background: linear-gradient(90deg, #ff9a8b 0%, #ff5e7e 60%, #ff70a6 100%);
+  width: 0%;
+}
+
+.gauge-bar-fill.breath {
+  background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+  width: 100%;
+}
+
+.gauge-bar-fill.breath.danger {
+  background: var(--danger-breath);
+  animation: shakeWarning 0.6s infinite ease-in-out;
+}
+
+@keyframes shakeWarning {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+/* ========================================= */
+/* CENTER RHYTHM STAGE: THE SENSORY PEACH    */
+/* ========================================= */
+.rhythm-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 310px;
+  touch-action: none;
+}
+
+/* Dynamic Aura around the peach */
+.peach-ambient-aura {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 140, 160, 0.28) 0%, rgba(255, 230, 235, 0) 70%);
+  animation: ambientBeat 1.8s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes ambientBeat {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.9; }
+}
+
+/* SVG Peach Interactive Container */
+.peach-interactive-wrap {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.peach-interactive-wrap.jiggle {
+  animation: peachBounce 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes peachBounce {
+  0% { transform: scale(1, 1); }
+  40% { transform: scale(1.08, 0.92); }
+  75% { transform: scale(0.95, 1.05); }
+  100% { transform: scale(1, 1); }
+}
+
+/* Left & Right Cheeks */
+.cheek-zone {
+  cursor: pointer;
+  transition: fill 0.15s, filter 0.15s;
+}
+
+.cheek-zone:active {
+  filter: brightness(1.12);
+}
+
+/* ========================================= */
+/* THE PLEASURE SPOT (CENTRAL JEWEL BELOW STEM) */
+/* ========================================= */
+.pleasure-spot-group {
+  cursor: pointer;
+  position: relative;
+}
+
+.pleasure-spot-aura {
+  transform-origin: 100px 72px;
+  animation: pleasurePulse 1.6s infinite ease-in-out;
+}
+
+@keyframes pleasurePulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 10px #f59e0b); }
+}
+
+.pleasure-spot-core {
+  fill: radial-gradient(circle, #fff3b0 0%, #f59e0b 60%, #d97706 100%);
+  filter: drop-shadow(0 2px 6px rgba(217, 119, 6, 0.5));
+  transition: transform 0.1s, fill 0.2s;
+}
+
+.pleasure-spot-core:active {
+  transform: scale(0.92);
+}
+
+.pleasure-spot-core.overheated {
+  fill: #dc2626 !important;
+  animation: burnFlicker 0.4s infinite alternate;
+}
+
+@keyframes burnFlicker {
+  from { filter: drop-shadow(0 0 12px #dc2626); }
+  to { filter: drop-shadow(0 0 4px #b91c1c); }
+}
+
+/* Swirl Guide Rotation Ring for Pleasure Spot */
+.swirl-guide-ring {
+  position: absolute;
+  top: 52px;
+  left: 80px;
+  width: 40px;
+  height: 40px;
+  border: 2px dashed #f59e0b;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: rotateSwirl 3s linear infinite;
+  display: none;
+}
+
+@keyframes rotateSwirl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Rating Popups (PERFECT / GREAT / MISS) */
+.rating-popup {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  pointer-events: none;
+  z-index: 50;
+  animation: ratingAnim 0.6s ease-out forwards;
+}
+
+.rating-popup.perfect {
+  color: #f59e0b;
+  text-shadow: 0 2px 12px rgba(245, 158, 11, 0.5);
+}
+
+.rating-popup.great {
+  color: #10b981;
+  text-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+}
+
+.rating-popup.miss {
+  color: #ef4444;
+  text-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
+}
+
+.rating-popup.overheat {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+@keyframes ratingAnim {
+  0% { transform: translate(-50%, -30%) scale(0.6); opacity: 0; }
+  35% { transform: translate(-50%, -55%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -85%) scale(1); opacity: 0; }
+}
+
+/* Approach Ring for Rhythm Nodes */
+.rhythm-approach-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid var(--primary-rose);
+  pointer-events: none;
+  z-index: 20;
+  box-shadow: 0 0 10px rgba(255, 94, 126, 0.4);
+}
+
+/* ========================================= */
+/* BOTTOM CONTROLS: TOOLS & ABILITIES        */
+/* ========================================= */
+.bottom-controls-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: var(--shadow-main);
+  margin-top: 8px;
+}
+
+.instruction-bar {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.instruction-title {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.instruction-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Tool Segmented Toggle (👆 Deget vs 👅 Limbă) */
+.tool-selector-bar {
+  display: flex;
+  background: #fae8eb;
+  padding: 3px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.tool-tab-btn {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  background: transparent;
+  border-radius: 11px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.tool-tab-btn.active {
+  background: #ffffff;
+  color: var(--primary-rose);
+  box-shadow: 0 3px 8px rgba(255, 94, 126, 0.18);
+}
+
+/* Catch Breath / Recovery Button */
+.btn-breath-recovery {
+  width: 100%;
+  background: #ffffff;
+  color: #2563eb;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-breath-recovery:active {
+  background: #eff6ff;
+}
+
+/* Next Level Action Button */
+.btn-level-action {
+  width: 100%;
+  background: linear-gradient(135deg, #ff5e7e 0%, #ff8a7a 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 13px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 94, 126, 0.35);
+  margin-top: 8px;
+  transition: transform 0.15s;
+}
+
+.btn-level-action:active {
+  transform: scale(0.97);
+}
+
+/* Particles Canvas */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ========================================= */
+/* VICTORY & GRADE CERTIFICATE MODAL         */
+/* ========================================= */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(35, 20, 25, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 20000;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.cert-card {
+  background: #fffdfa;
+  width: 100%;
+  max-width: 390px;
+  border-radius: 24px;
+  padding: 22px 18px;
+  border: 2px solid #ecd7b7;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: certPop 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes certPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.rank-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.cert-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #3b2212;
+  margin-bottom: 6px;
+}
+
+.cert-subtitle {
+  font-size: 0.82rem;
+  color: #6b4d3d;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.stats-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: #fff7eb;
+  border: 1px solid #fed7aa;
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 14px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-item .num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #b45309;
+}
+
+.summary-item .desc {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #92400e;
+  text-transform: uppercase;
+}
+
+.signature-box {
+  background: #ffffff;
+  border: 1.5px dashed #fed7aa;
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 14px;
+}
+
+#signature-canvas {
+  width: 100%;
+  height: 75px;
+  display: block;
+  touch-action: none;
+}
