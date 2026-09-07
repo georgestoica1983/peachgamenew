@@ -632,3 +632,363 @@ body {
   display: block;
   touch-action: none;
 }
+
+/* ========================================= */
+/* SPICY WAGER SELECTION SCREEN & CARDS      */
+/* ========================================= */
+.wager-modal-content {
+  background: #fffdfa;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 24px;
+  padding: 20px 18px;
+  border: 2px solid #ecd7b7;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.wager-badge-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.wagers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+  text-align: left;
+}
+
+.wager-card-option {
+  background: #fff7f2;
+  border: 2px solid #fecdd3;
+  border-radius: 16px;
+  padding: 12px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.wager-card-option:active, .wager-card-option.selected {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.2);
+  transform: translateY(-2px);
+}
+
+.wager-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.wager-info h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #881337;
+  margin-bottom: 2px;
+}
+
+.wager-info p {
+  font-size: 0.76rem;
+  color: #9f1239;
+  line-height: 1.35;
+}
+
+.custom-wager-input {
+  width: 100%;
+  border: 1.5px solid #fda4af;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  margin-top: 6px;
+  outline: none;
+}
+
+.custom-wager-input:focus {
+  border-color: #f43f5e;
+}
+
+/* Player Indicator in Header */
+.turn-pill-indicator {
+  background: #ffffff;
+  border: 1.5px solid #ffd4cc;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.turn-pill-indicator.otter-turn {
+  color: #be123c;
+  border-color: #fecdd3;
+  background: #fff1f2;
+}
+
+/* ========================================= */
+/* FEVER MODE / OVERDRIVE STYLES             */
+/* ========================================= */
+body.fever-active {
+  background: linear-gradient(155deg, #240b15 0%, #360f22 45%, #1f0714 100%) !important;
+  color: #fdf2f8 !important;
+}
+
+body.fever-active .card,
+body.fever-active .top-hud,
+body.fever-active .stats-dashboard,
+body.fever-active .bottom-controls-card {
+  background: rgba(45, 15, 30, 0.85) !important;
+  border-color: rgba(244, 63, 94, 0.5) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 40px rgba(244, 63, 94, 0.3) !important;
+}
+
+body.fever-active .stat-value,
+body.fever-active .instruction-title {
+  color: #ffffff !important;
+}
+
+.fever-banner {
+  display: none;
+  background: linear-gradient(90deg, #f43f5e 0%, #fbbf24 50%, #f43f5e 100%);
+  background-size: 200% auto;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-align: center;
+  letter-spacing: 0.8px;
+  margin-top: 4px;
+  animation: shimmerFever 1.5s linear infinite;
+}
+
+body.fever-active .fever-banner {
+  display: block;
+}
+
+@keyframes shimmerFever {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* RPM Meter Badge over Pleasure Spot */
+.rpm-badge {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid #f59e0b;
+  color: #b45309;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.rpm-badge.visible {
+  display: block;
+  animation: pulseRPM 0.3s ease;
+}
+
+@keyframes pulseRPM {
+  0% { transform: translateX(-50%) scale(0.9); }
+  50% { transform: translateX(-50%) scale(1.15); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* ========================================= */
+/* TURN HANDOVER MODAL                       */
+/* ========================================= */
+.handover-card {
+  background: #fffdfc;
+  width: 100%;
+  max-width: 390px;
+  border-radius: 24px;
+  padding: 24px 20px;
+  border: 2px solid #fed7aa;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.handover-avatar {
+  font-size: 3.5rem;
+  margin-bottom: 6px;
+  animation: bounceHandover 1.5s infinite ease-in-out;
+}
+
+@keyframes bounceHandover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Duel Comparative Winner Ceremony */
+.duel-vs-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  background: #fff7ed;
+  border: 1.5px solid #fdba74;
+  border-radius: 18px;
+  padding: 14px 10px;
+  margin-bottom: 14px;
+}
+
+.player-duel-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-duel-column.winner {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  border-radius: 14px;
+  padding: 8px 4px;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+}
+
+.player-duel-column .crown-icon {
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+}
+
+.player-duel-column .name {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #78350f;
+}
+
+.player-duel-column .score-num {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #b45309;
+  margin-top: 2px;
+}
+
+.duel-vs-badge {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #ea580c;
+  background: #ffedd5;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.wager-awarded-box {
+  background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+  border: 2px solid #f43f5e;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.wager-awarded-box h4 {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #9f1239;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.wager-awarded-box p {
+  font-size: 0.82rem;
+  color: #881337;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ========================================= */
+/* CHARACTER TOGGLE BAR & CUCUMBER STYLES    */
+/* ========================================= */
+.character-toggle-bar {
+  display: flex;
+  background: #fdf2f8;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 16px;
+  padding: 4px;
+  gap: 6px;
+}
+
+.char-tab-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #831843;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.char-tab-btn.active {
+  background: #ffffff;
+  color: #be123c;
+  box-shadow: 0 3px 10px rgba(190, 18, 60, 0.2);
+}
+
+/* Cucumber Interactive SVG & Animations */
+#cucumber-svg {
+  display: none;
+  filter: drop-shadow(0 10px 25px rgba(22, 101, 52, 0.25));
+}
+
+.cucumber-active #peach-svg {
+  display: none !important;
+}
+
+.cucumber-active #cucumber-svg {
+  display: block !important;
+}
+
+.cucumber-active .peach-ambient-aura {
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.3) 0%, rgba(240, 253, 244, 0) 70%) !important;
+}
+
+.cucumber-active .swirl-guide-ring {
+  top: 36px !important;
+  left: 80px !important;
+  border-color: #22c55e !important;
+}
+
+.cucumber-active .rhythm-approach-ring.pleasure-spot-ring {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.7) !important;
+}
+
+.cucumber-active .rpm-badge {
+  border-color: #22c55e;
+  color: #15803d;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}

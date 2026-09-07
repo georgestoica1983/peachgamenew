@@ -1,10 +1,13 @@
-// game.js - Rhythm Engine & Mechanics for Peach Sensory Symphony
+// game.js - Rhythm Engine & Mechanics for Peach Sensory Symphony (with 1v1 Pass & Play Duel & Spicy Wagers)
 
 document.addEventListener('DOMContentLoaded', () => {
   // DOM References
   const stageTitleText = document.getElementById('stage-title-text');
   const bpmIndicator = document.getElementById('bpm-indicator');
   const btnAudioToggle = document.getElementById('btn-audio-toggle');
+  const turnPlayerName = document.getElementById('turn-player-name');
+  const turnPillIndicator = document.getElementById('turn-pill-indicator');
+  const feverBanner = document.getElementById('fever-banner');
 
   const valScore = document.getElementById('val-score');
   const valCombo = document.getElementById('val-combo');
@@ -24,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pleasureSpotGroup = document.getElementById('pleasure-spot-group');
   const pleasureSpotCore = document.getElementById('pleasure-spot-core');
   const swirlGuideRing = document.getElementById('swirl-guide-ring');
+  const rpmBadge = document.getElementById('rpm-badge');
   const ratingContainer = document.getElementById('rating-container');
   const nodesLayer = document.getElementById('rhythm-nodes-layer');
 
@@ -35,8 +39,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnNextStage = document.getElementById('btn-next-stage');
   const btnNextStageText = document.getElementById('btn-next-stage-text');
 
+  // Character Toggle & Cucumber Elements
+  const btnCharToggle = document.getElementById('btn-char-toggle');
+  const charTabBtns = document.querySelectorAll('.char-tab-btn');
+  const cucumberLeft = document.getElementById('cucumber-left');
+  const cucumberRight = document.getElementById('cucumber-right');
+  const cucumberTipGroup = document.getElementById('cucumber-tip-group');
+  const cucumberTipCore = document.getElementById('cucumber-tip-core');
+
+  // Modals References
+  const wagerModal = document.getElementById('wager-modal');
+  const wagersList = document.getElementById('wagers-list');
+  const customWagerText = document.getElementById('custom-wager-text');
+  const btnStartDuel = document.getElementById('btn-start-duel');
+
+  const handoverModal = document.getElementById('handover-modal');
+  const handoverTargetScore = document.getElementById('handover-target-score');
+  const handoverWagerText = document.getElementById('handover-wager-text');
+  const btnStartPlayer2 = document.getElementById('btn-start-player2');
+
+  const duelWinnerModal = document.getElementById('duel-winner-modal');
+  const duelWinnerBadge = document.getElementById('duel-winner-badge');
+  const duelWinnerHeadline = document.getElementById('duel-winner-headline');
+  const p1DuelCol = document.getElementById('p1-duel-col');
+  const p2DuelCol = document.getElementById('p2-duel-col');
+  const p1Crown = document.getElementById('p1-crown');
+  const p2Crown = document.getElementById('p2-crown');
+  const p1FinalScore = document.getElementById('p1-final-score');
+  const p2FinalScore = document.getElementById('p2-final-score');
+  const p1FinalAcc = document.getElementById('p1-final-acc');
+  const p2FinalAcc = document.getElementById('p2-final-acc');
+  const duelAwardedWagerText = document.getElementById('duel-awarded-wager-text');
+  const duelSigCanvas = document.getElementById('duel-signature-canvas');
+  const btnClearDuelSig = document.getElementById('btn-clear-duel-sig');
+  const btnFinishDuel = document.getElementById('btn-finish-duel');
+
+  // Solo Modal fallback
   const victoryModal = document.getElementById('victory-modal');
-  const modalRankBadge = document.getElementById('modal-rank-badge');
   const modalFinalScore = document.getElementById('modal-final-score');
   const modalMaxCombo = document.getElementById('modal-max-combo');
   const modalFinalAccuracy = document.getElementById('modal-final-accuracy');
@@ -52,63 +91,70 @@ document.addEventListener('DOMContentLoaded', () => {
   function resizeCanvases() {
     partCanvas.width = window.innerWidth;
     partCanvas.height = window.innerHeight;
-    sigCanvas.width = sigCanvas.clientWidth;
-    sigCanvas.height = sigCanvas.clientHeight;
+    if (sigCanvas) {
+      sigCanvas.width = sigCanvas.clientWidth;
+      sigCanvas.height = sigCanvas.clientHeight;
+    }
+    if (duelSigCanvas) {
+      duelSigCanvas.width = duelSigCanvas.clientWidth;
+      duelSigCanvas.height = duelSigCanvas.clientHeight;
+    }
   }
   window.addEventListener('resize', resizeCanvases);
   resizeCanvases();
 
-  // Stage Configs (5 Progressive Levels)
-  const STAGES = [
+  // =========================================
+  // SONG MOVEMENTS CONFIGURATION (Full Track)
+  // =========================================
+  const SONG_MOVEMENTS = [
     {
-      level: 1,
-      name: 'Stage 1: First Light',
-      bpm: 75,
-      targetKpi: 20,
-      noteIntervalMs: 1200,
-      introText: 'Atinge obrajii stâng și drept când cercul de ritm se micșorează!',
-      subText: 'Menține apăsat Punctul de Plăcere de sub codiță pentru multiplicator 2x.'
+      name: 'Mișcarea 1: Încălzire Senzorială',
+      bpm: 85,
+      durationMs: 18000,
+      noteIntervalMs: 1000,
+      intro: 'Atinge ritmic obrajii stâng și drept!',
+      sub: 'Pregătește ritmul pentru runda decisivă.'
     },
     {
-      level: 2,
-      name: 'Stage 2: Velvet Curves',
-      bpm: 95,
-      targetKpi: 45,
-      noteIntervalMs: 900,
-      introText: 'Fă gesturi circulare (swirls) pe Punctul de Plăcere de sub codiță!',
-      subText: 'Comută pe Limbă (👅) pentru glisare fluidă și multiplicator 3x.'
+      name: 'Mișcarea 2: Ritm & Swirls pe Punctul de Plăcere',
+      bpm: 105,
+      durationMs: 20000,
+      noteIntervalMs: 800,
+      intro: 'Rotiri circulare pe Punctul de Plăcere de sub codiță!',
+      sub: 'Măsoară viteza RPM și activează multiplicatorul 3x.'
     },
     {
-      level: 3,
-      name: 'Stage 3: Breathless Waves',
-      bpm: 115,
-      targetKpi: 70,
-      noteIntervalMs: 700,
-      introText: 'Atenție la respirație! Nu supraîncălzi Punctul de Plăcere.',
-      subText: 'Dacă se înroșește, răcorește-l cu o mângâiere lină sau ia o pauză de sărut.'
+      name: 'Mișcarea 3: FEVER DROP & Valuri de Foc',
+      bpm: 125,
+      durationMs: 20000,
+      noteIntervalMs: 600,
+      intro: 'Menține combo-ul peste 15x pentru FEVER MODE!',
+      sub: 'Multiplicatori uriași 8x și 16x pe ecran.'
     },
     {
-      level: 4,
-      name: 'Stage 4: Poly-Rhythm Desires',
-      bpm: 130,
-      targetKpi: 90,
-      noteIntervalMs: 520,
-      introText: 'Poliritm: Ține apăsat Punctul de Plăcere în timp ce bați ritmul pe obraji!',
-      subText: 'Atingeți cu ambele degete simultan.'
-    },
-    {
-      level: 5,
-      name: 'Stage 5: Grand Climax (KPI Overdrive)',
-      bpm: 145,
-      targetKpi: 100,
-      noteIntervalMs: 400,
-      introText: 'Sprint final de intensitate maximă! Gâfâit garantat la 100%.',
-      subText: 'Activează toate cele 3 zone pentru desăvârșirea acordului.'
+      name: 'Mișcarea 4: CLIMAX OVERDRIVE • Gâfâit Garantat',
+      bpm: 140,
+      durationMs: 20000,
+      noteIntervalMs: 440,
+      intro: 'Sprint final de viteză maximă pentru scorul suprem!',
+      sub: 'Totul se decide acum!'
     }
   ];
 
-  // Game Engine State
-  let currentStageIdx = 0;
+  // Game Engine & Duel State
+  let isGameActive = false;
+  let currentTurnPlayer = 'Prestatorul'; // 'Prestatorul' | 'Otter'
+  let selectedWager = '20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă';
+
+  // Stats for Player 1 and Player 2
+  let p1Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
+  let p2Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
+
+  // Current Turn Active Variables
+  let currentMovementIdx = 0;
+  let movementTimer = null;
+  let noteSpawnTimer = null;
+  let activeNotes = [];
   let score = 0;
   let combo = 0;
   let maxCombo = 0;
@@ -118,20 +164,34 @@ document.addEventListener('DOMContentLoaded', () => {
   let breath = 100;
   let multiplier = 1;
   let activeTool = 'finger'; // 'finger' | 'tongue'
-  let isGameActive = false;
+  let activeCharacter = 'peach'; // 'peach' | 'cucumber'
+  let isFeverActive = false;
+  let currentTurnMaxRpm = 0;
 
-  // Active Rhythm Notes Queue
-  let activeNotes = [];
-  let noteSpawnTimer = null;
+  function setCharacter(charName) {
+    activeCharacter = charName;
+    if (activeCharacter === 'cucumber') {
+      document.body.classList.add('cucumber-active');
+      if (btnCharToggle) btnCharToggle.textContent = '🥒';
+    } else {
+      document.body.classList.remove('cucumber-active');
+      if (btnCharToggle) btnCharToggle.textContent = '🍑';
+    }
+
+    charTabBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.char === activeCharacter);
+    });
+  }
 
   // Pleasure Spot Mechanics
-  let pleasureSpotTouchStart = 0;
-  let pleasureSpotAccumulatedAngle = 0;
-  let lastAngle = null;
-  let overheatLevel = 0; // 0 to 100
+  let lastSwirlAngle = null;
+  let lastSwirlTime = null;
+  let accumulatedSwirlAngle = 0;
+  let overheatLevel = 0;
   let isOverheated = false;
+  let rpmHideTimeout = null;
 
-  // Haptic feedback
+  // Haptics helper
   function vibrate(ms = 25) {
     if (navigator.vibrate) {
       try { navigator.vibrate(ms); } catch (e) {}
@@ -140,7 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Particle System
   function addParticles(x, y, count = 18, type = 'star') {
-    const colors = ['#f59e0b', '#ff5e7e', '#10b981', '#f472b6', '#fcd34d', '#ffffff'];
+    const colors = isFeverActive
+      ? ['#f43f5e', '#fbbf24', '#f59e0b', '#ec4899', '#ffffff']
+      : ['#f59e0b', '#ff5e7e', '#10b981', '#f472b6', '#fcd34d', '#ffffff'];
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 5 + 2;
@@ -195,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   renderParticles();
 
-  // Rating Popup Display
+  // Rating Popups Display
   function showRating(text, type) {
     const el = document.createElement('div');
     el.className = `rating-popup ${type}`;
@@ -211,24 +273,35 @@ document.addEventListener('DOMContentLoaded', () => {
     peachWrap.classList.add('jiggle');
   }
 
-  // Update Top HUD Display
+  // Update Top HUD
   function updateHUD() {
     valScore.textContent = score.toLocaleString();
     valCombo.textContent = `${combo}x`;
+
     if (combo >= 15) {
       statComboBox.classList.add('hype');
+      if (!isFeverActive) {
+        activateFeverMode();
+      }
     } else {
       statComboBox.classList.remove('hype');
+      if (isFeverActive) {
+        deactivateFeverMode();
+      }
     }
 
     const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
     valAccuracy.textContent = `${acc}%`;
 
-    // Multiplier calculation
-    if (combo >= 40) multiplier = 8;
-    else if (combo >= 20) multiplier = 4;
-    else if (combo >= 10) multiplier = 2;
-    else multiplier = 1;
+    // Multiplier
+    if (isFeverActive) {
+      multiplier = combo >= 30 ? 16 : 8;
+    } else {
+      if (combo >= 40) multiplier = 8;
+      else if (combo >= 20) multiplier = 4;
+      else if (combo >= 10) multiplier = 2;
+      else multiplier = 1;
+    }
 
     valMultiplier.textContent = `${multiplier}x MULTI`;
 
@@ -248,11 +321,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Spawn a Rhythm Node with Approach Ring
+  // FEVER MODE Activators
+  function activateFeverMode() {
+    isFeverActive = true;
+    document.body.classList.add('fever-active');
+    window.symphonyAudio.setFever(true);
+    showRating('🔥 FEVER OVERDRIVE!', 'perfect');
+    vibrate([40, 30, 40]);
+  }
+
+  function deactivateFeverMode() {
+    isFeverActive = false;
+    document.body.classList.remove('fever-active');
+    window.symphonyAudio.setFever(false);
+  }
+
+  // =========================================
+  // RHYTHM NOTE SPAWNING & HIT DETECTION
+  // =========================================
   function spawnRhythmNode() {
     if (!isGameActive) return;
 
-    const stage = STAGES[currentStageIdx];
     const targets = ['left', 'right', 'center'];
     const chosenTarget = targets[Math.floor(Math.random() * targets.length)];
 
@@ -262,16 +351,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let localX = 0;
     let localY = 0;
 
-    if (chosenTarget === 'left') {
-      localX = pw * 0.35;
-      localY = ph * 0.58;
-    } else if (chosenTarget === 'right') {
-      localX = pw * 0.65;
-      localY = ph * 0.58;
+    if (activeCharacter === 'cucumber') {
+      if (chosenTarget === 'left') {
+        localX = pw * 0.38;
+        localY = ph * 0.58;
+      } else if (chosenTarget === 'right') {
+        localX = pw * 0.62;
+        localY = ph * 0.58;
+      } else {
+        // Sensitive Tip of Cucumber
+        localX = pw * 0.50;
+        localY = ph * 0.28;
+      }
     } else {
-      // Pleasure Spot right below stem in center
-      localX = pw * 0.50;
-      localY = ph * 0.37;
+      if (chosenTarget === 'left') {
+        localX = pw * 0.35;
+        localY = ph * 0.58;
+      } else if (chosenTarget === 'right') {
+        localX = pw * 0.65;
+        localY = ph * 0.58;
+      } else {
+        // Pleasure Spot right below stem
+        localX = pw * 0.50;
+        localY = ph * 0.37;
+      }
     }
 
     const ring = document.createElement('div');
@@ -282,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ring.style.height = '50px';
     nodesLayer.appendChild(ring);
 
-    const hitWindowMs = 700; // approach duration
+    const hitWindowMs = 650;
     const targetHitTime = Date.now() + hitWindowMs;
 
     const rect = peachWrap.getBoundingClientRect();
@@ -297,7 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
     activeNotes.push(noteObj);
     totalNotes++;
 
-    // Animate Approach Ring
     const startScale = 2.4;
     const startTime = Date.now();
 
@@ -314,64 +416,58 @@ document.addEventListener('DOMContentLoaded', () => {
       if (progress < 1) {
         requestAnimationFrame(animateRing);
       } else {
-        // Time expired: Check for Miss
         setTimeout(() => {
           if (!noteObj.hit) {
             noteObj.hit = true;
             ring.remove();
             handleNoteResult('miss', noteObj);
           }
-        }, 120);
+        }, 110);
       }
     }
     requestAnimationFrame(animateRing);
   }
 
-  // Handle Note Hit Result
   function handleNoteResult(rating, noteObj) {
     if (rating === 'perfect') {
       combo++;
       hitNotes++;
       const gain = 300 * multiplier;
       score += gain;
-      kpi = Math.min(100, kpi + 2.8);
-      breath = Math.max(10, breath - (currentStageIdx >= 2 ? 3.5 : 1.5));
+      kpi = Math.min(100, kpi + 2.5);
+      breath = Math.max(10, breath - 2.5);
       showRating('PERFECT!', 'perfect');
       window.symphonyAudio.playPerfectHit();
-      vibrate(30);
+      vibrate(28);
       addParticles(noteObj.x, noteObj.y, 16, 'star');
     } else if (rating === 'great') {
       combo++;
       hitNotes++;
       const gain = 150 * multiplier;
       score += gain;
-      kpi = Math.min(100, kpi + 1.6);
-      breath = Math.max(10, breath - (currentStageIdx >= 2 ? 2.5 : 1.0));
+      kpi = Math.min(100, kpi + 1.4);
+      breath = Math.max(10, breath - 1.5);
       showRating('GREAT!', 'great');
       window.symphonyAudio.playGreatHit();
-      vibrate(20);
+      vibrate(18);
       addParticles(noteObj.x, noteObj.y, 10, 'circle');
     } else {
-      // Miss
       combo = 0;
-      breath = Math.max(5, breath - 6.0);
+      breath = Math.max(5, breath - 5.0);
       showRating('MISS', 'miss');
       window.symphonyAudio.playMiss();
-      vibrate(50);
+      vibrate(45);
     }
 
     if (combo > maxCombo) maxCombo = combo;
     jigglePeach();
     updateHUD();
-    checkStageProgress();
   }
 
-  // Check if player hit the active note
   function tryHitTarget(targetName, e) {
     window.symphonyAudio.init();
     const now = Date.now();
 
-    // Find closest unhit note for this target
     const note = activeNotes.find(n => !n.hit && n.target === targetName && Math.abs(now - n.targetTime) <= 190);
 
     if (note) {
@@ -383,112 +479,262 @@ document.addEventListener('DOMContentLoaded', () => {
         handleNoteResult('great', note);
       }
     } else {
-      // Free tap (slight pleasure gain if on beat)
       score += 25 * multiplier;
-      kpi = Math.min(100, kpi + 0.6);
+      kpi = Math.min(100, kpi + 0.5);
       updateHUD();
-      checkStageProgress();
     }
   }
 
-  // Check Stage Completion
-  function checkStageProgress() {
-    const currentStage = STAGES[currentStageIdx];
-    if (kpi >= currentStage.targetKpi) {
-      if (currentStageIdx < STAGES.length - 1) {
-        // Prompt transition to next stage
-        btnNextStageText.textContent = `Treci la ${STAGES[currentStageIdx + 1].name}`;
-        btnNextStage.style.display = 'flex';
-      } else {
-        // Climax Complete! (100% KPI)
-        finishSymphony();
-      }
-    }
-  }
+  // =========================================
+  // SONG TRACK RUNNER (Full Track Progression)
+  // =========================================
+  function startSongMovement(idx) {
+    if (!isGameActive) return;
+    currentMovementIdx = idx;
+    const movement = SONG_MOVEMENTS[idx];
 
-  // Start Next Stage
-  function advanceStage() {
-    currentStageIdx++;
-    const stage = STAGES[currentStageIdx];
-    stageTitleText.textContent = stage.name;
-    bpmIndicator.textContent = `⚡ ${stage.bpm} BPM`;
-    instructionTitle.textContent = stage.introText;
-    instructionSub.textContent = stage.subText;
-    btnNextStage.style.display = 'none';
+    stageTitleText.textContent = `${currentTurnPlayer} • ${movement.name}`;
+    bpmIndicator.textContent = `⚡ ${movement.bpm} BPM`;
+    instructionTitle.textContent = movement.intro;
+    instructionSub.textContent = movement.sub;
 
-    // Update audio BPM
-    window.symphonyAudio.setBPM(stage.bpm);
+    window.symphonyAudio.setBPM(movement.bpm);
 
-    if (stage.level === 2) {
+    if (idx >= 1) {
       swirlGuideRing.style.display = 'block';
     }
 
-    // Restart note spawn timer with new tempo
     clearInterval(noteSpawnTimer);
-    noteSpawnTimer = setInterval(spawnRhythmNode, stage.noteIntervalMs);
+    noteSpawnTimer = setInterval(spawnRhythmNode, movement.noteIntervalMs);
+
+    movementTimer = setTimeout(() => {
+      if (currentMovementIdx < SONG_MOVEMENTS.length - 1) {
+        startSongMovement(currentMovementIdx + 1);
+      } else {
+        // Full song completed for current player!
+        finishPlayerTurn();
+      }
+    }, movement.durationMs);
   }
 
-  btnNextStage.addEventListener('click', advanceStage);
+  function startPlayerTurn() {
+    isGameActive = true;
+    currentMovementIdx = 0;
+    score = 0;
+    combo = 0;
+    maxCombo = 0;
+    totalNotes = 0;
+    hitNotes = 0;
+    kpi = 0;
+    breath = 100;
+    currentTurnMaxRpm = 0;
+    deactivateFeverMode();
 
-  // Finish Game & Open Modal
-  function finishSymphony() {
+    turnPlayerName.textContent = currentTurnPlayer;
+    turnPillIndicator.className = currentTurnPlayer === 'Otter'
+      ? 'turn-pill-indicator otter-turn'
+      : 'turn-pill-indicator';
+
+    window.symphonyAudio.init();
+    window.symphonyAudio.startBeatLoop();
+    updateHUD();
+
+    startSongMovement(0);
+  }
+
+  function finishPlayerTurn() {
     isGameActive = false;
     clearInterval(noteSpawnTimer);
+    clearTimeout(movementTimer);
     window.symphonyAudio.stopBeatLoop();
-    window.symphonyAudio.playVictoryFanfare();
-    vibrate(100);
-    addParticles(window.innerWidth / 2, window.innerHeight / 2, 80, 'heart');
+    deactivateFeverMode();
 
     const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
-    modalFinalScore.textContent = score.toLocaleString();
-    modalMaxCombo.textContent = `${maxCombo}x`;
-    modalFinalAccuracy.textContent = `${acc}%`;
 
-    // Grade
-    if (acc >= 94) {
-      modalRankBadge.textContent = '★ S RANK • EXCELLENT ★';
-      modalRankBadge.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
-    } else if (acc >= 85) {
-      modalRankBadge.textContent = '★ A RANK • GREAT ★';
-      modalRankBadge.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+    if (currentTurnPlayer === 'Prestatorul') {
+      // Save Player 1 stats
+      p1Stats = {
+        score: score,
+        maxCombo: maxCombo,
+        accuracy: acc,
+        maxRpm: currentTurnMaxRpm
+      };
+
+      window.symphonyAudio.playTurnChangeChime();
+      vibrate([60, 40, 60]);
+
+      // Show Handover Modal
+      handoverTargetScore.textContent = p1Stats.score.toLocaleString();
+      handoverWagerText.textContent = selectedWager;
+      handoverModal.classList.add('open');
+
     } else {
-      modalRankBadge.textContent = '★ B RANK • GOOD ★';
-      modalRankBadge.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+      // Player 2 (Otter) finished! Complete Duel!
+      p2Stats = {
+        score: score,
+        maxCombo: maxCombo,
+        accuracy: acc,
+        maxRpm: currentTurnMaxRpm
+      };
+
+      finishDuelCeremony();
+    }
+  }
+
+  // =========================================
+  // DUEL WINNER CEREMONY
+  // =========================================
+  function finishDuelCeremony() {
+    window.symphonyAudio.playVictoryFanfare();
+    vibrate([80, 50, 100]);
+    addParticles(window.innerWidth / 2, window.innerHeight * 0.4, 80, 'heart');
+
+    p1FinalScore.textContent = p1Stats.score.toLocaleString();
+    p1FinalAcc.textContent = `${p1Stats.accuracy}% Acc (Max ${p1Stats.maxCombo}x)`;
+
+    p2FinalScore.textContent = p2Stats.score.toLocaleString();
+    p2FinalAcc.textContent = `${p2Stats.accuracy}% Acc (Max ${p2Stats.maxCombo}x)`;
+
+    duelAwardedWagerText.textContent = selectedWager;
+
+    const isOtterWinner = p2Stats.score >= p1Stats.score;
+
+    if (isOtterWinner) {
+      duelWinnerHeadline.textContent = 'Otter a Câștigat Duelul!';
+      duelWinnerBadge.textContent = '👑 OTTER ESTE REGINA RITMULUI!';
+      p2DuelCol.classList.add('winner');
+      p1DuelCol.classList.remove('winner');
+      p2Crown.style.visibility = 'visible';
+      p1Crown.style.visibility = 'hidden';
+    } else {
+      duelWinnerHeadline.textContent = 'Prestatorul a Câștigat Duelul!';
+      duelWinnerBadge.textContent = '👑 PRESTATORUL A TRIUMFAT!';
+      p1DuelCol.classList.add('winner');
+      p2DuelCol.classList.remove('winner');
+      p1Crown.style.visibility = 'visible';
+      p2Crown.style.visibility = 'hidden';
     }
 
     setTimeout(() => {
-      victoryModal.classList.add('open');
-    }, 600);
+      duelWinnerModal.classList.add('open');
+      resizeCanvases();
+    }, 400);
   }
 
   // =========================================
-  // INTERACTIVE TOUCH ZONES
+  // SPICY WAGER SELECTION LOGIC
   // =========================================
+  const wagerOptions = document.querySelectorAll('.wager-card-option');
+  wagerOptions.forEach(card => {
+    card.addEventListener('click', () => {
+      wagerOptions.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
 
-  // Left Cheek (🍓)
+      const wagerType = card.dataset.wager;
+      if (wagerType === 'custom') {
+        customWagerText.focus();
+        selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+      } else {
+        selectedWager = wagerType;
+      }
+      window.symphonyAudio.playGlideTone(580);
+      vibrate(15);
+    });
+  });
+
+  customWagerText.addEventListener('input', () => {
+    selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+  });
+
+  btnStartDuel.addEventListener('click', () => {
+    const selectedOption = document.querySelector('.wager-card-option.selected');
+    if (selectedOption && selectedOption.dataset.wager === 'custom') {
+      selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+    }
+    wagerModal.classList.remove('open');
+    currentTurnPlayer = 'Prestatorul';
+    startPlayerTurn();
+  });
+
+  // Handover Button to Otter
+  btnStartPlayer2.addEventListener('click', () => {
+    handoverModal.classList.remove('open');
+    currentTurnPlayer = 'Otter';
+    startPlayerTurn();
+  });
+
+  // Replay Duel
+  btnFinishDuel.addEventListener('click', () => {
+    duelWinnerModal.classList.remove('open');
+    wagerModal.classList.add('open');
+  });
+
+  // Character Select Buttons (Header toggle & Modal selector)
+  if (btnCharToggle) {
+    btnCharToggle.addEventListener('click', () => {
+      setCharacter(activeCharacter === 'peach' ? 'cucumber' : 'peach');
+      window.symphonyAudio.playGlideTone(520);
+      vibrate(20);
+    });
+  }
+
+  charTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedChar = btn.dataset.char;
+      if (selectedChar) {
+        setCharacter(selectedChar);
+        window.symphonyAudio.playGlideTone(520);
+        vibrate(20);
+      }
+    });
+  });
+
+  // =========================================
+  // TOUCH ZONES & PLEASURE SPOT SWIRL TRACKER
+  // =========================================
+  // Peach Touch Zones
   peachLeft.addEventListener('click', (e) => tryHitTarget('left', e));
   peachLeft.addEventListener('touchstart', (e) => {
     e.preventDefault();
     tryHitTarget('left', e);
   }, { passive: false });
 
-  // Right Cheek (🍑)
   peachRight.addEventListener('click', (e) => tryHitTarget('right', e));
   peachRight.addEventListener('touchstart', (e) => {
     e.preventDefault();
     tryHitTarget('right', e);
   }, { passive: false });
 
-  // Pleasure Spot (✨ Center Below Stem)
-  pleasureSpotGroup.addEventListener('click', (e) => {
-    handlePleasureSpotTap(e);
-  });
-
+  pleasureSpotGroup.addEventListener('click', (e) => handlePleasureSpotTap(e));
   pleasureSpotGroup.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    pleasureSpotTouchStart = Date.now();
     handlePleasureSpotTap(e);
   }, { passive: false });
+
+  // Cucumber Touch Zones
+  if (cucumberLeft) {
+    cucumberLeft.addEventListener('click', (e) => tryHitTarget('left', e));
+    cucumberLeft.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      tryHitTarget('left', e);
+    }, { passive: false });
+  }
+
+  if (cucumberRight) {
+    cucumberRight.addEventListener('click', (e) => tryHitTarget('right', e));
+    cucumberRight.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      tryHitTarget('right', e);
+    }, { passive: false });
+  }
+
+  if (cucumberTipGroup) {
+    cucumberTipGroup.addEventListener('click', (e) => handlePleasureSpotTap(e));
+    cucumberTipGroup.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handlePleasureSpotTap(e);
+    }, { passive: false });
+  }
 
   function handlePleasureSpotTap(e) {
     if (isOverheated) {
@@ -506,54 +752,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.symphonyAudio.playPleasureSpotShimmer();
     vibrate(35);
-    const rect = pleasureSpotCore.getBoundingClientRect();
+    const activeCore = (activeCharacter === 'cucumber' && cucumberTipCore) ? cucumberTipCore : pleasureSpotCore;
+    const rect = activeCore ? activeCore.getBoundingClientRect() : pleasureSpotGroup.getBoundingClientRect();
     addParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 14, 'heart');
 
     tryHitTarget('center', e);
   }
 
-  // Pleasure Spot Swirl Tracker (Continuous circle gesture)
-  pleasureSpotGroup.addEventListener('touchmove', (e) => {
+  // Real-time Swirl & RPM Calculation
+  function handleSwirlMove(e, targetEl) {
     if (isOverheated || activeTool !== 'tongue') return;
     const touch = e.touches[0];
-    const rect = pleasureSpotGroup.getBoundingClientRect();
+    const rect = targetEl.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const currentAngle = Math.atan2(touch.clientY - cy, touch.clientX - cx);
+    const now = Date.now();
 
-    if (lastAngle !== null) {
-      let deltaAngle = currentAngle - lastAngle;
+    if (lastSwirlAngle !== null && lastSwirlTime !== null) {
+      let deltaAngle = currentAngle - lastSwirlAngle;
       if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
       if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
 
-      pleasureSpotAccumulatedAngle += Math.abs(deltaAngle);
+      const deltaMs = now - lastSwirlTime;
+      accumulatedSwirlAngle += Math.abs(deltaAngle);
 
-      // Completed a 360-degree swirl!
-      if (pleasureSpotAccumulatedAngle >= Math.PI * 2) {
-        pleasureSpotAccumulatedAngle = 0;
+      // Instant RPM calculation
+      if (deltaMs > 20) {
+        const rpm = ((Math.abs(deltaAngle) / (2 * Math.PI)) / (deltaMs / 60000));
+        if (rpm > 30 && rpm < 400) {
+          rpmBadge.textContent = `⚡ ${Math.round(rpm)} RPM`;
+          rpmBadge.classList.add('visible');
+
+          if (rpm > currentTurnMaxRpm) {
+            currentTurnMaxRpm = Math.round(rpm);
+          }
+
+          clearTimeout(rpmHideTimeout);
+          rpmHideTimeout = setTimeout(() => {
+            rpmBadge.classList.remove('visible');
+          }, 1200);
+        }
+      }
+
+      // Complete 360-degree swirl
+      if (accumulatedSwirlAngle >= Math.PI * 2) {
+        accumulatedSwirlAngle = 0;
         onSuccessfulSwirl(touch.clientX, touch.clientY);
       }
     }
-    lastAngle = currentAngle;
-  }, { passive: true });
+    lastSwirlAngle = currentAngle;
+    lastSwirlTime = now;
+  }
+
+  pleasureSpotGroup.addEventListener('touchmove', (e) => handleSwirlMove(e, pleasureSpotGroup), { passive: true });
+  pleasureSpotGroup.addEventListener('touchend', () => {
+    lastSwirlAngle = null;
+    lastSwirlTime = null;
+  });
+
+  if (cucumberTipGroup) {
+    cucumberTipGroup.addEventListener('touchmove', (e) => handleSwirlMove(e, cucumberTipGroup), { passive: true });
+    cucumberTipGroup.addEventListener('touchend', () => {
+      lastSwirlAngle = null;
+      lastSwirlTime = null;
+    });
+  }
 
   function onSuccessfulSwirl(x, y) {
     score += 450 * multiplier;
     kpi = Math.min(100, kpi + 4.2);
-    // Swirl cools down overheat!
     overheatLevel = Math.max(0, overheatLevel - 25);
     showRating('SWEET SWIRL!', 'perfect');
     window.symphonyAudio.playPleasureSpotShimmer();
     vibrate(40);
     addParticles(x, y, 22, 'heart');
     updateHUD();
-    checkStageProgress();
   }
 
-  // Overheat State Logic
   function triggerOverheat() {
     isOverheated = true;
     pleasureSpotCore.classList.add('overheated');
+    if (cucumberTipCore) cucumberTipCore.classList.add('overheated');
     showRating('SUPRAÎNCĂLZIRE!', 'overheat');
     vibrate([80, 50, 80]);
 
@@ -561,17 +841,17 @@ document.addEventListener('DOMContentLoaded', () => {
       isOverheated = false;
       overheatLevel = 0;
       pleasureSpotCore.classList.remove('overheated');
+      if (cucumberTipCore) cucumberTipCore.classList.remove('overheated');
     }, 2500);
   }
 
-  // Gradual Overheat Cooldown
   setInterval(() => {
     if (overheatLevel > 0 && !isOverheated) {
       overheatLevel = Math.max(0, overheatLevel - 8);
     }
   }, 1000);
 
-  // Tool Selector Toggle
+  // Tool Segmented Selector
   tabFinger.addEventListener('click', () => {
     activeTool = 'finger';
     tabFinger.classList.add('active');
@@ -588,7 +868,6 @@ document.addEventListener('DOMContentLoaded', () => {
     vibrate(15);
   });
 
-  // Breath Catch Button
   btnBreathCatch.addEventListener('click', () => {
     breath = Math.min(100, breath + 35);
     window.symphonyAudio.playGlideTone(680);
@@ -596,97 +875,72 @@ document.addEventListener('DOMContentLoaded', () => {
     updateHUD();
   });
 
-  // Audio Toggle
   btnAudioToggle.addEventListener('click', () => {
     const isMuted = window.symphonyAudio.toggleMute();
     btnAudioToggle.textContent = isMuted ? '🔇' : '🔔';
   });
 
   // =========================================
-  // SIGNATURE CANVAS LOGIC
+  // SIGNATURE CANVASES LOGIC
   // =========================================
-  const sigCtx = sigCanvas.getContext('2d');
-  let isDrawing = false;
-  let hasSigned = false;
+  function setupSignaturePad(canvasEl, clearBtn) {
+    if (!canvasEl) return;
+    const ctx = canvasEl.getContext('2d');
+    let drawing = false;
 
-  sigCtx.lineWidth = 2.5;
-  sigCtx.lineCap = 'round';
-  sigCtx.strokeStyle = '#d97706';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#be123c';
 
-  function getSigCoords(e) {
-    const rect = sigCanvas.getBoundingClientRect();
-    const cx = e.touches ? e.touches[0].clientX : e.clientX;
-    const cy = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: cx - rect.left, y: cy - rect.top };
-  }
-
-  function startSig(e) {
-    isDrawing = true;
-    hasSigned = true;
-    const p = getSigCoords(e);
-    sigCtx.beginPath();
-    sigCtx.moveTo(p.x, p.y);
-  }
-
-  function drawSig(e) {
-    if (!isDrawing) return;
-    const p = getSigCoords(e);
-    sigCtx.lineTo(p.x, p.y);
-    sigCtx.stroke();
-  }
-
-  function endSig() { isDrawing = false; }
-
-  sigCanvas.addEventListener('mousedown', startSig);
-  sigCanvas.addEventListener('mousemove', drawSig);
-  window.addEventListener('mouseup', endSig);
-
-  sigCanvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    startSig(e);
-  }, { passive: false });
-
-  sigCanvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    drawSig(e);
-  }, { passive: false });
-
-  sigCanvas.addEventListener('touchend', endSig);
-
-  btnClearSig.addEventListener('click', () => {
-    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
-    hasSigned = false;
-  });
-
-  btnSignComplete.addEventListener('click', () => {
-    if (!hasSigned) {
-      sigCtx.font = '24px "Playfair Display", Georgia, serif';
-      sigCtx.fillStyle = '#d97706';
-      sigCtx.fillText('★ Otter & Prestatorul ★', 40, 48);
+    function getCoords(e) {
+      const rect = canvasEl.getBoundingClientRect();
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: cx - rect.left, y: cy - rect.top };
     }
-    window.symphonyAudio.playVictoryFanfare();
-    vibrate(80);
-    btnSignComplete.innerHTML = `<span>✓ ACORD VALIDAT & DESĂVÂRȘIT!</span><span>🎉</span>`;
-    btnSignComplete.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
 
-    setTimeout(() => {
-      alert('🎉 Felicitări! Simfonia senzorială a fost desăvârșită cu succes! Garanție de rezultat îndeplinită și pupături asigurate pentru întreaga zi.');
-    }, 700);
-  });
+    function start(e) {
+      drawing = true;
+      const p = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
 
-  // Start Game Loop on first interaction
-  function startGame() {
-    if (isGameActive) return;
-    isGameActive = true;
-    window.symphonyAudio.init();
-    window.symphonyAudio.setBPM(STAGES[0].bpm);
-    window.symphonyAudio.startBeatLoop();
-    noteSpawnTimer = setInterval(spawnRhythmNode, STAGES[0].noteIntervalMs);
+    function draw(e) {
+      if (!drawing) return;
+      const p = getCoords(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+
+    function stop() { drawing = false; }
+
+    canvasEl.addEventListener('mousedown', start);
+    canvasEl.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stop);
+
+    canvasEl.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      start(e);
+    }, { passive: false });
+
+    canvasEl.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      draw(e);
+    }, { passive: false });
+
+    canvasEl.addEventListener('touchend', stop);
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+      });
+    }
   }
 
-  // Trigger start on first touch/click
-  document.body.addEventListener('touchstart', startGame, { once: true });
-  document.body.addEventListener('click', startGame, { once: true });
+  setupSignaturePad(sigCanvas, btnClearSig);
+  setupSignaturePad(duelSigCanvas, btnClearDuelSig);
 
+  // Initial HUD Display
   updateHUD();
 });

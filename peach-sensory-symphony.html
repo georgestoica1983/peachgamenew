@@ -640,6 +640,366 @@ body {
   touch-action: none;
 }
 
+/* ========================================= */
+/* SPICY WAGER SELECTION SCREEN & CARDS      */
+/* ========================================= */
+.wager-modal-content {
+  background: #fffdfa;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 24px;
+  padding: 20px 18px;
+  border: 2px solid #ecd7b7;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.wager-badge-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.wagers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+  text-align: left;
+}
+
+.wager-card-option {
+  background: #fff7f2;
+  border: 2px solid #fecdd3;
+  border-radius: 16px;
+  padding: 12px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.wager-card-option:active, .wager-card-option.selected {
+  background: #fff1f2;
+  border-color: #f43f5e;
+  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.2);
+  transform: translateY(-2px);
+}
+
+.wager-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.wager-info h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #881337;
+  margin-bottom: 2px;
+}
+
+.wager-info p {
+  font-size: 0.76rem;
+  color: #9f1239;
+  line-height: 1.35;
+}
+
+.custom-wager-input {
+  width: 100%;
+  border: 1.5px solid #fda4af;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  margin-top: 6px;
+  outline: none;
+}
+
+.custom-wager-input:focus {
+  border-color: #f43f5e;
+}
+
+/* Player Indicator in Header */
+.turn-pill-indicator {
+  background: #ffffff;
+  border: 1.5px solid #ffd4cc;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.turn-pill-indicator.otter-turn {
+  color: #be123c;
+  border-color: #fecdd3;
+  background: #fff1f2;
+}
+
+/* ========================================= */
+/* FEVER MODE / OVERDRIVE STYLES             */
+/* ========================================= */
+body.fever-active {
+  background: linear-gradient(155deg, #240b15 0%, #360f22 45%, #1f0714 100%) !important;
+  color: #fdf2f8 !important;
+}
+
+body.fever-active .card,
+body.fever-active .top-hud,
+body.fever-active .stats-dashboard,
+body.fever-active .bottom-controls-card {
+  background: rgba(45, 15, 30, 0.85) !important;
+  border-color: rgba(244, 63, 94, 0.5) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 40px rgba(244, 63, 94, 0.3) !important;
+}
+
+body.fever-active .stat-value,
+body.fever-active .instruction-title {
+  color: #ffffff !important;
+}
+
+.fever-banner {
+  display: none;
+  background: linear-gradient(90deg, #f43f5e 0%, #fbbf24 50%, #f43f5e 100%);
+  background-size: 200% auto;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-align: center;
+  letter-spacing: 0.8px;
+  margin-top: 4px;
+  animation: shimmerFever 1.5s linear infinite;
+}
+
+body.fever-active .fever-banner {
+  display: block;
+}
+
+@keyframes shimmerFever {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* RPM Meter Badge over Pleasure Spot */
+.rpm-badge {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid #f59e0b;
+  color: #b45309;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.rpm-badge.visible {
+  display: block;
+  animation: pulseRPM 0.3s ease;
+}
+
+@keyframes pulseRPM {
+  0% { transform: translateX(-50%) scale(0.9); }
+  50% { transform: translateX(-50%) scale(1.15); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* ========================================= */
+/* TURN HANDOVER MODAL                       */
+/* ========================================= */
+.handover-card {
+  background: #fffdfc;
+  width: 100%;
+  max-width: 390px;
+  border-radius: 24px;
+  padding: 24px 20px;
+  border: 2px solid #fed7aa;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.handover-avatar {
+  font-size: 3.5rem;
+  margin-bottom: 6px;
+  animation: bounceHandover 1.5s infinite ease-in-out;
+}
+
+@keyframes bounceHandover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Duel Comparative Winner Ceremony */
+.duel-vs-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  background: #fff7ed;
+  border: 1.5px solid #fdba74;
+  border-radius: 18px;
+  padding: 14px 10px;
+  margin-bottom: 14px;
+}
+
+.player-duel-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-duel-column.winner {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  border-radius: 14px;
+  padding: 8px 4px;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+}
+
+.player-duel-column .crown-icon {
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+}
+
+.player-duel-column .name {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #78350f;
+}
+
+.player-duel-column .score-num {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #b45309;
+  margin-top: 2px;
+}
+
+.duel-vs-badge {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #ea580c;
+  background: #ffedd5;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.wager-awarded-box {
+  background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+  border: 2px solid #f43f5e;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.wager-awarded-box h4 {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #9f1239;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.wager-awarded-box p {
+  font-size: 0.82rem;
+  color: #881337;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ========================================= */
+/* CHARACTER TOGGLE BAR & CUCUMBER STYLES    */
+/* ========================================= */
+.character-toggle-bar {
+  display: flex;
+  background: #fdf2f8;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 16px;
+  padding: 4px;
+  gap: 6px;
+}
+
+.char-tab-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #831843;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.char-tab-btn.active {
+  background: #ffffff;
+  color: #be123c;
+  box-shadow: 0 3px 10px rgba(190, 18, 60, 0.2);
+}
+
+/* Cucumber Interactive SVG & Animations */
+#cucumber-svg {
+  display: none;
+  filter: drop-shadow(0 10px 25px rgba(22, 101, 52, 0.25));
+}
+
+.cucumber-active #peach-svg {
+  display: none !important;
+}
+
+.cucumber-active #cucumber-svg {
+  display: block !important;
+}
+
+.cucumber-active .peach-ambient-aura {
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.3) 0%, rgba(240, 253, 244, 0) 70%) !important;
+}
+
+.cucumber-active .swirl-guide-ring {
+  top: 36px !important;
+  left: 80px !important;
+  border-color: #22c55e !important;
+}
+
+.cucumber-active .rhythm-approach-ring.pleasure-spot-ring {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.7) !important;
+}
+
+.cucumber-active .rpm-badge {
+  border-color: #22c55e;
+  color: #15803d;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
 </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -663,11 +1023,19 @@ body {
           <span>🌸</span>
           <span id="stage-title-text">Stage 1: First Light</span>
         </div>
+        <div class="turn-pill-indicator" id="turn-pill-indicator">
+          <span>🎮</span>
+          <span id="turn-player-name">Prestatorul</span>
+        </div>
         <div class="hud-actions">
-          <div class="bpm-indicator" id="bpm-indicator">⚡ 75 BPM</div>
+          <button id="btn-char-toggle" class="icon-button" title="Schimbă între Piersică și Castravete">🍑</button>
+          <div class="bpm-indicator" id="bpm-indicator">⚡ 85 BPM</div>
           <button id="btn-audio-toggle" class="icon-button" title="Sunet">🔔</button>
         </div>
       </div>
+
+      <!-- Fever Mode Overdrive Banner -->
+      <div class="fever-banner" id="fever-banner">🔥 FEVER OVERDRIVE • MULTIPLICATOR EXTAZ 8X / 16X!</div>
 
       <!-- Stats: Score, Combo & Accuracy -->
       <div class="stats-dashboard">
@@ -790,8 +1158,64 @@ body {
           </g>
         </svg>
 
+        <!-- ============================================== -->
+        <!-- CUCUMBER INTERACTIVE SVG                       -->
+        <!-- ============================================== -->
+        <svg viewBox="0 0 200 200" width="100%" height="100%" id="cucumber-svg">
+          <defs>
+            <!-- Left body gradient -->
+            <radialGradient id="grad-cuke-left" cx="35%" cy="50%" r="70%">
+              <stop offset="0%" stop-color="#86efac" />
+              <stop offset="50%" stop-color="#22c55e" />
+              <stop offset="100%" stop-color="#14532d" />
+            </radialGradient>
+            <!-- Right body gradient -->
+            <radialGradient id="grad-cuke-right" cx="65%" cy="50%" r="70%">
+              <stop offset="0%" stop-color="#86efac" />
+              <stop offset="50%" stop-color="#22c55e" />
+              <stop offset="100%" stop-color="#14532d" />
+            </radialGradient>
+            <!-- Sensitive Tip Gradient -->
+            <radialGradient id="grad-cuke-tip" cx="45%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="30%" stop-color="#fef08a" />
+              <stop offset="70%" stop-color="#22c55e" />
+              <stop offset="100%" stop-color="#15803d" />
+            </radialGradient>
+          </defs>
+
+          <!-- Cucumber Stem / Base Blossom -->
+          <path d="M 98 185 Q 100 195 98 198" stroke="#3f6212" stroke-width="4" stroke-linecap="round" fill="none" />
+
+          <!-- Left Half of Cucumber Body -->
+          <path id="cucumber-left" class="cheek-zone"
+                d="M 100 45 C 80 45, 65 65, 64 110 C 63 150, 78 185, 100 185 C 98 150, 98 90, 100 45 Z"
+                fill="url(#grad-cuke-left)" />
+
+          <!-- Right Half of Cucumber Body -->
+          <path id="cucumber-right" class="cheek-zone"
+                d="M 100 45 C 120 45, 135 65, 136 110 C 137 150, 122 185, 100 185 C 102 150, 102 90, 100 45 Z"
+                fill="url(#grad-cuke-right)" />
+
+          <!-- Rib Texture Lines -->
+          <path d="M 80 75 Q 82 120 86 165" stroke="#166534" stroke-width="1.8" stroke-dasharray="2,5" fill="none" opacity="0.6" />
+          <path d="M 120 75 Q 118 120 114 165" stroke="#166534" stroke-width="1.8" stroke-dasharray="2,5" fill="none" opacity="0.6" />
+          <path d="M 100 45 L 100 185" stroke="#14532d" stroke-width="1.5" fill="none" opacity="0.3" />
+
+          <!-- Sensitive Tip / Head of the Cucumber (✨ Centered at Top) -->
+          <g id="cucumber-tip-group" class="pleasure-spot-group">
+            <circle class="pleasure-spot-aura" cx="100" cy="55" r="20" fill="#fef08a" opacity="0.4" />
+            <circle class="pleasure-spot-aura" cx="100" cy="55" r="14" fill="#4ade80" opacity="0.5" />
+            <circle id="cucumber-tip-core" class="pleasure-spot-core" cx="100" cy="55" r="10" fill="url(#grad-cuke-tip)" />
+            <circle cx="98" cy="52.5" r="2.2" fill="#ffffff" opacity="0.9" />
+          </g>
+        </svg>
+
         <!-- Swirl Guide Ring Overlay for Stage 2+ -->
         <div id="swirl-guide-ring" class="swirl-guide-ring"></div>
+
+        <!-- Live RPM Speedometer Badge on Pleasure Spot -->
+        <div class="rpm-badge" id="rpm-badge">⚡ 0 RPM</div>
       </div>
     </main>
 
@@ -865,21 +1289,164 @@ body {
         <span>Aprobă & Validează Parteneriatul</span>
         <span>💮</span>
       </button>
+  <!-- ========================================= -->
+  <!-- SPICY WAGER SELECTION MODAL (PRE-GAME)    -->
+  <!-- ========================================= -->
+  <div class="modal-overlay open" id="wager-modal">
+    <div class="wager-modal-content">
+      <span class="wager-badge-tag">⚔️ MODUL DUEL 1V1 • MIZE SPICY</span>
+      <h2 style="font-size:1.3rem; font-weight:900; color:#4c0519; margin-bottom:4px;">Alegeți Miza Meciului</h2>
+      <p style="font-size:0.8rem; color:#9f1239; margin-bottom:12px;">Cine pierde jocul are obligația să onoreze miza aleasă în această seară!</p>
+
+      <!-- Character Choice: Peach vs Cucumber -->
+      <div style="margin-bottom:14px;">
+        <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
+          Alegeți Activul Ritmului:
+        </label>
+        <div class="character-toggle-bar" id="character-toggle-bar">
+          <button type="button" class="char-tab-btn active" data-char="peach">
+            <span style="font-size:1.2rem;">🍑</span>
+            <span>Piersica Catifelată</span>
+          </button>
+          <button type="button" class="char-tab-btn" data-char="cucumber">
+            <span style="font-size:1.2rem;">🥒</span>
+            <span>Castravetele Ferm</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="wagers-list" id="wagers-list">
+        <div class="wager-card-option selected" data-wager="20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă">
+          <div class="wager-icon">🔥</div>
+          <div class="wager-info">
+            <h4>Masaj Senzual Fără Grabă</h4>
+            <p>20 de minute de masaj cu ulei cald la lumina lumânărilor</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="Câștigătorul dictează scenariul, ritmul și poziția în pat în această seară">
+          <div class="wager-icon">👑</div>
+          <div class="wager-info">
+            <h4>Comandă Totală în Pat</h4>
+            <p>Câștigătorul dictează scenariul, ritmul și poziția în pat</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="Mângâieri și sărutări dedicate în zonele fierbinți fără limită de timp">
+          <div class="wager-icon">💋</div>
+          <div class="wager-info">
+            <h4>Răsfăț Oral Dedicat</h4>
+            <p>Mângâieri și sărutări în zonele fierbinți fără limită de timp</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="Joc intim senzorial cu căpșuni, ciocolată sau frișcă direct pe piele">
+          <div class="wager-icon">🍓</div>
+          <div class="wager-info">
+            <h4>Fructe & Dulceață</h4>
+            <p>Joc intim senzorial cu frișcă, ciocolată sau fructe pe corp</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="custom">
+          <div class="wager-icon">✍️</div>
+          <div class="wager-info" style="width:100%;">
+            <h4>Miză Secretă Personalizată</h4>
+            <input type="text" id="custom-wager-text" class="custom-wager-input" placeholder="Scrieți aici propria miză spicy..." />
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-start-duel" class="btn-level-action" style="width:100%; margin-top:6px;">
+        <span>Confirmă Miza & Începe Runda Prestatorului</span>
+        <span>🔥</span>
+      </button>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- ========================================= -->
+  <!-- TURN HANDOVER MODAL (PASS THE PHONE)      -->
+  <!-- ========================================= -->
+  <div class="modal-overlay" id="handover-modal">
+    <div class="handover-card">
+      <div class="handover-avatar">🏆</div>
+      <h2 style="font-size:1.3rem; font-weight:900; color:#78350f; margin-bottom:6px;">Runda Prestatorului s-a încheiat!</h2>
+      <p style="font-size:0.85rem; color:#92400e; margin-bottom:12px;">
+        Scorul de bătut este: <strong id="handover-target-score" style="font-size:1.25rem; color:#b45309;">0</strong> puncte!
+      </p>
+
+      <div style="background:#fff7ed; border:1.5px solid #fed7aa; border-radius:14px; padding:10px 12px; margin-bottom:14px; text-align:left;">
+        <div style="font-size:0.7rem; font-weight:800; color:#ea580c; text-transform:uppercase;">Miza pusă în joc:</div>
+        <div id="handover-wager-text" style="font-size:0.82rem; font-weight:700; color:#9a3412; margin-top:2px;"></div>
+      </div>
+
+      <p style="font-size:0.85rem; color:#6b4d3d; margin-bottom:16px; font-weight:600;">
+        Predă telefonul lui <strong>Otter</strong>! Ești gata să arăți cine domină ritmul?
+      </p>
+
+      <button id="btn-start-player2" class="btn-level-action" style="width:100%; margin-top:0;">
+        <span>Am luat telefonul, rândul lui Otter! 🍑</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================= -->
+  <!-- DUEL WINNER CEREMONY MODAL                -->
+  <!-- ========================================= -->
+  <div class="modal-overlay" id="duel-winner-modal">
+    <div class="cert-card" style="max-width:410px;">
+      <div class="rank-badge" id="duel-winner-badge" style="background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">👑 VICTORIE TOTALĂ!</div>
+      <h2 class="cert-title" id="duel-winner-headline">Otter a Câștigat Duelul!</h2>
+      
+      <div class="duel-vs-grid">
+        <div class="player-duel-column" id="p1-duel-col">
+          <span class="crown-icon" id="p1-crown" style="visibility:hidden;">👑</span>
+          <span class="name">Prestatorul</span>
+          <span class="score-num" id="p1-final-score">0</span>
+          <span style="font-size:0.68rem; color:#78350f;" id="p1-final-acc">0% Acc</span>
+        </div>
+        
+        <div class="duel-vs-badge">VS</div>
+        
+        <div class="player-duel-column" id="p2-duel-col">
+          <span class="crown-icon" id="p2-crown" style="visibility:hidden;">👑</span>
+          <span class="name">Otter</span>
+          <span class="score-num" id="p2-final-score">0</span>
+          <span style="font-size:0.68rem; color:#78350f;" id="p2-final-acc">0% Acc</span>
+        </div>
+      </div>
+
+      <div class="wager-awarded-box">
+        <h4>★ RECOMPENSA CÂȘTIGATĂ ★</h4>
+        <p id="duel-awarded-wager-text"></p>
+      </div>
+
+      <div class="signature-box">
+        <div style="font-size:0.72rem; color:#881337; font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between;">
+          <span>Semnătura învinsului (acceptare & onorare):</span>
+          <button id="btn-clear-duel-sig" style="background:none; border:none; color:var(--primary-rose); font-size:0.75rem; font-weight:700; cursor:pointer;">Șterge</button>
+        </div>
+        <canvas id="duel-signature-canvas" width="340" height="65"></canvas>
+      </div>
+
+      <button id="btn-finish-duel" class="btn-level-action" style="width:100%; margin-top:0;">
+        <span>Onorează Miza & Reia Duelul</span>
+        <span>💋</span>
+      </button>
+    </div>
+  </div>
   <script>
-// audio.js - Advanced Procedural Synthesizer & Rhythm Engine for Peach Sensory Symphony
+// audio.js - Advanced Procedural Synthesizer & Rhythm Engine for Peach Sensory Symphony (with Fever Mode & Duel Support)
 
 class SymphonyAudioEngine {
   constructor() {
     this.ctx = null;
     this.isMuted = false;
-    this.bpm = 75;
+    this.bpm = 85;
     this.isPlayingBeat = false;
     this.beatInterval = null;
     this.currentStep = 0;
+    this.isFeverMode = false;
   }
 
   init() {
@@ -908,6 +1475,10 @@ class SymphonyAudioEngine {
     }
   }
 
+  setFever(enabled) {
+    this.isFeverMode = enabled;
+  }
+
   // --- Procedural Rhythm Percussion & Harmony ---
 
   playKick(time) {
@@ -916,22 +1487,23 @@ class SymphonyAudioEngine {
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(120, time);
-    osc.frequency.exponentialRampToValueAtTime(32, time + 0.18);
+    const startFreq = this.isFeverMode ? 150 : 120;
+    osc.frequency.setValueAtTime(startFreq, time);
+    osc.frequency.exponentialRampToValueAtTime(30, time + 0.2);
 
-    gain.gain.setValueAtTime(0.35, time);
-    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.18);
+    const volume = this.isFeverMode ? 0.45 : 0.32;
+    gain.gain.setValueAtTime(volume, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.2);
 
     osc.connect(gain);
     gain.connect(this.ctx.destination);
 
     osc.start(time);
-    osc.stop(time + 0.18);
+    osc.stop(time + 0.2);
   }
 
   playSnare(time) {
     if (this.isMuted) return;
-    // Noise buffer for snap
     const bufferSize = this.ctx.sampleRate * 0.08;
     const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -942,17 +1514,38 @@ class SymphonyAudioEngine {
     noise.buffer = buffer;
 
     const noiseGain = this.ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.2, time);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, time + 0.08);
+    noiseGain.gain.setValueAtTime(this.isFeverMode ? 0.28 : 0.18, time);
+    noiseGain.gain.exponentialRampToValueAtTime(0.01, time + 0.09);
 
     noise.connect(noiseGain);
     noiseGain.connect(this.ctx.destination);
     noise.start(time);
   }
 
+  playFeverBass(step, time) {
+    if (this.isMuted || !this.isFeverMode) return;
+    const bassNotes = [55, 55, 65.4, 73.4, 82.4, 73.4, 65.4, 55]; // A1, C2, D2, E2
+    const freq = bassNotes[step % bassNotes.length];
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(freq, time);
+
+    gain.gain.setValueAtTime(0.12, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.18);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(time);
+    osc.stop(time + 0.18);
+  }
+
   playChordPad(step, time) {
     if (this.isMuted) return;
-    // Warm morning lo-fi progression: Fmaj7 -> Cmaj7 -> Dm7 -> Gsus4
+    // Harmonic progression: Fmaj7 -> Cmaj7 -> Dm7 -> Gsus4
     const progressions = [
       [349.23, 440.00, 523.25, 659.25], // Fmaj7
       [261.63, 329.63, 392.00, 493.88], // Cmaj7
@@ -964,10 +1557,11 @@ class SymphonyAudioEngine {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
 
-      osc.type = 'triangle';
+      osc.type = this.isFeverMode ? 'sawtooth' : 'triangle';
       osc.frequency.setValueAtTime(freq, time);
 
-      gain.gain.setValueAtTime(0.04, time);
+      const vol = this.isFeverMode ? 0.035 : 0.04;
+      gain.gain.setValueAtTime(vol, time);
       gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.6);
 
       osc.connect(gain);
@@ -989,13 +1583,17 @@ class SymphonyAudioEngine {
       const now = this.ctx.currentTime;
       const step = this.currentStep % 16;
 
-      // Kick on beats 0, 4, 8, 12
-      if (step % 4 === 0) {
+      // Kick on beats 0, 4, 8, 12 (and extra off-beats in Fever Mode)
+      if (step % 4 === 0 || (this.isFeverMode && (step === 6 || step === 14))) {
         this.playKick(now);
       }
       // Snare on beats 2, 6, 10, 14
       if (step % 4 === 2) {
         this.playSnare(now);
+      }
+      // Fever synth bass
+      if (this.isFeverMode) {
+        this.playFeverBass(step, now);
       }
       // Chord pad every 4 beats
       if (step % 4 === 0) {
@@ -1025,8 +1623,9 @@ class SymphonyAudioEngine {
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(783.99, now); // G5
-    osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.08); // C6
+    const pitch = this.isFeverMode ? 987.77 : 783.99; // B5 or G5
+    osc.frequency.setValueAtTime(pitch, now);
+    osc.frequency.exponentialRampToValueAtTime(pitch * 1.33, now + 0.08);
 
     gain.gain.setValueAtTime(0.28, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
@@ -1047,7 +1646,7 @@ class SymphonyAudioEngine {
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(659.25, now); // E5
+    osc.frequency.setValueAtTime(659.25, now);
 
     gain.gain.setValueAtTime(0.2, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
@@ -1081,7 +1680,6 @@ class SymphonyAudioEngine {
     osc.stop(now + 0.16);
   }
 
-  // Specialized: Pleasure Spot Shimmer Sound
   playPleasureSpotShimmer() {
     if (this.isMuted) return;
     this.init();
@@ -1093,20 +1691,19 @@ class SymphonyAudioEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+      osc.frequency.setValueAtTime(freq, now + idx * 0.035);
 
-      gain.gain.setValueAtTime(0.18, now + idx * 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.04 + 0.25);
+      gain.gain.setValueAtTime(0.18, now + idx * 0.035);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.035 + 0.25);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
-      osc.start(now + idx * 0.04);
-      osc.stop(now + idx * 0.04 + 0.25);
+      osc.start(now + idx * 0.035);
+      osc.stop(now + idx * 0.035 + 0.25);
     });
   }
 
-  // Specialized: Tongue Glide Tone
   playGlideTone(pitch = 440) {
     if (this.isMuted) return;
     this.init();
@@ -1129,7 +1726,6 @@ class SymphonyAudioEngine {
     osc.stop(now + 0.12);
   }
 
-  // Heartbeat pulse sound
   playHeartbeat() {
     if (this.isMuted) return;
     this.init();
@@ -1154,7 +1750,25 @@ class SymphonyAudioEngine {
     });
   }
 
-  // Grand Climax Victory Chime
+  playTurnChangeChime() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+    const chimeNotes = [440, 554.37, 659.25, 880]; // A major
+    chimeNotes.forEach((freq, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + i * 0.1);
+      gain.gain.setValueAtTime(0.2, now + i * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.5);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + i * 0.1);
+      osc.stop(now + i * 0.1 + 0.5);
+    });
+  }
+
   playVictoryFanfare() {
     if (this.isMuted) return;
     this.init();
@@ -1168,28 +1782,32 @@ class SymphonyAudioEngine {
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(freq, now + idx * 0.08);
 
-      gain.gain.setValueAtTime(0.22, now + idx * 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.6);
+      gain.gain.setValueAtTime(0.25, now + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.7);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start(now + idx * 0.08);
-      osc.stop(now + idx * 0.08 + 0.6);
+      osc.stop(now + idx * 0.08 + 0.7);
     });
   }
 }
 
 window.symphonyAudio = new SymphonyAudioEngine();
 
-
-// game.js - Rhythm Engine & Mechanics for Peach Sensory Symphony
+</script>
+  <script>
+// game.js - Rhythm Engine & Mechanics for Peach Sensory Symphony (with 1v1 Pass & Play Duel & Spicy Wagers)
 
 document.addEventListener('DOMContentLoaded', () => {
   // DOM References
   const stageTitleText = document.getElementById('stage-title-text');
   const bpmIndicator = document.getElementById('bpm-indicator');
   const btnAudioToggle = document.getElementById('btn-audio-toggle');
+  const turnPlayerName = document.getElementById('turn-player-name');
+  const turnPillIndicator = document.getElementById('turn-pill-indicator');
+  const feverBanner = document.getElementById('fever-banner');
 
   const valScore = document.getElementById('val-score');
   const valCombo = document.getElementById('val-combo');
@@ -1209,6 +1827,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pleasureSpotGroup = document.getElementById('pleasure-spot-group');
   const pleasureSpotCore = document.getElementById('pleasure-spot-core');
   const swirlGuideRing = document.getElementById('swirl-guide-ring');
+  const rpmBadge = document.getElementById('rpm-badge');
   const ratingContainer = document.getElementById('rating-container');
   const nodesLayer = document.getElementById('rhythm-nodes-layer');
 
@@ -1220,8 +1839,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnNextStage = document.getElementById('btn-next-stage');
   const btnNextStageText = document.getElementById('btn-next-stage-text');
 
+  // Character Toggle & Cucumber Elements
+  const btnCharToggle = document.getElementById('btn-char-toggle');
+  const charTabBtns = document.querySelectorAll('.char-tab-btn');
+  const cucumberLeft = document.getElementById('cucumber-left');
+  const cucumberRight = document.getElementById('cucumber-right');
+  const cucumberTipGroup = document.getElementById('cucumber-tip-group');
+  const cucumberTipCore = document.getElementById('cucumber-tip-core');
+
+  // Modals References
+  const wagerModal = document.getElementById('wager-modal');
+  const wagersList = document.getElementById('wagers-list');
+  const customWagerText = document.getElementById('custom-wager-text');
+  const btnStartDuel = document.getElementById('btn-start-duel');
+
+  const handoverModal = document.getElementById('handover-modal');
+  const handoverTargetScore = document.getElementById('handover-target-score');
+  const handoverWagerText = document.getElementById('handover-wager-text');
+  const btnStartPlayer2 = document.getElementById('btn-start-player2');
+
+  const duelWinnerModal = document.getElementById('duel-winner-modal');
+  const duelWinnerBadge = document.getElementById('duel-winner-badge');
+  const duelWinnerHeadline = document.getElementById('duel-winner-headline');
+  const p1DuelCol = document.getElementById('p1-duel-col');
+  const p2DuelCol = document.getElementById('p2-duel-col');
+  const p1Crown = document.getElementById('p1-crown');
+  const p2Crown = document.getElementById('p2-crown');
+  const p1FinalScore = document.getElementById('p1-final-score');
+  const p2FinalScore = document.getElementById('p2-final-score');
+  const p1FinalAcc = document.getElementById('p1-final-acc');
+  const p2FinalAcc = document.getElementById('p2-final-acc');
+  const duelAwardedWagerText = document.getElementById('duel-awarded-wager-text');
+  const duelSigCanvas = document.getElementById('duel-signature-canvas');
+  const btnClearDuelSig = document.getElementById('btn-clear-duel-sig');
+  const btnFinishDuel = document.getElementById('btn-finish-duel');
+
+  // Solo Modal fallback
   const victoryModal = document.getElementById('victory-modal');
-  const modalRankBadge = document.getElementById('modal-rank-badge');
   const modalFinalScore = document.getElementById('modal-final-score');
   const modalMaxCombo = document.getElementById('modal-max-combo');
   const modalFinalAccuracy = document.getElementById('modal-final-accuracy');
@@ -1237,63 +1891,70 @@ document.addEventListener('DOMContentLoaded', () => {
   function resizeCanvases() {
     partCanvas.width = window.innerWidth;
     partCanvas.height = window.innerHeight;
-    sigCanvas.width = sigCanvas.clientWidth;
-    sigCanvas.height = sigCanvas.clientHeight;
+    if (sigCanvas) {
+      sigCanvas.width = sigCanvas.clientWidth;
+      sigCanvas.height = sigCanvas.clientHeight;
+    }
+    if (duelSigCanvas) {
+      duelSigCanvas.width = duelSigCanvas.clientWidth;
+      duelSigCanvas.height = duelSigCanvas.clientHeight;
+    }
   }
   window.addEventListener('resize', resizeCanvases);
   resizeCanvases();
 
-  // Stage Configs (5 Progressive Levels)
-  const STAGES = [
+  // =========================================
+  // SONG MOVEMENTS CONFIGURATION (Full Track)
+  // =========================================
+  const SONG_MOVEMENTS = [
     {
-      level: 1,
-      name: 'Stage 1: First Light',
-      bpm: 75,
-      targetKpi: 20,
-      noteIntervalMs: 1200,
-      introText: 'Atinge obrajii stâng și drept când cercul de ritm se micșorează!',
-      subText: 'Menține apăsat Punctul de Plăcere de sub codiță pentru multiplicator 2x.'
+      name: 'Mișcarea 1: Încălzire Senzorială',
+      bpm: 85,
+      durationMs: 18000,
+      noteIntervalMs: 1000,
+      intro: 'Atinge ritmic obrajii stâng și drept!',
+      sub: 'Pregătește ritmul pentru runda decisivă.'
     },
     {
-      level: 2,
-      name: 'Stage 2: Velvet Curves',
-      bpm: 95,
-      targetKpi: 45,
-      noteIntervalMs: 900,
-      introText: 'Fă gesturi circulare (swirls) pe Punctul de Plăcere de sub codiță!',
-      subText: 'Comută pe Limbă (👅) pentru glisare fluidă și multiplicator 3x.'
+      name: 'Mișcarea 2: Ritm & Swirls pe Punctul de Plăcere',
+      bpm: 105,
+      durationMs: 20000,
+      noteIntervalMs: 800,
+      intro: 'Rotiri circulare pe Punctul de Plăcere de sub codiță!',
+      sub: 'Măsoară viteza RPM și activează multiplicatorul 3x.'
     },
     {
-      level: 3,
-      name: 'Stage 3: Breathless Waves',
-      bpm: 115,
-      targetKpi: 70,
-      noteIntervalMs: 700,
-      introText: 'Atenție la respirație! Nu supraîncălzi Punctul de Plăcere.',
-      subText: 'Dacă se înroșește, răcorește-l cu o mângâiere lină sau ia o pauză de sărut.'
+      name: 'Mișcarea 3: FEVER DROP & Valuri de Foc',
+      bpm: 125,
+      durationMs: 20000,
+      noteIntervalMs: 600,
+      intro: 'Menține combo-ul peste 15x pentru FEVER MODE!',
+      sub: 'Multiplicatori uriași 8x și 16x pe ecran.'
     },
     {
-      level: 4,
-      name: 'Stage 4: Poly-Rhythm Desires',
-      bpm: 130,
-      targetKpi: 90,
-      noteIntervalMs: 520,
-      introText: 'Poliritm: Ține apăsat Punctul de Plăcere în timp ce bați ritmul pe obraji!',
-      subText: 'Atingeți cu ambele degete simultan.'
-    },
-    {
-      level: 5,
-      name: 'Stage 5: Grand Climax (KPI Overdrive)',
-      bpm: 145,
-      targetKpi: 100,
-      noteIntervalMs: 400,
-      introText: 'Sprint final de intensitate maximă! Gâfâit garantat la 100%.',
-      subText: 'Activează toate cele 3 zone pentru desăvârșirea acordului.'
+      name: 'Mișcarea 4: CLIMAX OVERDRIVE • Gâfâit Garantat',
+      bpm: 140,
+      durationMs: 20000,
+      noteIntervalMs: 440,
+      intro: 'Sprint final de viteză maximă pentru scorul suprem!',
+      sub: 'Totul se decide acum!'
     }
   ];
 
-  // Game Engine State
-  let currentStageIdx = 0;
+  // Game Engine & Duel State
+  let isGameActive = false;
+  let currentTurnPlayer = 'Prestatorul'; // 'Prestatorul' | 'Otter'
+  let selectedWager = '20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă';
+
+  // Stats for Player 1 and Player 2
+  let p1Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
+  let p2Stats = { score: 0, combo: 0, maxCombo: 0, totalNotes: 0, hitNotes: 0, maxRpm: 0 };
+
+  // Current Turn Active Variables
+  let currentMovementIdx = 0;
+  let movementTimer = null;
+  let noteSpawnTimer = null;
+  let activeNotes = [];
   let score = 0;
   let combo = 0;
   let maxCombo = 0;
@@ -1303,20 +1964,34 @@ document.addEventListener('DOMContentLoaded', () => {
   let breath = 100;
   let multiplier = 1;
   let activeTool = 'finger'; // 'finger' | 'tongue'
-  let isGameActive = false;
+  let activeCharacter = 'peach'; // 'peach' | 'cucumber'
+  let isFeverActive = false;
+  let currentTurnMaxRpm = 0;
 
-  // Active Rhythm Notes Queue
-  let activeNotes = [];
-  let noteSpawnTimer = null;
+  function setCharacter(charName) {
+    activeCharacter = charName;
+    if (activeCharacter === 'cucumber') {
+      document.body.classList.add('cucumber-active');
+      if (btnCharToggle) btnCharToggle.textContent = '🥒';
+    } else {
+      document.body.classList.remove('cucumber-active');
+      if (btnCharToggle) btnCharToggle.textContent = '🍑';
+    }
+
+    charTabBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.char === activeCharacter);
+    });
+  }
 
   // Pleasure Spot Mechanics
-  let pleasureSpotTouchStart = 0;
-  let pleasureSpotAccumulatedAngle = 0;
-  let lastAngle = null;
-  let overheatLevel = 0; // 0 to 100
+  let lastSwirlAngle = null;
+  let lastSwirlTime = null;
+  let accumulatedSwirlAngle = 0;
+  let overheatLevel = 0;
   let isOverheated = false;
+  let rpmHideTimeout = null;
 
-  // Haptic feedback
+  // Haptics helper
   function vibrate(ms = 25) {
     if (navigator.vibrate) {
       try { navigator.vibrate(ms); } catch (e) {}
@@ -1325,7 +2000,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Particle System
   function addParticles(x, y, count = 18, type = 'star') {
-    const colors = ['#f59e0b', '#ff5e7e', '#10b981', '#f472b6', '#fcd34d', '#ffffff'];
+    const colors = isFeverActive
+      ? ['#f43f5e', '#fbbf24', '#f59e0b', '#ec4899', '#ffffff']
+      : ['#f59e0b', '#ff5e7e', '#10b981', '#f472b6', '#fcd34d', '#ffffff'];
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 5 + 2;
@@ -1380,7 +2057,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   renderParticles();
 
-  // Rating Popup Display
+  // Rating Popups Display
   function showRating(text, type) {
     const el = document.createElement('div');
     el.className = `rating-popup ${type}`;
@@ -1396,24 +2073,35 @@ document.addEventListener('DOMContentLoaded', () => {
     peachWrap.classList.add('jiggle');
   }
 
-  // Update Top HUD Display
+  // Update Top HUD
   function updateHUD() {
     valScore.textContent = score.toLocaleString();
     valCombo.textContent = `${combo}x`;
+
     if (combo >= 15) {
       statComboBox.classList.add('hype');
+      if (!isFeverActive) {
+        activateFeverMode();
+      }
     } else {
       statComboBox.classList.remove('hype');
+      if (isFeverActive) {
+        deactivateFeverMode();
+      }
     }
 
     const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
     valAccuracy.textContent = `${acc}%`;
 
-    // Multiplier calculation
-    if (combo >= 40) multiplier = 8;
-    else if (combo >= 20) multiplier = 4;
-    else if (combo >= 10) multiplier = 2;
-    else multiplier = 1;
+    // Multiplier
+    if (isFeverActive) {
+      multiplier = combo >= 30 ? 16 : 8;
+    } else {
+      if (combo >= 40) multiplier = 8;
+      else if (combo >= 20) multiplier = 4;
+      else if (combo >= 10) multiplier = 2;
+      else multiplier = 1;
+    }
 
     valMultiplier.textContent = `${multiplier}x MULTI`;
 
@@ -1433,11 +2121,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Spawn a Rhythm Node with Approach Ring
+  // FEVER MODE Activators
+  function activateFeverMode() {
+    isFeverActive = true;
+    document.body.classList.add('fever-active');
+    window.symphonyAudio.setFever(true);
+    showRating('🔥 FEVER OVERDRIVE!', 'perfect');
+    vibrate([40, 30, 40]);
+  }
+
+  function deactivateFeverMode() {
+    isFeverActive = false;
+    document.body.classList.remove('fever-active');
+    window.symphonyAudio.setFever(false);
+  }
+
+  // =========================================
+  // RHYTHM NOTE SPAWNING & HIT DETECTION
+  // =========================================
   function spawnRhythmNode() {
     if (!isGameActive) return;
 
-    const stage = STAGES[currentStageIdx];
     const targets = ['left', 'right', 'center'];
     const chosenTarget = targets[Math.floor(Math.random() * targets.length)];
 
@@ -1447,16 +2151,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let localX = 0;
     let localY = 0;
 
-    if (chosenTarget === 'left') {
-      localX = pw * 0.35;
-      localY = ph * 0.58;
-    } else if (chosenTarget === 'right') {
-      localX = pw * 0.65;
-      localY = ph * 0.58;
+    if (activeCharacter === 'cucumber') {
+      if (chosenTarget === 'left') {
+        localX = pw * 0.38;
+        localY = ph * 0.58;
+      } else if (chosenTarget === 'right') {
+        localX = pw * 0.62;
+        localY = ph * 0.58;
+      } else {
+        // Sensitive Tip of Cucumber
+        localX = pw * 0.50;
+        localY = ph * 0.28;
+      }
     } else {
-      // Pleasure Spot right below stem in center
-      localX = pw * 0.50;
-      localY = ph * 0.37;
+      if (chosenTarget === 'left') {
+        localX = pw * 0.35;
+        localY = ph * 0.58;
+      } else if (chosenTarget === 'right') {
+        localX = pw * 0.65;
+        localY = ph * 0.58;
+      } else {
+        // Pleasure Spot right below stem
+        localX = pw * 0.50;
+        localY = ph * 0.37;
+      }
     }
 
     const ring = document.createElement('div');
@@ -1467,7 +2185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ring.style.height = '50px';
     nodesLayer.appendChild(ring);
 
-    const hitWindowMs = 700; // approach duration
+    const hitWindowMs = 650;
     const targetHitTime = Date.now() + hitWindowMs;
 
     const rect = peachWrap.getBoundingClientRect();
@@ -1482,7 +2200,6 @@ document.addEventListener('DOMContentLoaded', () => {
     activeNotes.push(noteObj);
     totalNotes++;
 
-    // Animate Approach Ring
     const startScale = 2.4;
     const startTime = Date.now();
 
@@ -1499,64 +2216,58 @@ document.addEventListener('DOMContentLoaded', () => {
       if (progress < 1) {
         requestAnimationFrame(animateRing);
       } else {
-        // Time expired: Check for Miss
         setTimeout(() => {
           if (!noteObj.hit) {
             noteObj.hit = true;
             ring.remove();
             handleNoteResult('miss', noteObj);
           }
-        }, 120);
+        }, 110);
       }
     }
     requestAnimationFrame(animateRing);
   }
 
-  // Handle Note Hit Result
   function handleNoteResult(rating, noteObj) {
     if (rating === 'perfect') {
       combo++;
       hitNotes++;
       const gain = 300 * multiplier;
       score += gain;
-      kpi = Math.min(100, kpi + 2.8);
-      breath = Math.max(10, breath - (currentStageIdx >= 2 ? 3.5 : 1.5));
+      kpi = Math.min(100, kpi + 2.5);
+      breath = Math.max(10, breath - 2.5);
       showRating('PERFECT!', 'perfect');
       window.symphonyAudio.playPerfectHit();
-      vibrate(30);
+      vibrate(28);
       addParticles(noteObj.x, noteObj.y, 16, 'star');
     } else if (rating === 'great') {
       combo++;
       hitNotes++;
       const gain = 150 * multiplier;
       score += gain;
-      kpi = Math.min(100, kpi + 1.6);
-      breath = Math.max(10, breath - (currentStageIdx >= 2 ? 2.5 : 1.0));
+      kpi = Math.min(100, kpi + 1.4);
+      breath = Math.max(10, breath - 1.5);
       showRating('GREAT!', 'great');
       window.symphonyAudio.playGreatHit();
-      vibrate(20);
+      vibrate(18);
       addParticles(noteObj.x, noteObj.y, 10, 'circle');
     } else {
-      // Miss
       combo = 0;
-      breath = Math.max(5, breath - 6.0);
+      breath = Math.max(5, breath - 5.0);
       showRating('MISS', 'miss');
       window.symphonyAudio.playMiss();
-      vibrate(50);
+      vibrate(45);
     }
 
     if (combo > maxCombo) maxCombo = combo;
     jigglePeach();
     updateHUD();
-    checkStageProgress();
   }
 
-  // Check if player hit the active note
   function tryHitTarget(targetName, e) {
     window.symphonyAudio.init();
     const now = Date.now();
 
-    // Find closest unhit note for this target
     const note = activeNotes.find(n => !n.hit && n.target === targetName && Math.abs(now - n.targetTime) <= 190);
 
     if (note) {
@@ -1568,112 +2279,262 @@ document.addEventListener('DOMContentLoaded', () => {
         handleNoteResult('great', note);
       }
     } else {
-      // Free tap (slight pleasure gain if on beat)
       score += 25 * multiplier;
-      kpi = Math.min(100, kpi + 0.6);
+      kpi = Math.min(100, kpi + 0.5);
       updateHUD();
-      checkStageProgress();
     }
   }
 
-  // Check Stage Completion
-  function checkStageProgress() {
-    const currentStage = STAGES[currentStageIdx];
-    if (kpi >= currentStage.targetKpi) {
-      if (currentStageIdx < STAGES.length - 1) {
-        // Prompt transition to next stage
-        btnNextStageText.textContent = `Treci la ${STAGES[currentStageIdx + 1].name}`;
-        btnNextStage.style.display = 'flex';
-      } else {
-        // Climax Complete! (100% KPI)
-        finishSymphony();
-      }
-    }
-  }
+  // =========================================
+  // SONG TRACK RUNNER (Full Track Progression)
+  // =========================================
+  function startSongMovement(idx) {
+    if (!isGameActive) return;
+    currentMovementIdx = idx;
+    const movement = SONG_MOVEMENTS[idx];
 
-  // Start Next Stage
-  function advanceStage() {
-    currentStageIdx++;
-    const stage = STAGES[currentStageIdx];
-    stageTitleText.textContent = stage.name;
-    bpmIndicator.textContent = `⚡ ${stage.bpm} BPM`;
-    instructionTitle.textContent = stage.introText;
-    instructionSub.textContent = stage.subText;
-    btnNextStage.style.display = 'none';
+    stageTitleText.textContent = `${currentTurnPlayer} • ${movement.name}`;
+    bpmIndicator.textContent = `⚡ ${movement.bpm} BPM`;
+    instructionTitle.textContent = movement.intro;
+    instructionSub.textContent = movement.sub;
 
-    // Update audio BPM
-    window.symphonyAudio.setBPM(stage.bpm);
+    window.symphonyAudio.setBPM(movement.bpm);
 
-    if (stage.level === 2) {
+    if (idx >= 1) {
       swirlGuideRing.style.display = 'block';
     }
 
-    // Restart note spawn timer with new tempo
     clearInterval(noteSpawnTimer);
-    noteSpawnTimer = setInterval(spawnRhythmNode, stage.noteIntervalMs);
+    noteSpawnTimer = setInterval(spawnRhythmNode, movement.noteIntervalMs);
+
+    movementTimer = setTimeout(() => {
+      if (currentMovementIdx < SONG_MOVEMENTS.length - 1) {
+        startSongMovement(currentMovementIdx + 1);
+      } else {
+        // Full song completed for current player!
+        finishPlayerTurn();
+      }
+    }, movement.durationMs);
   }
 
-  btnNextStage.addEventListener('click', advanceStage);
+  function startPlayerTurn() {
+    isGameActive = true;
+    currentMovementIdx = 0;
+    score = 0;
+    combo = 0;
+    maxCombo = 0;
+    totalNotes = 0;
+    hitNotes = 0;
+    kpi = 0;
+    breath = 100;
+    currentTurnMaxRpm = 0;
+    deactivateFeverMode();
 
-  // Finish Game & Open Modal
-  function finishSymphony() {
+    turnPlayerName.textContent = currentTurnPlayer;
+    turnPillIndicator.className = currentTurnPlayer === 'Otter'
+      ? 'turn-pill-indicator otter-turn'
+      : 'turn-pill-indicator';
+
+    window.symphonyAudio.init();
+    window.symphonyAudio.startBeatLoop();
+    updateHUD();
+
+    startSongMovement(0);
+  }
+
+  function finishPlayerTurn() {
     isGameActive = false;
     clearInterval(noteSpawnTimer);
+    clearTimeout(movementTimer);
     window.symphonyAudio.stopBeatLoop();
-    window.symphonyAudio.playVictoryFanfare();
-    vibrate(100);
-    addParticles(window.innerWidth / 2, window.innerHeight / 2, 80, 'heart');
+    deactivateFeverMode();
 
     const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
-    modalFinalScore.textContent = score.toLocaleString();
-    modalMaxCombo.textContent = `${maxCombo}x`;
-    modalFinalAccuracy.textContent = `${acc}%`;
 
-    // Grade
-    if (acc >= 94) {
-      modalRankBadge.textContent = '★ S RANK • EXCELLENT ★';
-      modalRankBadge.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
-    } else if (acc >= 85) {
-      modalRankBadge.textContent = '★ A RANK • GREAT ★';
-      modalRankBadge.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+    if (currentTurnPlayer === 'Prestatorul') {
+      // Save Player 1 stats
+      p1Stats = {
+        score: score,
+        maxCombo: maxCombo,
+        accuracy: acc,
+        maxRpm: currentTurnMaxRpm
+      };
+
+      window.symphonyAudio.playTurnChangeChime();
+      vibrate([60, 40, 60]);
+
+      // Show Handover Modal
+      handoverTargetScore.textContent = p1Stats.score.toLocaleString();
+      handoverWagerText.textContent = selectedWager;
+      handoverModal.classList.add('open');
+
     } else {
-      modalRankBadge.textContent = '★ B RANK • GOOD ★';
-      modalRankBadge.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+      // Player 2 (Otter) finished! Complete Duel!
+      p2Stats = {
+        score: score,
+        maxCombo: maxCombo,
+        accuracy: acc,
+        maxRpm: currentTurnMaxRpm
+      };
+
+      finishDuelCeremony();
+    }
+  }
+
+  // =========================================
+  // DUEL WINNER CEREMONY
+  // =========================================
+  function finishDuelCeremony() {
+    window.symphonyAudio.playVictoryFanfare();
+    vibrate([80, 50, 100]);
+    addParticles(window.innerWidth / 2, window.innerHeight * 0.4, 80, 'heart');
+
+    p1FinalScore.textContent = p1Stats.score.toLocaleString();
+    p1FinalAcc.textContent = `${p1Stats.accuracy}% Acc (Max ${p1Stats.maxCombo}x)`;
+
+    p2FinalScore.textContent = p2Stats.score.toLocaleString();
+    p2FinalAcc.textContent = `${p2Stats.accuracy}% Acc (Max ${p2Stats.maxCombo}x)`;
+
+    duelAwardedWagerText.textContent = selectedWager;
+
+    const isOtterWinner = p2Stats.score >= p1Stats.score;
+
+    if (isOtterWinner) {
+      duelWinnerHeadline.textContent = 'Otter a Câștigat Duelul!';
+      duelWinnerBadge.textContent = '👑 OTTER ESTE REGINA RITMULUI!';
+      p2DuelCol.classList.add('winner');
+      p1DuelCol.classList.remove('winner');
+      p2Crown.style.visibility = 'visible';
+      p1Crown.style.visibility = 'hidden';
+    } else {
+      duelWinnerHeadline.textContent = 'Prestatorul a Câștigat Duelul!';
+      duelWinnerBadge.textContent = '👑 PRESTATORUL A TRIUMFAT!';
+      p1DuelCol.classList.add('winner');
+      p2DuelCol.classList.remove('winner');
+      p1Crown.style.visibility = 'visible';
+      p2Crown.style.visibility = 'hidden';
     }
 
     setTimeout(() => {
-      victoryModal.classList.add('open');
-    }, 600);
+      duelWinnerModal.classList.add('open');
+      resizeCanvases();
+    }, 400);
   }
 
   // =========================================
-  // INTERACTIVE TOUCH ZONES
+  // SPICY WAGER SELECTION LOGIC
   // =========================================
+  const wagerOptions = document.querySelectorAll('.wager-card-option');
+  wagerOptions.forEach(card => {
+    card.addEventListener('click', () => {
+      wagerOptions.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
 
-  // Left Cheek (🍓)
+      const wagerType = card.dataset.wager;
+      if (wagerType === 'custom') {
+        customWagerText.focus();
+        selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+      } else {
+        selectedWager = wagerType;
+      }
+      window.symphonyAudio.playGlideTone(580);
+      vibrate(15);
+    });
+  });
+
+  customWagerText.addEventListener('input', () => {
+    selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+  });
+
+  btnStartDuel.addEventListener('click', () => {
+    const selectedOption = document.querySelector('.wager-card-option.selected');
+    if (selectedOption && selectedOption.dataset.wager === 'custom') {
+      selectedWager = customWagerText.value.trim() || 'Miză secretă personalizată aleasă în cuplu';
+    }
+    wagerModal.classList.remove('open');
+    currentTurnPlayer = 'Prestatorul';
+    startPlayerTurn();
+  });
+
+  // Handover Button to Otter
+  btnStartPlayer2.addEventListener('click', () => {
+    handoverModal.classList.remove('open');
+    currentTurnPlayer = 'Otter';
+    startPlayerTurn();
+  });
+
+  // Replay Duel
+  btnFinishDuel.addEventListener('click', () => {
+    duelWinnerModal.classList.remove('open');
+    wagerModal.classList.add('open');
+  });
+
+  // Character Select Buttons (Header toggle & Modal selector)
+  if (btnCharToggle) {
+    btnCharToggle.addEventListener('click', () => {
+      setCharacter(activeCharacter === 'peach' ? 'cucumber' : 'peach');
+      window.symphonyAudio.playGlideTone(520);
+      vibrate(20);
+    });
+  }
+
+  charTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedChar = btn.dataset.char;
+      if (selectedChar) {
+        setCharacter(selectedChar);
+        window.symphonyAudio.playGlideTone(520);
+        vibrate(20);
+      }
+    });
+  });
+
+  // =========================================
+  // TOUCH ZONES & PLEASURE SPOT SWIRL TRACKER
+  // =========================================
+  // Peach Touch Zones
   peachLeft.addEventListener('click', (e) => tryHitTarget('left', e));
   peachLeft.addEventListener('touchstart', (e) => {
     e.preventDefault();
     tryHitTarget('left', e);
   }, { passive: false });
 
-  // Right Cheek (🍑)
   peachRight.addEventListener('click', (e) => tryHitTarget('right', e));
   peachRight.addEventListener('touchstart', (e) => {
     e.preventDefault();
     tryHitTarget('right', e);
   }, { passive: false });
 
-  // Pleasure Spot (✨ Center Below Stem)
-  pleasureSpotGroup.addEventListener('click', (e) => {
-    handlePleasureSpotTap(e);
-  });
-
+  pleasureSpotGroup.addEventListener('click', (e) => handlePleasureSpotTap(e));
   pleasureSpotGroup.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    pleasureSpotTouchStart = Date.now();
     handlePleasureSpotTap(e);
   }, { passive: false });
+
+  // Cucumber Touch Zones
+  if (cucumberLeft) {
+    cucumberLeft.addEventListener('click', (e) => tryHitTarget('left', e));
+    cucumberLeft.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      tryHitTarget('left', e);
+    }, { passive: false });
+  }
+
+  if (cucumberRight) {
+    cucumberRight.addEventListener('click', (e) => tryHitTarget('right', e));
+    cucumberRight.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      tryHitTarget('right', e);
+    }, { passive: false });
+  }
+
+  if (cucumberTipGroup) {
+    cucumberTipGroup.addEventListener('click', (e) => handlePleasureSpotTap(e));
+    cucumberTipGroup.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handlePleasureSpotTap(e);
+    }, { passive: false });
+  }
 
   function handlePleasureSpotTap(e) {
     if (isOverheated) {
@@ -1691,54 +2552,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.symphonyAudio.playPleasureSpotShimmer();
     vibrate(35);
-    const rect = pleasureSpotCore.getBoundingClientRect();
+    const activeCore = (activeCharacter === 'cucumber' && cucumberTipCore) ? cucumberTipCore : pleasureSpotCore;
+    const rect = activeCore ? activeCore.getBoundingClientRect() : pleasureSpotGroup.getBoundingClientRect();
     addParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 14, 'heart');
 
     tryHitTarget('center', e);
   }
 
-  // Pleasure Spot Swirl Tracker (Continuous circle gesture)
-  pleasureSpotGroup.addEventListener('touchmove', (e) => {
+  // Real-time Swirl & RPM Calculation
+  function handleSwirlMove(e, targetEl) {
     if (isOverheated || activeTool !== 'tongue') return;
     const touch = e.touches[0];
-    const rect = pleasureSpotGroup.getBoundingClientRect();
+    const rect = targetEl.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const currentAngle = Math.atan2(touch.clientY - cy, touch.clientX - cx);
+    const now = Date.now();
 
-    if (lastAngle !== null) {
-      let deltaAngle = currentAngle - lastAngle;
+    if (lastSwirlAngle !== null && lastSwirlTime !== null) {
+      let deltaAngle = currentAngle - lastSwirlAngle;
       if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
       if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
 
-      pleasureSpotAccumulatedAngle += Math.abs(deltaAngle);
+      const deltaMs = now - lastSwirlTime;
+      accumulatedSwirlAngle += Math.abs(deltaAngle);
 
-      // Completed a 360-degree swirl!
-      if (pleasureSpotAccumulatedAngle >= Math.PI * 2) {
-        pleasureSpotAccumulatedAngle = 0;
+      // Instant RPM calculation
+      if (deltaMs > 20) {
+        const rpm = ((Math.abs(deltaAngle) / (2 * Math.PI)) / (deltaMs / 60000));
+        if (rpm > 30 && rpm < 400) {
+          rpmBadge.textContent = `⚡ ${Math.round(rpm)} RPM`;
+          rpmBadge.classList.add('visible');
+
+          if (rpm > currentTurnMaxRpm) {
+            currentTurnMaxRpm = Math.round(rpm);
+          }
+
+          clearTimeout(rpmHideTimeout);
+          rpmHideTimeout = setTimeout(() => {
+            rpmBadge.classList.remove('visible');
+          }, 1200);
+        }
+      }
+
+      // Complete 360-degree swirl
+      if (accumulatedSwirlAngle >= Math.PI * 2) {
+        accumulatedSwirlAngle = 0;
         onSuccessfulSwirl(touch.clientX, touch.clientY);
       }
     }
-    lastAngle = currentAngle;
-  }, { passive: true });
+    lastSwirlAngle = currentAngle;
+    lastSwirlTime = now;
+  }
+
+  pleasureSpotGroup.addEventListener('touchmove', (e) => handleSwirlMove(e, pleasureSpotGroup), { passive: true });
+  pleasureSpotGroup.addEventListener('touchend', () => {
+    lastSwirlAngle = null;
+    lastSwirlTime = null;
+  });
+
+  if (cucumberTipGroup) {
+    cucumberTipGroup.addEventListener('touchmove', (e) => handleSwirlMove(e, cucumberTipGroup), { passive: true });
+    cucumberTipGroup.addEventListener('touchend', () => {
+      lastSwirlAngle = null;
+      lastSwirlTime = null;
+    });
+  }
 
   function onSuccessfulSwirl(x, y) {
     score += 450 * multiplier;
     kpi = Math.min(100, kpi + 4.2);
-    // Swirl cools down overheat!
     overheatLevel = Math.max(0, overheatLevel - 25);
     showRating('SWEET SWIRL!', 'perfect');
     window.symphonyAudio.playPleasureSpotShimmer();
     vibrate(40);
     addParticles(x, y, 22, 'heart');
     updateHUD();
-    checkStageProgress();
   }
 
-  // Overheat State Logic
   function triggerOverheat() {
     isOverheated = true;
     pleasureSpotCore.classList.add('overheated');
+    if (cucumberTipCore) cucumberTipCore.classList.add('overheated');
     showRating('SUPRAÎNCĂLZIRE!', 'overheat');
     vibrate([80, 50, 80]);
 
@@ -1746,17 +2641,17 @@ document.addEventListener('DOMContentLoaded', () => {
       isOverheated = false;
       overheatLevel = 0;
       pleasureSpotCore.classList.remove('overheated');
+      if (cucumberTipCore) cucumberTipCore.classList.remove('overheated');
     }, 2500);
   }
 
-  // Gradual Overheat Cooldown
   setInterval(() => {
     if (overheatLevel > 0 && !isOverheated) {
       overheatLevel = Math.max(0, overheatLevel - 8);
     }
   }, 1000);
 
-  // Tool Selector Toggle
+  // Tool Segmented Selector
   tabFinger.addEventListener('click', () => {
     activeTool = 'finger';
     tabFinger.classList.add('active');
@@ -1773,7 +2668,6 @@ document.addEventListener('DOMContentLoaded', () => {
     vibrate(15);
   });
 
-  // Breath Catch Button
   btnBreathCatch.addEventListener('click', () => {
     breath = Math.min(100, breath + 35);
     window.symphonyAudio.playGlideTone(680);
@@ -1781,98 +2675,73 @@ document.addEventListener('DOMContentLoaded', () => {
     updateHUD();
   });
 
-  // Audio Toggle
   btnAudioToggle.addEventListener('click', () => {
     const isMuted = window.symphonyAudio.toggleMute();
     btnAudioToggle.textContent = isMuted ? '🔇' : '🔔';
   });
 
   // =========================================
-  // SIGNATURE CANVAS LOGIC
+  // SIGNATURE CANVASES LOGIC
   // =========================================
-  const sigCtx = sigCanvas.getContext('2d');
-  let isDrawing = false;
-  let hasSigned = false;
+  function setupSignaturePad(canvasEl, clearBtn) {
+    if (!canvasEl) return;
+    const ctx = canvasEl.getContext('2d');
+    let drawing = false;
 
-  sigCtx.lineWidth = 2.5;
-  sigCtx.lineCap = 'round';
-  sigCtx.strokeStyle = '#d97706';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#be123c';
 
-  function getSigCoords(e) {
-    const rect = sigCanvas.getBoundingClientRect();
-    const cx = e.touches ? e.touches[0].clientX : e.clientX;
-    const cy = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: cx - rect.left, y: cy - rect.top };
-  }
-
-  function startSig(e) {
-    isDrawing = true;
-    hasSigned = true;
-    const p = getSigCoords(e);
-    sigCtx.beginPath();
-    sigCtx.moveTo(p.x, p.y);
-  }
-
-  function drawSig(e) {
-    if (!isDrawing) return;
-    const p = getSigCoords(e);
-    sigCtx.lineTo(p.x, p.y);
-    sigCtx.stroke();
-  }
-
-  function endSig() { isDrawing = false; }
-
-  sigCanvas.addEventListener('mousedown', startSig);
-  sigCanvas.addEventListener('mousemove', drawSig);
-  window.addEventListener('mouseup', endSig);
-
-  sigCanvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    startSig(e);
-  }, { passive: false });
-
-  sigCanvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    drawSig(e);
-  }, { passive: false });
-
-  sigCanvas.addEventListener('touchend', endSig);
-
-  btnClearSig.addEventListener('click', () => {
-    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
-    hasSigned = false;
-  });
-
-  btnSignComplete.addEventListener('click', () => {
-    if (!hasSigned) {
-      sigCtx.font = '24px "Playfair Display", Georgia, serif';
-      sigCtx.fillStyle = '#d97706';
-      sigCtx.fillText('★ Otter & Prestatorul ★', 40, 48);
+    function getCoords(e) {
+      const rect = canvasEl.getBoundingClientRect();
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: cx - rect.left, y: cy - rect.top };
     }
-    window.symphonyAudio.playVictoryFanfare();
-    vibrate(80);
-    btnSignComplete.innerHTML = `<span>✓ ACORD VALIDAT & DESĂVÂRȘIT!</span><span>🎉</span>`;
-    btnSignComplete.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
 
-    setTimeout(() => {
-      alert('🎉 Felicitări! Simfonia senzorială a fost desăvârșită cu succes! Garanție de rezultat îndeplinită și pupături asigurate pentru întreaga zi.');
-    }, 700);
-  });
+    function start(e) {
+      drawing = true;
+      const p = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
 
-  // Start Game Loop on first interaction
-  function startGame() {
-    if (isGameActive) return;
-    isGameActive = true;
-    window.symphonyAudio.init();
-    window.symphonyAudio.setBPM(STAGES[0].bpm);
-    window.symphonyAudio.startBeatLoop();
-    noteSpawnTimer = setInterval(spawnRhythmNode, STAGES[0].noteIntervalMs);
+    function draw(e) {
+      if (!drawing) return;
+      const p = getCoords(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+
+    function stop() { drawing = false; }
+
+    canvasEl.addEventListener('mousedown', start);
+    canvasEl.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stop);
+
+    canvasEl.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      start(e);
+    }, { passive: false });
+
+    canvasEl.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      draw(e);
+    }, { passive: false });
+
+    canvasEl.addEventListener('touchend', stop);
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+      });
+    }
   }
 
-  // Trigger start on first touch/click
-  document.body.addEventListener('touchstart', startGame, { once: true });
-  document.body.addEventListener('click', startGame, { once: true });
+  setupSignaturePad(sigCanvas, btnClearSig);
+  setupSignaturePad(duelSigCanvas, btnClearDuelSig);
 
+  // Initial HUD Display
   updateHUD();
 });
 

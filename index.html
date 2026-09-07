@@ -27,11 +27,19 @@
           <span>🌸</span>
           <span id="stage-title-text">Stage 1: First Light</span>
         </div>
+        <div class="turn-pill-indicator" id="turn-pill-indicator">
+          <span>🎮</span>
+          <span id="turn-player-name">Prestatorul</span>
+        </div>
         <div class="hud-actions">
-          <div class="bpm-indicator" id="bpm-indicator">⚡ 75 BPM</div>
+          <button id="btn-char-toggle" class="icon-button" title="Schimbă între Piersică și Castravete">🍑</button>
+          <div class="bpm-indicator" id="bpm-indicator">⚡ 85 BPM</div>
           <button id="btn-audio-toggle" class="icon-button" title="Sunet">🔔</button>
         </div>
       </div>
+
+      <!-- Fever Mode Overdrive Banner -->
+      <div class="fever-banner" id="fever-banner">🔥 FEVER OVERDRIVE • MULTIPLICATOR EXTAZ 8X / 16X!</div>
 
       <!-- Stats: Score, Combo & Accuracy -->
       <div class="stats-dashboard">
@@ -154,8 +162,64 @@
           </g>
         </svg>
 
+        <!-- ============================================== -->
+        <!-- CUCUMBER INTERACTIVE SVG                       -->
+        <!-- ============================================== -->
+        <svg viewBox="0 0 200 200" width="100%" height="100%" id="cucumber-svg">
+          <defs>
+            <!-- Left body gradient -->
+            <radialGradient id="grad-cuke-left" cx="35%" cy="50%" r="70%">
+              <stop offset="0%" stop-color="#86efac" />
+              <stop offset="50%" stop-color="#22c55e" />
+              <stop offset="100%" stop-color="#14532d" />
+            </radialGradient>
+            <!-- Right body gradient -->
+            <radialGradient id="grad-cuke-right" cx="65%" cy="50%" r="70%">
+              <stop offset="0%" stop-color="#86efac" />
+              <stop offset="50%" stop-color="#22c55e" />
+              <stop offset="100%" stop-color="#14532d" />
+            </radialGradient>
+            <!-- Sensitive Tip Gradient -->
+            <radialGradient id="grad-cuke-tip" cx="45%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="30%" stop-color="#fef08a" />
+              <stop offset="70%" stop-color="#22c55e" />
+              <stop offset="100%" stop-color="#15803d" />
+            </radialGradient>
+          </defs>
+
+          <!-- Cucumber Stem / Base Blossom -->
+          <path d="M 98 185 Q 100 195 98 198" stroke="#3f6212" stroke-width="4" stroke-linecap="round" fill="none" />
+
+          <!-- Left Half of Cucumber Body -->
+          <path id="cucumber-left" class="cheek-zone"
+                d="M 100 45 C 80 45, 65 65, 64 110 C 63 150, 78 185, 100 185 C 98 150, 98 90, 100 45 Z"
+                fill="url(#grad-cuke-left)" />
+
+          <!-- Right Half of Cucumber Body -->
+          <path id="cucumber-right" class="cheek-zone"
+                d="M 100 45 C 120 45, 135 65, 136 110 C 137 150, 122 185, 100 185 C 102 150, 102 90, 100 45 Z"
+                fill="url(#grad-cuke-right)" />
+
+          <!-- Rib Texture Lines -->
+          <path d="M 80 75 Q 82 120 86 165" stroke="#166534" stroke-width="1.8" stroke-dasharray="2,5" fill="none" opacity="0.6" />
+          <path d="M 120 75 Q 118 120 114 165" stroke="#166534" stroke-width="1.8" stroke-dasharray="2,5" fill="none" opacity="0.6" />
+          <path d="M 100 45 L 100 185" stroke="#14532d" stroke-width="1.5" fill="none" opacity="0.3" />
+
+          <!-- Sensitive Tip / Head of the Cucumber (✨ Centered at Top) -->
+          <g id="cucumber-tip-group" class="pleasure-spot-group">
+            <circle class="pleasure-spot-aura" cx="100" cy="55" r="20" fill="#fef08a" opacity="0.4" />
+            <circle class="pleasure-spot-aura" cx="100" cy="55" r="14" fill="#4ade80" opacity="0.5" />
+            <circle id="cucumber-tip-core" class="pleasure-spot-core" cx="100" cy="55" r="10" fill="url(#grad-cuke-tip)" />
+            <circle cx="98" cy="52.5" r="2.2" fill="#ffffff" opacity="0.9" />
+          </g>
+        </svg>
+
         <!-- Swirl Guide Ring Overlay for Stage 2+ -->
         <div id="swirl-guide-ring" class="swirl-guide-ring"></div>
+
+        <!-- Live RPM Speedometer Badge on Pleasure Spot -->
+        <div class="rpm-badge" id="rpm-badge">⚡ 0 RPM</div>
       </div>
     </main>
 
@@ -229,10 +293,152 @@
         <span>Aprobă & Validează Parteneriatul</span>
         <span>💮</span>
       </button>
+  <!-- ========================================= -->
+  <!-- SPICY WAGER SELECTION MODAL (PRE-GAME)    -->
+  <!-- ========================================= -->
+  <div class="modal-overlay open" id="wager-modal">
+    <div class="wager-modal-content">
+      <span class="wager-badge-tag">⚔️ MODUL DUEL 1V1 • MIZE SPICY</span>
+      <h2 style="font-size:1.3rem; font-weight:900; color:#4c0519; margin-bottom:4px;">Alegeți Miza Meciului</h2>
+      <p style="font-size:0.8rem; color:#9f1239; margin-bottom:12px;">Cine pierde jocul are obligația să onoreze miza aleasă în această seară!</p>
+
+      <!-- Character Choice: Peach vs Cucumber -->
+      <div style="margin-bottom:14px;">
+        <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
+          Alegeți Activul Ritmului:
+        </label>
+        <div class="character-toggle-bar" id="character-toggle-bar">
+          <button type="button" class="char-tab-btn active" data-char="peach">
+            <span style="font-size:1.2rem;">🍑</span>
+            <span>Piersica Catifelată</span>
+          </button>
+          <button type="button" class="char-tab-btn" data-char="cucumber">
+            <span style="font-size:1.2rem;">🥒</span>
+            <span>Castravetele Ferm</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="wagers-list" id="wagers-list">
+        <div class="wager-card-option selected" data-wager="20 de minute de masaj senzual cu ulei cald la lumina lumânărilor fără nicio grabă">
+          <div class="wager-icon">🔥</div>
+          <div class="wager-info">
+            <h4>Masaj Senzual Fără Grabă</h4>
+            <p>20 de minute de masaj cu ulei cald la lumina lumânărilor</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="Câștigătorul dictează scenariul, ritmul și poziția în pat în această seară">
+          <div class="wager-icon">👑</div>
+          <div class="wager-info">
+            <h4>Comandă Totală în Pat</h4>
+            <p>Câștigătorul dictează scenariul, ritmul și poziția în pat</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="Mângâieri și sărutări dedicate în zonele fierbinți fără limită de timp">
+          <div class="wager-icon">💋</div>
+          <div class="wager-info">
+            <h4>Răsfăț Oral Dedicat</h4>
+            <p>Mângâieri și sărutări în zonele fierbinți fără limită de timp</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="Joc intim senzorial cu căpșuni, ciocolată sau frișcă direct pe piele">
+          <div class="wager-icon">🍓</div>
+          <div class="wager-info">
+            <h4>Fructe & Dulceață</h4>
+            <p>Joc intim senzorial cu frișcă, ciocolată sau fructe pe corp</p>
+          </div>
+        </div>
+
+        <div class="wager-card-option" data-wager="custom">
+          <div class="wager-icon">✍️</div>
+          <div class="wager-info" style="width:100%;">
+            <h4>Miză Secretă Personalizată</h4>
+            <input type="text" id="custom-wager-text" class="custom-wager-input" placeholder="Scrieți aici propria miză spicy..." />
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-start-duel" class="btn-level-action" style="width:100%; margin-top:6px;">
+        <span>Confirmă Miza & Începe Runda Prestatorului</span>
+        <span>🔥</span>
+      </button>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- ========================================= -->
+  <!-- TURN HANDOVER MODAL (PASS THE PHONE)      -->
+  <!-- ========================================= -->
+  <div class="modal-overlay" id="handover-modal">
+    <div class="handover-card">
+      <div class="handover-avatar">🏆</div>
+      <h2 style="font-size:1.3rem; font-weight:900; color:#78350f; margin-bottom:6px;">Runda Prestatorului s-a încheiat!</h2>
+      <p style="font-size:0.85rem; color:#92400e; margin-bottom:12px;">
+        Scorul de bătut este: <strong id="handover-target-score" style="font-size:1.25rem; color:#b45309;">0</strong> puncte!
+      </p>
+
+      <div style="background:#fff7ed; border:1.5px solid #fed7aa; border-radius:14px; padding:10px 12px; margin-bottom:14px; text-align:left;">
+        <div style="font-size:0.7rem; font-weight:800; color:#ea580c; text-transform:uppercase;">Miza pusă în joc:</div>
+        <div id="handover-wager-text" style="font-size:0.82rem; font-weight:700; color:#9a3412; margin-top:2px;"></div>
+      </div>
+
+      <p style="font-size:0.85rem; color:#6b4d3d; margin-bottom:16px; font-weight:600;">
+        Predă telefonul lui <strong>Otter</strong>! Ești gata să arăți cine domină ritmul?
+      </p>
+
+      <button id="btn-start-player2" class="btn-level-action" style="width:100%; margin-top:0;">
+        <span>Am luat telefonul, rândul lui Otter! 🍑</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================= -->
+  <!-- DUEL WINNER CEREMONY MODAL                -->
+  <!-- ========================================= -->
+  <div class="modal-overlay" id="duel-winner-modal">
+    <div class="cert-card" style="max-width:410px;">
+      <div class="rank-badge" id="duel-winner-badge" style="background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">👑 VICTORIE TOTALĂ!</div>
+      <h2 class="cert-title" id="duel-winner-headline">Otter a Câștigat Duelul!</h2>
+      
+      <div class="duel-vs-grid">
+        <div class="player-duel-column" id="p1-duel-col">
+          <span class="crown-icon" id="p1-crown" style="visibility:hidden;">👑</span>
+          <span class="name">Prestatorul</span>
+          <span class="score-num" id="p1-final-score">0</span>
+          <span style="font-size:0.68rem; color:#78350f;" id="p1-final-acc">0% Acc</span>
+        </div>
+        
+        <div class="duel-vs-badge">VS</div>
+        
+        <div class="player-duel-column" id="p2-duel-col">
+          <span class="crown-icon" id="p2-crown" style="visibility:hidden;">👑</span>
+          <span class="name">Otter</span>
+          <span class="score-num" id="p2-final-score">0</span>
+          <span style="font-size:0.68rem; color:#78350f;" id="p2-final-acc">0% Acc</span>
+        </div>
+      </div>
+
+      <div class="wager-awarded-box">
+        <h4>★ RECOMPENSA CÂȘTIGATĂ ★</h4>
+        <p id="duel-awarded-wager-text"></p>
+      </div>
+
+      <div class="signature-box">
+        <div style="font-size:0.72rem; color:#881337; font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between;">
+          <span>Semnătura învinsului (acceptare & onorare):</span>
+          <button id="btn-clear-duel-sig" style="background:none; border:none; color:var(--primary-rose); font-size:0.75rem; font-weight:700; cursor:pointer;">Șterge</button>
+        </div>
+        <canvas id="duel-signature-canvas" width="340" height="65"></canvas>
+      </div>
+
+      <button id="btn-finish-duel" class="btn-level-action" style="width:100%; margin-top:0;">
+        <span>Onorează Miza & Reia Duelul</span>
+        <span>💋</span>
+      </button>
+    </div>
+  </div>
   <script src="audio.js"></script>
   <script src="game.js"></script>
 </body>
