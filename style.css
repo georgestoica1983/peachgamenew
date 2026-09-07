@@ -958,6 +958,65 @@ body.fever-active .fever-banner {
   box-shadow: 0 3px 10px rgba(190, 18, 60, 0.2);
 }
 
+/* Difficulty Toggle Bar */
+.difficulty-toggle-bar {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: #fdf2f8;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 16px;
+  padding: 4px;
+  gap: 6px;
+}
+
+.diff-tab-btn {
+  padding: 8px 6px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #831843;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.diff-tab-btn.active {
+  background: #ffffff;
+  color: #be123c;
+  box-shadow: 0 3px 10px rgba(190, 18, 60, 0.2);
+}
+
+.diff-tab-btn[data-diff="hardcore"].active {
+  background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+  color: #ffffff;
+  box-shadow: 0 3px 12px rgba(190, 18, 60, 0.4);
+}
+
+.diff-badge-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid #fb7185;
+  color: #9f1239;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.diff-badge-btn:active {
+  transform: scale(0.95);
+}
+
 /* Cucumber Interactive SVG & Animations */
 #cucumber-svg {
   display: none;

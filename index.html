@@ -33,6 +33,7 @@
         </div>
         <div class="hud-actions">
           <button id="btn-char-toggle" class="icon-button" title="Schimbă între Piersică și Castravete">🍑</button>
+          <button id="btn-diff-badge" class="diff-badge-btn" title="Schimbă Dificultatea">🟡 Mediu</button>
           <div class="bpm-indicator" id="bpm-indicator">⚡ 85 BPM</div>
           <button id="btn-audio-toggle" class="icon-button" title="Sunet">🔔</button>
         </div>
@@ -252,6 +253,12 @@
         <span id="btn-next-stage-text">Treci la Etapa Următoare</span>
         <span>✨</span>
       </button>
+
+      <!-- Open Duel & Settings Button (Visible when idle) -->
+      <button id="btn-open-duel-modal" class="btn-level-action" style="width: 100%; margin-top: 6px;">
+        <span>⚔️ Alege Dificultatea & Miza Duelului</span>
+        <span>🔥</span>
+      </button>
     </footer>
   </div>
 
@@ -293,6 +300,9 @@
         <span>Aprobă & Validează Parteneriatul</span>
         <span>💮</span>
       </button>
+    </div>
+  </div>
+
   <!-- ========================================= -->
   <!-- SPICY WAGER SELECTION MODAL (PRE-GAME)    -->
   <!-- ========================================= -->
@@ -303,7 +313,7 @@
       <p style="font-size:0.8rem; color:#9f1239; margin-bottom:12px;">Cine pierde jocul are obligația să onoreze miza aleasă în această seară!</p>
 
       <!-- Character Choice: Peach vs Cucumber -->
-      <div style="margin-bottom:14px;">
+      <div style="margin-bottom:12px;">
         <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
           Alegeți Activul Ritmului:
         </label>
@@ -315,6 +325,34 @@
           <button type="button" class="char-tab-btn" data-char="cucumber">
             <span style="font-size:1.2rem;">🥒</span>
             <span>Castravetele Ferm</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Difficulty Level Selector -->
+      <div style="margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <label style="font-size:0.75rem; font-weight:800; color:#881337; text-transform:uppercase; letter-spacing:0.5px;">
+            Grad de Dificultate:
+          </label>
+          <span id="diff-desc-label" style="font-size:0.7rem; color:#9f1239; font-weight:700;">Standard • Ritm echilibrat</span>
+        </div>
+        <div class="difficulty-toggle-bar" id="difficulty-toggle-bar">
+          <button type="button" class="diff-tab-btn" data-diff="easy">
+            <span>🟢</span>
+            <span>Sensual (Ușor)</span>
+          </button>
+          <button type="button" class="diff-tab-btn active" data-diff="medium">
+            <span>🟡</span>
+            <span>Pasiune (Mediu)</span>
+          </button>
+          <button type="button" class="diff-tab-btn" data-diff="hard">
+            <span>🔴</span>
+            <span>Extaz (Intens)</span>
+          </button>
+          <button type="button" class="diff-tab-btn" data-diff="hardcore">
+            <span>🔥</span>
+            <span>Hardcore (Sălbatic)</span>
           </button>
         </div>
       </div>

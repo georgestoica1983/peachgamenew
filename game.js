@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const cucumberTipGroup = document.getElementById('cucumber-tip-group');
   const cucumberTipCore = document.getElementById('cucumber-tip-core');
 
+  // Difficulty Selector Elements
+  const btnDiffBadge = document.getElementById('btn-diff-badge');
+  const diffTabBtns = document.querySelectorAll('.diff-tab-btn');
+  const diffDescLabel = document.getElementById('diff-desc-label');
+  const btnOpenDuelModal = document.getElementById('btn-open-duel-modal');
+
   // Modals References
   const wagerModal = document.getElementById('wager-modal');
   const wagersList = document.getElementById('wagers-list');
@@ -180,6 +186,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
     charTabBtns.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.char === activeCharacter);
+    });
+  }
+
+  // =========================================
+  // DIFFICULTY CONFIGURATION & MECHANICS
+  // =========================================
+  const DIFFICULTY_CONFIG = {
+    easy: {
+      name: '🟢 Sensual (Ușor)',
+      shortName: '🟢 Ușor',
+      desc: 'Ritm relaxat • Ferestre mari de reacție',
+      spawnMultiplier: 1.35,
+      approachTimeMs: 780,
+      hitWindowMs: 230,
+      perfectWindowMs: 95,
+      scoreMultiplier: 1.0,
+      breathDrain: 1.2,
+      bpmMultiplier: 0.9
+    },
+    medium: {
+      name: '🟡 Pasiune (Mediu)',
+      shortName: '🟡 Mediu',
+      desc: 'Standard • Ritm dinamic echilibrat',
+      spawnMultiplier: 1.0,
+      approachTimeMs: 650,
+      hitWindowMs: 180,
+      perfectWindowMs: 75,
+      scoreMultiplier: 1.5,
+      breathDrain: 2.2,
+      bpmMultiplier: 1.0
+    },
+    hard: {
+      name: '🔴 Extaz (Intens)',
+      shortName: '🔴 Intens',
+      desc: 'Ritm alert • Ferestre strânse • Viteză mare',
+      spawnMultiplier: 0.72,
+      approachTimeMs: 500,
+      hitWindowMs: 130,
+      perfectWindowMs: 55,
+      scoreMultiplier: 2.5,
+      breathDrain: 3.5,
+      bpmMultiplier: 1.15
+    },
+    hardcore: {
+      name: '🔥 Hardcore (Sălbatic)',
+      shortName: '🔥 Hardcore',
+      desc: 'Viteză fulger • Penalizări mari • Doar pt campioni!',
+      spawnMultiplier: 0.52,
+      approachTimeMs: 390,
+      hitWindowMs: 95,
+      perfectWindowMs: 40,
+      scoreMultiplier: 4.0,
+      breathDrain: 5.5,
+      bpmMultiplier: 1.25
+    }
+  };
+
+  let selectedDifficulty = 'medium'; // 'easy' | 'medium' | 'hard' | 'hardcore'
+
+  function setDifficulty(diff) {
+    if (!DIFFICULTY_CONFIG[diff]) return;
+    selectedDifficulty = diff;
+    const cfg = DIFFICULTY_CONFIG[diff];
+
+    if (btnDiffBadge) {
+      btnDiffBadge.textContent = cfg.shortName;
+    }
+
+    if (diffDescLabel) {
+      diffDescLabel.textContent = cfg.desc;
+    }
+
+    diffTabBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.diff === diff);
     });
   }
 
@@ -385,7 +465,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ring.style.height = '50px';
     nodesLayer.appendChild(ring);
 
-    const hitWindowMs = 650;
+    const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
+    const hitWindowMs = diffCfg.approachTimeMs;
     const targetHitTime = Date.now() + hitWindowMs;
 
     const rect = peachWrap.getBoundingClientRect();
@@ -416,26 +497,28 @@ document.addEventListener('DOMContentLoaded', () => {
       if (progress < 1) {
         requestAnimationFrame(animateRing);
       } else {
+        const missGraceMs = Math.round(diffCfg.hitWindowMs * 0.45);
         setTimeout(() => {
           if (!noteObj.hit) {
             noteObj.hit = true;
             ring.remove();
             handleNoteResult('miss', noteObj);
           }
-        }, 110);
+        }, missGraceMs);
       }
     }
     requestAnimationFrame(animateRing);
   }
 
   function handleNoteResult(rating, noteObj) {
+    const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
     if (rating === 'perfect') {
       combo++;
       hitNotes++;
-      const gain = 300 * multiplier;
+      const gain = Math.round(300 * multiplier * diffCfg.scoreMultiplier);
       score += gain;
       kpi = Math.min(100, kpi + 2.5);
-      breath = Math.max(10, breath - 2.5);
+      breath = Math.max(5, breath - (diffCfg.breathDrain * 0.8));
       showRating('PERFECT!', 'perfect');
       window.symphonyAudio.playPerfectHit();
       vibrate(28);
@@ -443,17 +526,17 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (rating === 'great') {
       combo++;
       hitNotes++;
-      const gain = 150 * multiplier;
+      const gain = Math.round(150 * multiplier * diffCfg.scoreMultiplier);
       score += gain;
       kpi = Math.min(100, kpi + 1.4);
-      breath = Math.max(10, breath - 1.5);
+      breath = Math.max(5, breath - diffCfg.breathDrain);
       showRating('GREAT!', 'great');
       window.symphonyAudio.playGreatHit();
       vibrate(18);
       addParticles(noteObj.x, noteObj.y, 10, 'circle');
     } else {
       combo = 0;
-      breath = Math.max(5, breath - 5.0);
+      breath = Math.max(0, breath - (diffCfg.breathDrain * 2.2));
       showRating('MISS', 'miss');
       window.symphonyAudio.playMiss();
       vibrate(45);
@@ -467,19 +550,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function tryHitTarget(targetName, e) {
     window.symphonyAudio.init();
     const now = Date.now();
+    const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
 
-    const note = activeNotes.find(n => !n.hit && n.target === targetName && Math.abs(now - n.targetTime) <= 190);
+    const note = activeNotes.find(n => !n.hit && n.target === targetName && Math.abs(now - n.targetTime) <= diffCfg.hitWindowMs);
 
     if (note) {
       note.hit = true;
       const delta = Math.abs(now - note.targetTime);
-      if (delta <= 75) {
+      if (delta <= diffCfg.perfectWindowMs) {
         handleNoteResult('perfect', note);
       } else {
         handleNoteResult('great', note);
       }
     } else {
-      score += 25 * multiplier;
+      score += Math.round(25 * multiplier * diffCfg.scoreMultiplier);
       kpi = Math.min(100, kpi + 0.5);
       updateHUD();
     }
@@ -492,20 +576,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isGameActive) return;
     currentMovementIdx = idx;
     const movement = SONG_MOVEMENTS[idx];
+    const diffCfg = DIFFICULTY_CONFIG[selectedDifficulty] || DIFFICULTY_CONFIG.medium;
 
+    const actualBpm = Math.round(movement.bpm * diffCfg.bpmMultiplier);
     stageTitleText.textContent = `${currentTurnPlayer} • ${movement.name}`;
-    bpmIndicator.textContent = `⚡ ${movement.bpm} BPM`;
+    bpmIndicator.textContent = `⚡ ${actualBpm} BPM`;
     instructionTitle.textContent = movement.intro;
     instructionSub.textContent = movement.sub;
 
-    window.symphonyAudio.setBPM(movement.bpm);
+    window.symphonyAudio.setBPM(actualBpm);
 
     if (idx >= 1) {
       swirlGuideRing.style.display = 'block';
+    } else {
+      swirlGuideRing.style.display = 'none';
     }
 
     clearInterval(noteSpawnTimer);
-    noteSpawnTimer = setInterval(spawnRhythmNode, movement.noteIntervalMs);
+    const actualInterval = Math.round(movement.noteIntervalMs * diffCfg.spawnMultiplier);
+    noteSpawnTimer = setInterval(spawnRhythmNode, actualInterval);
 
     movementTimer = setTimeout(() => {
       if (currentMovementIdx < SONG_MOVEMENTS.length - 1) {
@@ -530,6 +619,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentTurnMaxRpm = 0;
     deactivateFeverMode();
 
+    if (btnOpenDuelModal) btnOpenDuelModal.style.display = 'none';
+
     turnPlayerName.textContent = currentTurnPlayer;
     turnPillIndicator.className = currentTurnPlayer === 'Otter'
       ? 'turn-pill-indicator otter-turn'
@@ -548,6 +639,8 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(movementTimer);
     window.symphonyAudio.stopBeatLoop();
     deactivateFeverMode();
+
+    if (btnOpenDuelModal) btnOpenDuelModal.style.display = 'flex';
 
     const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
 
@@ -688,6 +781,36 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Difficulty Select Buttons
+  diffTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const d = btn.dataset.diff;
+      if (d) {
+        setDifficulty(d);
+        window.symphonyAudio.playGlideTone(620);
+        vibrate(20);
+      }
+    });
+  });
+
+  if (btnDiffBadge) {
+    btnDiffBadge.addEventListener('click', () => {
+      const diffs = ['easy', 'medium', 'hard', 'hardcore'];
+      const nextIdx = (diffs.indexOf(selectedDifficulty) + 1) % diffs.length;
+      setDifficulty(diffs[nextIdx]);
+      window.symphonyAudio.playGlideTone(540 + nextIdx * 80);
+      vibrate(25);
+    });
+  }
+
+  if (btnOpenDuelModal) {
+    btnOpenDuelModal.addEventListener('click', () => {
+      wagerModal.classList.add('open');
+      window.symphonyAudio.playGlideTone(580);
+      vibrate(20);
+    });
+  }
 
   // =========================================
   // TOUCH ZONES & PLEASURE SPOT SWIRL TRACKER
@@ -941,6 +1064,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSignaturePad(sigCanvas, btnClearSig);
   setupSignaturePad(duelSigCanvas, btnClearDuelSig);
 
-  // Initial HUD Display
+  // Initial Setup
+  setDifficulty('medium');
   updateHUD();
 });
