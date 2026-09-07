@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Peach Sensory Symphony • Rhythm & Mastery</title>
+  <style>
+/* style.css - Luxury Pastel Rhythm Aesthetics for Peach Sensory Symphony */
+
+:root {
+  --bg-gradient: linear-gradient(155deg, #fffbf8 0%, #fff0ec 40%, #ffebf3 100%);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(255, 210, 215, 0.7);
+  --shadow-main: 0 14px 35px rgba(255, 130, 140, 0.15);
+  
+  --primary-rose: #ff5e7e;
+  --peach-warm: #ff8a7a;
+  --gold-shimmer: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.45);
+  --mint-accent: #10b981;
+  --danger-breath: #ef4444;
+  --text-dark: #2e1c20;
+  --text-muted: #7d656a;
+  
+  --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  color: var(--text-dark);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: env(safe-area-inset-top, 12px) 14px env(safe-area-inset-bottom, 16px) 14px;
+  overflow-x: hidden;
+  touch-action: manipulation;
+}
+
+#symphony-app {
+  width: 100%;
+  max-width: 440px;
+  min-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ========================================= */
+/* TOP HUD: STAGE, BPM & DASHBOARD           */
+/* ========================================= */
+.top-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.hud-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stage-pill {
+  background: #ffffff;
+  border: 1.5px solid #ffd4cc;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--primary-rose);
+  box-shadow: 0 2px 8px rgba(255, 94, 126, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bpm-indicator {
+  background: #fff6e5;
+  border: 1px solid #fde68a;
+  color: #b45309;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.icon-button {
+  background: #ffffff;
+  border: 1px solid #ffd4cc;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.icon-button:active {
+  transform: scale(0.92);
+}
+
+/* Score, Combo & Accuracy Grid */
+.stats-dashboard {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  align-items: center;
+  box-shadow: var(--shadow-main);
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1f2937;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-box.combo .stat-value {
+  color: var(--primary-rose);
+  transition: transform 0.1s;
+}
+
+.stat-box.combo.hype .stat-value {
+  animation: comboPulse 0.4s ease;
+  color: #ec4899;
+}
+
+@keyframes comboPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.multiplier-tag {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* Dual Resource Gauges (Pleasure/KPI & Breath) */
+.gauges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.gauge-bar-bg {
+  height: 10px;
+  background: #f5e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gauge-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.2s cubic-bezier(0.1, 0.6, 0.3, 1);
+}
+
+.gauge-bar-fill.pleasure {
+  background: linear-gradient(90deg, #ff9a8b 0%, #ff5e7e 60%, #ff70a6 100%);
+  width: 0%;
+}
+
+.gauge-bar-fill.breath {
+  background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+  width: 100%;
+}
+
+.gauge-bar-fill.breath.danger {
+  background: var(--danger-breath);
+  animation: shakeWarning 0.6s infinite ease-in-out;
+}
+
+@keyframes shakeWarning {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+/* ========================================= */
+/* CENTER RHYTHM STAGE: THE SENSORY PEACH    */
+/* ========================================= */
+.rhythm-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 310px;
+  touch-action: none;
+}
+
+/* Dynamic Aura around the peach */
+.peach-ambient-aura {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 140, 160, 0.28) 0%, rgba(255, 230, 235, 0) 70%);
+  animation: ambientBeat 1.8s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes ambientBeat {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.9; }
+}
+
+/* SVG Peach Interactive Container */
+.peach-interactive-wrap {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.peach-interactive-wrap.jiggle {
+  animation: peachBounce 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes peachBounce {
+  0% { transform: scale(1, 1); }
+  40% { transform: scale(1.08, 0.92); }
+  75% { transform: scale(0.95, 1.05); }
+  100% { transform: scale(1, 1); }
+}
+
+/* Left & Right Cheeks */
+.cheek-zone {
+  cursor: pointer;
+  transition: fill 0.15s, filter 0.15s;
+}
+
+.cheek-zone:active {
+  filter: brightness(1.12);
+}
+
+/* ========================================= */
+/* THE PLEASURE SPOT (CENTRAL JEWEL BELOW STEM) */
+/* ========================================= */
+.pleasure-spot-group {
+  cursor: pointer;
+  position: relative;
+}
+
+.pleasure-spot-aura {
+  transform-origin: 100px 72px;
+  animation: pleasurePulse 1.6s infinite ease-in-out;
+}
+
+@keyframes pleasurePulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 10px #f59e0b); }
+}
+
+.pleasure-spot-core {
+  fill: radial-gradient(circle, #fff3b0 0%, #f59e0b 60%, #d97706 100%);
+  filter: drop-shadow(0 2px 6px rgba(217, 119, 6, 0.5));
+  transition: transform 0.1s, fill 0.2s;
+}
+
+.pleasure-spot-core:active {
+  transform: scale(0.92);
+}
+
+.pleasure-spot-core.overheated {
+  fill: #dc2626 !important;
+  animation: burnFlicker 0.4s infinite alternate;
+}
+
+@keyframes burnFlicker {
+  from { filter: drop-shadow(0 0 12px #dc2626); }
+  to { filter: drop-shadow(0 0 4px #b91c1c); }
+}
+
+/* Swirl Guide Rotation Ring for Pleasure Spot */
+.swirl-guide-ring {
+  position: absolute;
+  top: 52px;
+  left: 80px;
+  width: 40px;
+  height: 40px;
+  border: 2px dashed #f59e0b;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: rotateSwirl 3s linear infinite;
+  display: none;
+}
+
+@keyframes rotateSwirl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Rating Popups (PERFECT / GREAT / MISS) */
+.rating-popup {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  pointer-events: none;
+  z-index: 50;
+  animation: ratingAnim 0.6s ease-out forwards;
+}
+
+.rating-popup.perfect {
+  color: #f59e0b;
+  text-shadow: 0 2px 12px rgba(245, 158, 11, 0.5);
+}
+
+.rating-popup.great {
+  color: #10b981;
+  text-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+}
+
+.rating-popup.miss {
+  color: #ef4444;
+  text-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
+}
+
+.rating-popup.overheat {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+@keyframes ratingAnim {
+  0% { transform: translate(-50%, -30%) scale(0.6); opacity: 0; }
+  35% { transform: translate(-50%, -55%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -85%) scale(1); opacity: 0; }
+}
+
+/* Approach Ring for Rhythm Nodes */
+.rhythm-approach-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid var(--primary-rose);
+  pointer-events: none;
+  z-index: 20;
+  box-shadow: 0 0 10px rgba(255, 94, 126, 0.4);
+}
+
+/* ========================================= */
+/* BOTTOM CONTROLS: TOOLS & ABILITIES        */
+/* ========================================= */
+.bottom-controls-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: var(--shadow-main);
+  margin-top: 8px;
+}
+
+.instruction-bar {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.instruction-title {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.instruction-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Tool Segmented Toggle (👆 Deget vs 👅 Limbă) */
+.tool-selector-bar {
+  display: flex;
+  background: #fae8eb;
+  padding: 3px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.tool-tab-btn {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  background: transparent;
+  border-radius: 11px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.tool-tab-btn.active {
+  background: #ffffff;
+  color: var(--primary-rose);
+  box-shadow: 0 3px 8px rgba(255, 94, 126, 0.18);
+}
+
+/* Catch Breath / Recovery Button */
+.btn-breath-recovery {
+  width: 100%;
+  background: #ffffff;
+  color: #2563eb;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-breath-recovery:active {
+  background: #eff6ff;
+}
+
+/* Next Level Action Button */
+.btn-level-action {
+  width: 100%;
+  background: linear-gradient(135deg, #ff5e7e 0%, #ff8a7a 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 13px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 94, 126, 0.35);
+  margin-top: 8px;
+  transition: transform 0.15s;
+}
+
+.btn-level-action:active {
+  transform: scale(0.97);
+}
+
+/* Particles Canvas */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ========================================= */
+/* VICTORY & GRADE CERTIFICATE MODAL         */
+/* ========================================= */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(35, 20, 25, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 20000;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.cert-card {
+  background: #fffdfa;
+  width: 100%;
+  max-width: 390px;
+  border-radius: 24px;
+  padding: 22px 18px;
+  border: 2px solid #ecd7b7;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: certPop 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes certPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.rank-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.cert-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #3b2212;
+  margin-bottom: 6px;
+}
+
+.cert-subtitle {
+  font-size: 0.82rem;
+  color: #6b4d3d;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.stats-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: #fff7eb;
+  border: 1px solid #fed7aa;
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 14px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-item .num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #b45309;
+}
+
+.summary-item .desc {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #92400e;
+  text-transform: uppercase;
+}
+
+.signature-box {
+  background: #ffffff;
+  border: 1.5px dashed #fed7aa;
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 14px;
+}
+
+#signature-canvas {
+  width: 100%;
+  height: 75px;
+  display: block;
+  touch-action: none;
+}
+
+</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#fff8f5">
+</head>
+<body>
+
+  <!-- Background Particle Effects Layer -->
+  <canvas id="particles-canvas"></canvas>
+
+  <div id="symphony-app">
+    <!-- ========================================= -->
+    <!-- TOP HUD: STAGE, BPM & LIVE STATS          -->
+    <!-- ========================================= -->
+    <header class="top-hud">
+      <div class="hud-header-row">
+        <div class="stage-pill" id="stage-pill">
+          <span>🌸</span>
+          <span id="stage-title-text">Stage 1: First Light</span>
+        </div>
+        <div class="hud-actions">
+          <div class="bpm-indicator" id="bpm-indicator">⚡ 75 BPM</div>
+          <button id="btn-audio-toggle" class="icon-button" title="Sunet">🔔</button>
+        </div>
+      </div>
+
+      <!-- Stats: Score, Combo & Accuracy -->
+      <div class="stats-dashboard">
+        <div class="stat-box">
+          <span class="stat-label">Scor Ritm</span>
+          <span class="stat-value" id="val-score">0</span>
+        </div>
+
+        <div class="stat-box combo" id="stat-combo-box">
+          <span class="stat-label">Combo</span>
+          <span class="stat-value" id="val-combo">0x</span>
+        </div>
+
+        <div class="stat-box" style="align-items: flex-end;">
+          <span class="stat-label">Acuratețe</span>
+          <span class="stat-value" id="val-accuracy">100%</span>
+          <span class="multiplier-tag" id="val-multiplier">1x MULTI</span>
+        </div>
+      </div>
+
+      <!-- Dual Resource Gauges: Pleasure / KPI & Breath -->
+      <div class="gauges-container">
+        <div class="gauge-wrap">
+          <div class="gauge-header">
+            <span>⚡ KPI Plăcere</span>
+            <span id="label-kpi-val">0%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="bar-pleasure" class="gauge-bar-fill pleasure"></div>
+          </div>
+        </div>
+
+        <div class="gauge-wrap">
+          <div class="gauge-header">
+            <span>🫁 Respirație & Oxigen</span>
+            <span id="label-breath-val">100%</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div id="bar-breath" class="gauge-bar-fill breath"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================= -->
+    <!-- CENTER STAGE: THE SENSORY PEACH           -->
+    <!-- ========================================= -->
+    <main class="rhythm-stage" id="rhythm-stage">
+      <div class="peach-ambient-aura"></div>
+
+      <!-- Rating Popup Feedback Container (*PERFECT!*, *GREAT!*, *MISS*) -->
+      <div id="rating-container"></div>
+
+      <!-- Rhythm Approach Rings & Node Layer -->
+      <div id="rhythm-nodes-layer" style="position:absolute; width:100%; height:100%; pointer-events:none; z-index:15;"></div>
+
+      <div class="peach-interactive-wrap" id="peach-interactive-wrap">
+        <svg viewBox="0 0 200 200" width="100%" height="100%" id="peach-svg">
+          <defs>
+            <!-- Gradient for Left Cheek -->
+            <radialGradient id="grad-left" cx="38%" cy="46%" r="65%">
+              <stop offset="0%" stop-color="#ffb3a1" />
+              <stop offset="55%" stop-color="#ff6b8b" />
+              <stop offset="100%" stop-color="#e03856" />
+            </radialGradient>
+
+            <!-- Gradient for Right Cheek -->
+            <radialGradient id="grad-right" cx="62%" cy="46%" r="65%">
+              <stop offset="0%" stop-color="#ffb3a1" />
+              <stop offset="55%" stop-color="#ff6b8b" />
+              <stop offset="100%" stop-color="#e03856" />
+            </radialGradient>
+
+            <!-- Gold/Pearl Shimmer for the Pleasure Spot -->
+            <radialGradient id="grad-pleasure-spot" cx="45%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="35%" stop-color="#fef08a" />
+              <stop offset="70%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#b45309" />
+            </radialGradient>
+
+            <!-- Leaf Gradient -->
+            <linearGradient id="grad-leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#86efac" />
+              <stop offset="100%" stop-color="#22c55e" />
+            </linearGradient>
+          </defs>
+
+          <!-- Stem & Leaf -->
+          <g class="peach-stem-group">
+            <path d="M 100 46 C 100 24, 126 14, 144 20 C 144 36, 124 48, 100 46 Z" fill="url(#grad-leaf)" />
+            <path d="M 100 46 Q 102 36 100 30" stroke="#5c3d2e" stroke-width="3" stroke-linecap="round" fill="none" />
+          </g>
+
+          <!-- Zone 1: Left Cheek (🍓) -->
+          <path id="peach-left" class="cheek-zone"
+                d="M 100 46 C 64 42, 24 74, 24 118 C 24 162, 68 186, 100 190 C 96 150, 96 82, 100 46 Z"
+                fill="url(#grad-left)" />
+
+          <!-- Zone 2: Right Cheek (🍑) -->
+          <path id="peach-right" class="cheek-zone"
+                d="M 100 46 C 136 42, 176 74, 176 118 C 176 162, 132 186, 100 190 C 104 150, 104 82, 100 46 Z"
+                fill="url(#grad-right)" />
+
+          <!-- Central Cleft Shadow -->
+          <path d="M 100 46 Q 98 118 100 190" stroke="#b91c1c" stroke-width="2" fill="none" opacity="0.45" />
+
+          <!-- ============================================== -->
+          <!-- ZONE 3: THE PLEASURE SPOT (RIGHT BELOW STEM)   -->
+          <!-- ============================================== -->
+          <g id="pleasure-spot-group" class="pleasure-spot-group">
+            <!-- Pulsing Golden Aura -->
+            <circle class="pleasure-spot-aura" cx="100" cy="74" r="19" fill="#fef08a" opacity="0.35" />
+            <circle class="pleasure-spot-aura" cx="100" cy="74" r="14" fill="#f59e0b" opacity="0.45" />
+
+            <!-- Core Jewel Spot -->
+            <circle id="pleasure-spot-core" class="pleasure-spot-core" cx="100" cy="74" r="9.5" fill="url(#grad-pleasure-spot)" />
+
+            <!-- Star Highlight -->
+            <circle cx="98" cy="71.5" r="2.2" fill="#ffffff" opacity="0.9" />
+          </g>
+        </svg>
+
+        <!-- Swirl Guide Ring Overlay for Stage 2+ -->
+        <div id="swirl-guide-ring" class="swirl-guide-ring"></div>
+      </div>
+    </main>
+
+    <!-- ========================================= -->
+    <!-- BOTTOM CONTROLS & DYNAMIC INSTRUCTIONS    -->
+    <!-- ========================================= -->
+    <footer class="bottom-controls-card">
+      <div class="instruction-bar">
+        <div class="instruction-title" id="instruction-title">Atinge notele de ritm când inelul se micșorează!</div>
+        <div class="instruction-sub" id="instruction-sub">Punctul de plăcere de sub codiță activează multiplicatorul 2x.</div>
+      </div>
+
+      <!-- Tool Switcher: 👆 Deget vs 👅 Limbă -->
+      <div class="tool-selector-bar">
+        <button id="tab-finger" class="tool-tab-btn active">
+          <span>👆 Vârful Degetului (Tap)</span>
+        </button>
+        <button id="tab-tongue" class="tool-tab-btn">
+          <span>👅 Vârful Limbii (Glide & Swirl)</span>
+        </button>
+      </div>
+
+      <!-- Breath Catch Button -->
+      <button id="btn-breath-catch" class="btn-breath-recovery">
+        <span>🫁 Pauză de Sărut (+35% Oxigen)</span>
+      </button>
+
+      <!-- Stage Progression Button -->
+      <button id="btn-next-stage" class="btn-level-action" style="display: none;">
+        <span id="btn-next-stage-text">Treci la Etapa Următoare</span>
+        <span>✨</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- ========================================= -->
+  <!-- VICTORY & GRADE CERTIFICATE MODAL         -->
+  <!-- ========================================= -->
+  <div class="modal-overlay" id="victory-modal">
+    <div class="cert-card">
+      <div class="rank-badge" id="modal-rank-badge">★ S RANK • EXCELLENT ★</div>
+      <h2 class="cert-title">Acord de Ritm Îndeplinit</h2>
+      <p class="cert-subtitle">
+        Toate cele 5 etape ale simfoniei senzoriale au fost desăvârșite! KPI 100% atins cu brio.
+      </p>
+
+      <div class="stats-summary-grid">
+        <div class="summary-item">
+          <span class="num" id="modal-final-score">0</span>
+          <span class="desc">Scor Total</span>
+        </div>
+        <div class="summary-item">
+          <span class="num" id="modal-max-combo">0x</span>
+          <span class="desc">Max Combo</span>
+        </div>
+        <div class="summary-item">
+          <span class="num" id="modal-final-accuracy">100%</span>
+          <span class="desc">Acuratețe</span>
+        </div>
+      </div>
+
+      <div class="signature-box">
+        <div style="font-size:0.75rem; color:#8d6e63; font-weight:700; margin-bottom:4px; display:flex; justify-content:space-between;">
+          <span>Semnătura Clientului Activ (Otter):</span>
+          <button id="btn-clear-sig" style="background:none; border:none; color:var(--primary-rose); font-size:0.75rem; font-weight:700; cursor:pointer;">Șterge</button>
+        </div>
+        <canvas id="signature-canvas" width="340" height="75"></canvas>
+      </div>
+
+      <button id="btn-sign-complete" class="btn-level-action" style="width:100%; margin-top:0;">
+        <span>Aprobă & Validează Parteneriatul</span>
+        <span>💮</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+// audio.js - Advanced Procedural Synthesizer & Rhythm Engine for Peach Sensory Symphony
+
+class SymphonyAudioEngine {
+  constructor() {
+    this.ctx = null;
+    this.isMuted = false;
+    this.bpm = 75;
+    this.isPlayingBeat = false;
+    this.beatInterval = null;
+    this.currentStep = 0;
+  }
+
+  init() {
+    if (!this.ctx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioContext();
+    }
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    if (this.isMuted && this.isPlayingBeat) {
+      this.stopBeatLoop();
+    }
+    return this.isMuted;
+  }
+
+  setBPM(newBPM) {
+    this.bpm = newBPM;
+    if (this.isPlayingBeat) {
+      this.stopBeatLoop();
+      this.startBeatLoop();
+    }
+  }
+
+  // --- Procedural Rhythm Percussion & Harmony ---
+
+  playKick(time) {
+    if (this.isMuted) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(120, time);
+    osc.frequency.exponentialRampToValueAtTime(32, time + 0.18);
+
+    gain.gain.setValueAtTime(0.35, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.18);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(time);
+    osc.stop(time + 0.18);
+  }
+
+  playSnare(time) {
+    if (this.isMuted) return;
+    // Noise buffer for snap
+    const bufferSize = this.ctx.sampleRate * 0.08;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.2, time);
+    noiseGain.gain.exponentialRampToValueAtTime(0.01, time + 0.08);
+
+    noise.connect(noiseGain);
+    noiseGain.connect(this.ctx.destination);
+    noise.start(time);
+  }
+
+  playChordPad(step, time) {
+    if (this.isMuted) return;
+    // Warm morning lo-fi progression: Fmaj7 -> Cmaj7 -> Dm7 -> Gsus4
+    const progressions = [
+      [349.23, 440.00, 523.25, 659.25], // Fmaj7
+      [261.63, 329.63, 392.00, 493.88], // Cmaj7
+      [293.66, 349.23, 440.00, 523.25], // Dm7
+      [392.00, 440.00, 523.25, 587.33]  // Gsus4
+    ];
+    const chord = progressions[Math.floor((step / 4) % 4)];
+    chord.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, time);
+
+      gain.gain.setValueAtTime(0.04, time);
+      gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.6);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(time);
+      osc.stop(time + 0.6);
+    });
+  }
+
+  startBeatLoop() {
+    if (this.isPlayingBeat) return;
+    this.init();
+    this.isPlayingBeat = true;
+
+    const intervalMs = (60 / this.bpm) * 1000;
+    this.beatInterval = setInterval(() => {
+      if (this.isMuted) return;
+      const now = this.ctx.currentTime;
+      const step = this.currentStep % 16;
+
+      // Kick on beats 0, 4, 8, 12
+      if (step % 4 === 0) {
+        this.playKick(now);
+      }
+      // Snare on beats 2, 6, 10, 14
+      if (step % 4 === 2) {
+        this.playSnare(now);
+      }
+      // Chord pad every 4 beats
+      if (step % 4 === 0) {
+        this.playChordPad(step, now);
+      }
+
+      this.currentStep++;
+    }, intervalMs);
+  }
+
+  stopBeatLoop() {
+    this.isPlayingBeat = false;
+    if (this.beatInterval) {
+      clearInterval(this.beatInterval);
+      this.beatInterval = null;
+    }
+  }
+
+  // --- Hit Rating Sound Effects ---
+
+  playPerfectHit() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(783.99, now); // G5
+    osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.08); // C6
+
+    gain.gain.setValueAtTime(0.28, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.15);
+  }
+
+  playGreatHit() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(659.25, now); // E5
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  playMiss() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.exponentialRampToValueAtTime(80, now + 0.15);
+
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.16);
+  }
+
+  // Specialized: Pleasure Spot Shimmer Sound
+  playPleasureSpotShimmer() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    const sparkleFreqs = [1174.66, 1318.51, 1567.98, 1760.00];
+    sparkleFreqs.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+
+      gain.gain.setValueAtTime(0.18, now + idx * 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.04 + 0.25);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + idx * 0.04);
+      osc.stop(now + idx * 0.04 + 0.25);
+    });
+  }
+
+  // Specialized: Tongue Glide Tone
+  playGlideTone(pitch = 440) {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(pitch, now);
+    osc.frequency.linearRampToValueAtTime(pitch * 1.25, now + 0.1);
+
+    gain.gain.setValueAtTime(0.1, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  // Heartbeat pulse sound
+  playHeartbeat() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    [0, 0.12].forEach((offset, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(idx === 0 ? 80 : 65, now + offset);
+      osc.frequency.exponentialRampToValueAtTime(36, now + offset + 0.09);
+
+      gain.gain.setValueAtTime(0.3, now + offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.1);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + offset);
+      osc.stop(now + offset + 0.1);
+    });
+  }
+
+  // Grand Climax Victory Chime
+  playVictoryFanfare() {
+    if (this.isMuted) return;
+    this.init();
+    const now = this.ctx.currentTime;
+
+    const chords = [523.25, 659.25, 783.99, 987.77, 1046.50, 1318.51, 1567.98];
+    chords.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+      gain.gain.setValueAtTime(0.22, now + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.6);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + idx * 0.08);
+      osc.stop(now + idx * 0.08 + 0.6);
+    });
+  }
+}
+
+window.symphonyAudio = new SymphonyAudioEngine();
+
+
+// game.js - Rhythm Engine & Mechanics for Peach Sensory Symphony
+
+document.addEventListener('DOMContentLoaded', () => {
+  // DOM References
+  const stageTitleText = document.getElementById('stage-title-text');
+  const bpmIndicator = document.getElementById('bpm-indicator');
+  const btnAudioToggle = document.getElementById('btn-audio-toggle');
+
+  const valScore = document.getElementById('val-score');
+  const valCombo = document.getElementById('val-combo');
+  const statComboBox = document.getElementById('stat-combo-box');
+  const valAccuracy = document.getElementById('val-accuracy');
+  const valMultiplier = document.getElementById('val-multiplier');
+
+  const barPleasure = document.getElementById('bar-pleasure');
+  const labelKpiVal = document.getElementById('label-kpi-val');
+  const barBreath = document.getElementById('bar-breath');
+  const labelBreathVal = document.getElementById('label-breath-val');
+
+  const rhythmStage = document.getElementById('rhythm-stage');
+  const peachWrap = document.getElementById('peach-interactive-wrap');
+  const peachLeft = document.getElementById('peach-left');
+  const peachRight = document.getElementById('peach-right');
+  const pleasureSpotGroup = document.getElementById('pleasure-spot-group');
+  const pleasureSpotCore = document.getElementById('pleasure-spot-core');
+  const swirlGuideRing = document.getElementById('swirl-guide-ring');
+  const ratingContainer = document.getElementById('rating-container');
+  const nodesLayer = document.getElementById('rhythm-nodes-layer');
+
+  const instructionTitle = document.getElementById('instruction-title');
+  const instructionSub = document.getElementById('instruction-sub');
+  const tabFinger = document.getElementById('tab-finger');
+  const tabTongue = document.getElementById('tab-tongue');
+  const btnBreathCatch = document.getElementById('btn-breath-catch');
+  const btnNextStage = document.getElementById('btn-next-stage');
+  const btnNextStageText = document.getElementById('btn-next-stage-text');
+
+  const victoryModal = document.getElementById('victory-modal');
+  const modalRankBadge = document.getElementById('modal-rank-badge');
+  const modalFinalScore = document.getElementById('modal-final-score');
+  const modalMaxCombo = document.getElementById('modal-max-combo');
+  const modalFinalAccuracy = document.getElementById('modal-final-accuracy');
+  const sigCanvas = document.getElementById('signature-canvas');
+  const btnClearSig = document.getElementById('btn-clear-sig');
+  const btnSignComplete = document.getElementById('btn-sign-complete');
+
+  // Particle Canvas
+  const partCanvas = document.getElementById('particles-canvas');
+  const partCtx = partCanvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvases() {
+    partCanvas.width = window.innerWidth;
+    partCanvas.height = window.innerHeight;
+    sigCanvas.width = sigCanvas.clientWidth;
+    sigCanvas.height = sigCanvas.clientHeight;
+  }
+  window.addEventListener('resize', resizeCanvases);
+  resizeCanvases();
+
+  // Stage Configs (5 Progressive Levels)
+  const STAGES = [
+    {
+      level: 1,
+      name: 'Stage 1: First Light',
+      bpm: 75,
+      targetKpi: 20,
+      noteIntervalMs: 1200,
+      introText: 'Atinge obrajii stâng și drept când cercul de ritm se micșorează!',
+      subText: 'Menține apăsat Punctul de Plăcere de sub codiță pentru multiplicator 2x.'
+    },
+    {
+      level: 2,
+      name: 'Stage 2: Velvet Curves',
+      bpm: 95,
+      targetKpi: 45,
+      noteIntervalMs: 900,
+      introText: 'Fă gesturi circulare (swirls) pe Punctul de Plăcere de sub codiță!',
+      subText: 'Comută pe Limbă (👅) pentru glisare fluidă și multiplicator 3x.'
+    },
+    {
+      level: 3,
+      name: 'Stage 3: Breathless Waves',
+      bpm: 115,
+      targetKpi: 70,
+      noteIntervalMs: 700,
+      introText: 'Atenție la respirație! Nu supraîncălzi Punctul de Plăcere.',
+      subText: 'Dacă se înroșește, răcorește-l cu o mângâiere lină sau ia o pauză de sărut.'
+    },
+    {
+      level: 4,
+      name: 'Stage 4: Poly-Rhythm Desires',
+      bpm: 130,
+      targetKpi: 90,
+      noteIntervalMs: 520,
+      introText: 'Poliritm: Ține apăsat Punctul de Plăcere în timp ce bați ritmul pe obraji!',
+      subText: 'Atingeți cu ambele degete simultan.'
+    },
+    {
+      level: 5,
+      name: 'Stage 5: Grand Climax (KPI Overdrive)',
+      bpm: 145,
+      targetKpi: 100,
+      noteIntervalMs: 400,
+      introText: 'Sprint final de intensitate maximă! Gâfâit garantat la 100%.',
+      subText: 'Activează toate cele 3 zone pentru desăvârșirea acordului.'
+    }
+  ];
+
+  // Game Engine State
+  let currentStageIdx = 0;
+  let score = 0;
+  let combo = 0;
+  let maxCombo = 0;
+  let totalNotes = 0;
+  let hitNotes = 0;
+  let kpi = 0;
+  let breath = 100;
+  let multiplier = 1;
+  let activeTool = 'finger'; // 'finger' | 'tongue'
+  let isGameActive = false;
+
+  // Active Rhythm Notes Queue
+  let activeNotes = [];
+  let noteSpawnTimer = null;
+
+  // Pleasure Spot Mechanics
+  let pleasureSpotTouchStart = 0;
+  let pleasureSpotAccumulatedAngle = 0;
+  let lastAngle = null;
+  let overheatLevel = 0; // 0 to 100
+  let isOverheated = false;
+
+  // Haptic feedback
+  function vibrate(ms = 25) {
+    if (navigator.vibrate) {
+      try { navigator.vibrate(ms); } catch (e) {}
+    }
+  }
+
+  // Particle System
+  function addParticles(x, y, count = 18, type = 'star') {
+    const colors = ['#f59e0b', '#ff5e7e', '#10b981', '#f472b6', '#fcd34d', '#ffffff'];
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 5 + 2;
+      particles.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.5,
+        radius: Math.random() * 4 + 2.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 1,
+        decay: Math.random() * 0.02 + 0.015,
+        type: type
+      });
+    }
+  }
+
+  function renderParticles() {
+    partCtx.clearRect(0, 0, partCanvas.width, partCanvas.height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.12;
+      p.life -= p.decay;
+
+      if (p.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      partCtx.save();
+      partCtx.globalAlpha = p.life;
+      partCtx.fillStyle = p.color;
+
+      if (p.type === 'heart') {
+        const s = p.radius * 1.5;
+        partCtx.translate(p.x, p.y);
+        partCtx.beginPath();
+        partCtx.moveTo(0, 0);
+        partCtx.bezierCurveTo(-s, -s, -s * 1.4, s * 0.4, 0, s * 1.4);
+        partCtx.bezierCurveTo(s * 1.4, s * 0.4, s, -s, 0, 0);
+        partCtx.fill();
+      } else {
+        partCtx.beginPath();
+        partCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        partCtx.fill();
+      }
+      partCtx.restore();
+    }
+    requestAnimationFrame(renderParticles);
+  }
+  renderParticles();
+
+  // Rating Popup Display
+  function showRating(text, type) {
+    const el = document.createElement('div');
+    el.className = `rating-popup ${type}`;
+    el.textContent = text;
+    ratingContainer.appendChild(el);
+    setTimeout(() => el.remove(), 600);
+  }
+
+  // Peach Jiggle Effect
+  function jigglePeach() {
+    peachWrap.classList.remove('jiggle');
+    void peachWrap.offsetWidth;
+    peachWrap.classList.add('jiggle');
+  }
+
+  // Update Top HUD Display
+  function updateHUD() {
+    valScore.textContent = score.toLocaleString();
+    valCombo.textContent = `${combo}x`;
+    if (combo >= 15) {
+      statComboBox.classList.add('hype');
+    } else {
+      statComboBox.classList.remove('hype');
+    }
+
+    const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
+    valAccuracy.textContent = `${acc}%`;
+
+    // Multiplier calculation
+    if (combo >= 40) multiplier = 8;
+    else if (combo >= 20) multiplier = 4;
+    else if (combo >= 10) multiplier = 2;
+    else multiplier = 1;
+
+    valMultiplier.textContent = `${multiplier}x MULTI`;
+
+    // Pleasure Gauge
+    barPleasure.style.width = `${Math.min(100, kpi)}%`;
+    labelKpiVal.textContent = `${Math.round(kpi)}%`;
+
+    // Breath Gauge
+    barBreath.style.width = `${Math.max(0, Math.min(100, breath))}%`;
+    labelBreathVal.textContent = `${Math.round(breath)}%`;
+
+    if (breath < 35) {
+      barBreath.classList.add('danger');
+      window.symphonyAudio.playHeartbeat();
+    } else {
+      barBreath.classList.remove('danger');
+    }
+  }
+
+  // Spawn a Rhythm Node with Approach Ring
+  function spawnRhythmNode() {
+    if (!isGameActive) return;
+
+    const stage = STAGES[currentStageIdx];
+    const targets = ['left', 'right', 'center'];
+    const chosenTarget = targets[Math.floor(Math.random() * targets.length)];
+
+    const rect = peachWrap.getBoundingClientRect();
+    let targetX = 0;
+    let targetY = 0;
+
+    if (chosenTarget === 'left') {
+      targetX = rect.left + rect.width * 0.32;
+      targetY = rect.top + rect.height * 0.58;
+    } else if (chosenTarget === 'right') {
+      targetX = rect.left + rect.width * 0.68;
+      targetY = rect.top + rect.height * 0.58;
+    } else {
+      // Pleasure Spot right below stem in center
+      targetX = rect.left + rect.width * 0.5;
+      targetY = rect.top + rect.height * 0.37;
+    }
+
+    const ring = document.createElement('div');
+    ring.className = 'rhythm-approach-ring';
+    ring.style.left = `${targetX - 25}px`;
+    ring.style.top = `${targetY - 25}px`;
+    ring.style.width = '50px';
+    ring.style.height = '50px';
+    nodesLayer.appendChild(ring);
+
+    const hitWindowMs = 700; // approach duration
+    const targetHitTime = Date.now() + hitWindowMs;
+
+    const noteObj = {
+      target: chosenTarget,
+      targetTime: targetHitTime,
+      element: ring,
+      x: targetX,
+      y: targetY,
+      hit: false
+    };
+    activeNotes.push(noteObj);
+    totalNotes++;
+
+    // Animate Approach Ring
+    const startScale = 2.4;
+    const startTime = Date.now();
+
+    function animateRing() {
+      if (noteObj.hit) {
+        ring.remove();
+        return;
+      }
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(1, elapsed / hitWindowMs);
+      const currentScale = startScale - (startScale - 1) * progress;
+      ring.style.transform = `scale(${currentScale})`;
+
+      if (progress < 1) {
+        requestAnimationFrame(animateRing);
+      } else {
+        // Time expired: Check for Miss
+        setTimeout(() => {
+          if (!noteObj.hit) {
+            noteObj.hit = true;
+            ring.remove();
+            handleNoteResult('miss', noteObj);
+          }
+        }, 120);
+      }
+    }
+    requestAnimationFrame(animateRing);
+  }
+
+  // Handle Note Hit Result
+  function handleNoteResult(rating, noteObj) {
+    if (rating === 'perfect') {
+      combo++;
+      hitNotes++;
+      const gain = 300 * multiplier;
+      score += gain;
+      kpi = Math.min(100, kpi + 2.8);
+      breath = Math.max(10, breath - (currentStageIdx >= 2 ? 3.5 : 1.5));
+      showRating('PERFECT!', 'perfect');
+      window.symphonyAudio.playPerfectHit();
+      vibrate(30);
+      addParticles(noteObj.x, noteObj.y, 16, 'star');
+    } else if (rating === 'great') {
+      combo++;
+      hitNotes++;
+      const gain = 150 * multiplier;
+      score += gain;
+      kpi = Math.min(100, kpi + 1.6);
+      breath = Math.max(10, breath - (currentStageIdx >= 2 ? 2.5 : 1.0));
+      showRating('GREAT!', 'great');
+      window.symphonyAudio.playGreatHit();
+      vibrate(20);
+      addParticles(noteObj.x, noteObj.y, 10, 'circle');
+    } else {
+      // Miss
+      combo = 0;
+      breath = Math.max(5, breath - 6.0);
+      showRating('MISS', 'miss');
+      window.symphonyAudio.playMiss();
+      vibrate(50);
+    }
+
+    if (combo > maxCombo) maxCombo = combo;
+    jigglePeach();
+    updateHUD();
+    checkStageProgress();
+  }
+
+  // Check if player hit the active note
+  function tryHitTarget(targetName, e) {
+    window.symphonyAudio.init();
+    const now = Date.now();
+
+    // Find closest unhit note for this target
+    const note = activeNotes.find(n => !n.hit && n.target === targetName && Math.abs(now - n.targetTime) <= 190);
+
+    if (note) {
+      note.hit = true;
+      const delta = Math.abs(now - note.targetTime);
+      if (delta <= 75) {
+        handleNoteResult('perfect', note);
+      } else {
+        handleNoteResult('great', note);
+      }
+    } else {
+      // Free tap (slight pleasure gain if on beat)
+      score += 25 * multiplier;
+      kpi = Math.min(100, kpi + 0.6);
+      updateHUD();
+      checkStageProgress();
+    }
+  }
+
+  // Check Stage Completion
+  function checkStageProgress() {
+    const currentStage = STAGES[currentStageIdx];
+    if (kpi >= currentStage.targetKpi) {
+      if (currentStageIdx < STAGES.length - 1) {
+        // Prompt transition to next stage
+        btnNextStageText.textContent = `Treci la ${STAGES[currentStageIdx + 1].name}`;
+        btnNextStage.style.display = 'flex';
+      } else {
+        // Climax Complete! (100% KPI)
+        finishSymphony();
+      }
+    }
+  }
+
+  // Start Next Stage
+  function advanceStage() {
+    currentStageIdx++;
+    const stage = STAGES[currentStageIdx];
+    stageTitleText.textContent = stage.name;
+    bpmIndicator.textContent = `⚡ ${stage.bpm} BPM`;
+    instructionTitle.textContent = stage.introText;
+    instructionSub.textContent = stage.subText;
+    btnNextStage.style.display = 'none';
+
+    // Update audio BPM
+    window.symphonyAudio.setBPM(stage.bpm);
+
+    if (stage.level === 2) {
+      swirlGuideRing.style.display = 'block';
+    }
+
+    // Restart note spawn timer with new tempo
+    clearInterval(noteSpawnTimer);
+    noteSpawnTimer = setInterval(spawnRhythmNode, stage.noteIntervalMs);
+  }
+
+  btnNextStage.addEventListener('click', advanceStage);
+
+  // Finish Game & Open Modal
+  function finishSymphony() {
+    isGameActive = false;
+    clearInterval(noteSpawnTimer);
+    window.symphonyAudio.stopBeatLoop();
+    window.symphonyAudio.playVictoryFanfare();
+    vibrate(100);
+    addParticles(window.innerWidth / 2, window.innerHeight / 2, 80, 'heart');
+
+    const acc = totalNotes === 0 ? 100 : Math.round((hitNotes / totalNotes) * 100);
+    modalFinalScore.textContent = score.toLocaleString();
+    modalMaxCombo.textContent = `${maxCombo}x`;
+    modalFinalAccuracy.textContent = `${acc}%`;
+
+    // Grade
+    if (acc >= 94) {
+      modalRankBadge.textContent = '★ S RANK • EXCELLENT ★';
+      modalRankBadge.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+    } else if (acc >= 85) {
+      modalRankBadge.textContent = '★ A RANK • GREAT ★';
+      modalRankBadge.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+    } else {
+      modalRankBadge.textContent = '★ B RANK • GOOD ★';
+      modalRankBadge.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+    }
+
+    setTimeout(() => {
+      victoryModal.classList.add('open');
+    }, 600);
+  }
+
+  // =========================================
+  // INTERACTIVE TOUCH ZONES
+  // =========================================
+
+  // Left Cheek (🍓)
+  peachLeft.addEventListener('click', (e) => tryHitTarget('left', e));
+  peachLeft.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    tryHitTarget('left', e);
+  }, { passive: false });
+
+  // Right Cheek (🍑)
+  peachRight.addEventListener('click', (e) => tryHitTarget('right', e));
+  peachRight.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    tryHitTarget('right', e);
+  }, { passive: false });
+
+  // Pleasure Spot (✨ Center Below Stem)
+  pleasureSpotGroup.addEventListener('click', (e) => {
+    handlePleasureSpotTap(e);
+  });
+
+  pleasureSpotGroup.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    pleasureSpotTouchStart = Date.now();
+    handlePleasureSpotTap(e);
+  }, { passive: false });
+
+  function handlePleasureSpotTap(e) {
+    if (isOverheated) {
+      showRating('OVERHEAT!', 'overheat');
+      window.symphonyAudio.playMiss();
+      vibrate(60);
+      return;
+    }
+
+    overheatLevel += 18;
+    if (overheatLevel >= 100) {
+      triggerOverheat();
+      return;
+    }
+
+    window.symphonyAudio.playPleasureSpotShimmer();
+    vibrate(35);
+    const rect = pleasureSpotCore.getBoundingClientRect();
+    addParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 14, 'heart');
+
+    tryHitTarget('center', e);
+  }
+
+  // Pleasure Spot Swirl Tracker (Continuous circle gesture)
+  pleasureSpotGroup.addEventListener('touchmove', (e) => {
+    if (isOverheated || activeTool !== 'tongue') return;
+    const touch = e.touches[0];
+    const rect = pleasureSpotGroup.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const currentAngle = Math.atan2(touch.clientY - cy, touch.clientX - cx);
+
+    if (lastAngle !== null) {
+      let deltaAngle = currentAngle - lastAngle;
+      if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
+      if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
+
+      pleasureSpotAccumulatedAngle += Math.abs(deltaAngle);
+
+      // Completed a 360-degree swirl!
+      if (pleasureSpotAccumulatedAngle >= Math.PI * 2) {
+        pleasureSpotAccumulatedAngle = 0;
+        onSuccessfulSwirl(touch.clientX, touch.clientY);
+      }
+    }
+    lastAngle = currentAngle;
+  }, { passive: true });
+
+  function onSuccessfulSwirl(x, y) {
+    score += 450 * multiplier;
+    kpi = Math.min(100, kpi + 4.2);
+    // Swirl cools down overheat!
+    overheatLevel = Math.max(0, overheatLevel - 25);
+    showRating('SWEET SWIRL!', 'perfect');
+    window.symphonyAudio.playPleasureSpotShimmer();
+    vibrate(40);
+    addParticles(x, y, 22, 'heart');
+    updateHUD();
+    checkStageProgress();
+  }
+
+  // Overheat State Logic
+  function triggerOverheat() {
+    isOverheated = true;
+    pleasureSpotCore.classList.add('overheated');
+    showRating('SUPRAÎNCĂLZIRE!', 'overheat');
+    vibrate([80, 50, 80]);
+
+    setTimeout(() => {
+      isOverheated = false;
+      overheatLevel = 0;
+      pleasureSpotCore.classList.remove('overheated');
+    }, 2500);
+  }
+
+  // Gradual Overheat Cooldown
+  setInterval(() => {
+    if (overheatLevel > 0 && !isOverheated) {
+      overheatLevel = Math.max(0, overheatLevel - 8);
+    }
+  }, 1000);
+
+  // Tool Selector Toggle
+  tabFinger.addEventListener('click', () => {
+    activeTool = 'finger';
+    tabFinger.classList.add('active');
+    tabTongue.classList.remove('active');
+    window.symphonyAudio.playGlideTone(550);
+    vibrate(15);
+  });
+
+  tabTongue.addEventListener('click', () => {
+    activeTool = 'tongue';
+    tabTongue.classList.add('active');
+    tabFinger.classList.remove('active');
+    window.symphonyAudio.playGlideTone(420);
+    vibrate(15);
+  });
+
+  // Breath Catch Button
+  btnBreathCatch.addEventListener('click', () => {
+    breath = Math.min(100, breath + 35);
+    window.symphonyAudio.playGlideTone(680);
+    vibrate(25);
+    updateHUD();
+  });
+
+  // Audio Toggle
+  btnAudioToggle.addEventListener('click', () => {
+    const isMuted = window.symphonyAudio.toggleMute();
+    btnAudioToggle.textContent = isMuted ? '🔇' : '🔔';
+  });
+
+  // =========================================
+  // SIGNATURE CANVAS LOGIC
+  // =========================================
+  const sigCtx = sigCanvas.getContext('2d');
+  let isDrawing = false;
+  let hasSigned = false;
+
+  sigCtx.lineWidth = 2.5;
+  sigCtx.lineCap = 'round';
+  sigCtx.strokeStyle = '#d97706';
+
+  function getSigCoords(e) {
+    const rect = sigCanvas.getBoundingClientRect();
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: cx - rect.left, y: cy - rect.top };
+  }
+
+  function startSig(e) {
+    isDrawing = true;
+    hasSigned = true;
+    const p = getSigCoords(e);
+    sigCtx.beginPath();
+    sigCtx.moveTo(p.x, p.y);
+  }
+
+  function drawSig(e) {
+    if (!isDrawing) return;
+    const p = getSigCoords(e);
+    sigCtx.lineTo(p.x, p.y);
+    sigCtx.stroke();
+  }
+
+  function endSig() { isDrawing = false; }
+
+  sigCanvas.addEventListener('mousedown', startSig);
+  sigCanvas.addEventListener('mousemove', drawSig);
+  window.addEventListener('mouseup', endSig);
+
+  sigCanvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    startSig(e);
+  }, { passive: false });
+
+  sigCanvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    drawSig(e);
+  }, { passive: false });
+
+  sigCanvas.addEventListener('touchend', endSig);
+
+  btnClearSig.addEventListener('click', () => {
+    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+    hasSigned = false;
+  });
+
+  btnSignComplete.addEventListener('click', () => {
+    if (!hasSigned) {
+      sigCtx.font = '24px "Playfair Display", Georgia, serif';
+      sigCtx.fillStyle = '#d97706';
+      sigCtx.fillText('★ Otter & Prestatorul ★', 40, 48);
+    }
+    window.symphonyAudio.playVictoryFanfare();
+    vibrate(80);
+    btnSignComplete.innerHTML = `<span>✓ ACORD VALIDAT & DESĂVÂRȘIT!</span><span>🎉</span>`;
+    btnSignComplete.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+
+    setTimeout(() => {
+      alert('🎉 Felicitări! Simfonia senzorială a fost desăvârșită cu succes! Garanție de rezultat îndeplinită și pupături asigurate pentru întreaga zi.');
+    }, 700);
+  });
+
+  // Start Game Loop on first interaction
+  function startGame() {
+    if (isGameActive) return;
+    isGameActive = true;
+    window.symphonyAudio.init();
+    window.symphonyAudio.setBPM(STAGES[0].bpm);
+    window.symphonyAudio.startBeatLoop();
+    noteSpawnTimer = setInterval(spawnRhythmNode, STAGES[0].noteIntervalMs);
+  }
+
+  // Trigger start on first touch/click
+  document.body.addEventListener('touchstart', startGame, { once: true });
+  document.body.addEventListener('click', startGame, { once: true });
+
+  updateHUD();
+});
+
+</script>
+</body>
+</html>
