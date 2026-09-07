@@ -398,10 +398,16 @@ body {
 .rhythm-approach-ring {
   position: absolute;
   border-radius: 50%;
-  border: 2.5px solid var(--primary-rose);
+  border: 3px solid var(--primary-rose);
   pointer-events: none;
-  z-index: 20;
-  box-shadow: 0 0 10px rgba(255, 94, 126, 0.4);
+  z-index: 25;
+  box-shadow: 0 0 14px rgba(255, 94, 126, 0.6);
+  transform-origin: center center;
+}
+
+.rhythm-approach-ring.pleasure-spot-ring {
+  border-color: #f59e0b;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.7);
 }
 
 /* ========================================= */

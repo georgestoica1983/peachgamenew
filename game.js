@@ -256,26 +256,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const targets = ['left', 'right', 'center'];
     const chosenTarget = targets[Math.floor(Math.random() * targets.length)];
 
-    const rect = peachWrap.getBoundingClientRect();
-    let targetX = 0;
-    let targetY = 0;
+    const pw = peachWrap.clientWidth || 240;
+    const ph = peachWrap.clientHeight || 240;
+
+    let localX = 0;
+    let localY = 0;
 
     if (chosenTarget === 'left') {
-      targetX = rect.left + rect.width * 0.32;
-      targetY = rect.top + rect.height * 0.58;
+      localX = pw * 0.35;
+      localY = ph * 0.58;
     } else if (chosenTarget === 'right') {
-      targetX = rect.left + rect.width * 0.68;
-      targetY = rect.top + rect.height * 0.58;
+      localX = pw * 0.65;
+      localY = ph * 0.58;
     } else {
       // Pleasure Spot right below stem in center
-      targetX = rect.left + rect.width * 0.5;
-      targetY = rect.top + rect.height * 0.37;
+      localX = pw * 0.50;
+      localY = ph * 0.37;
     }
 
     const ring = document.createElement('div');
-    ring.className = 'rhythm-approach-ring';
-    ring.style.left = `${targetX - 25}px`;
-    ring.style.top = `${targetY - 25}px`;
+    ring.className = chosenTarget === 'center' ? 'rhythm-approach-ring pleasure-spot-ring' : 'rhythm-approach-ring';
+    ring.style.left = `${localX - 25}px`;
+    ring.style.top = `${localY - 25}px`;
     ring.style.width = '50px';
     ring.style.height = '50px';
     nodesLayer.appendChild(ring);
@@ -283,12 +285,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const hitWindowMs = 700; // approach duration
     const targetHitTime = Date.now() + hitWindowMs;
 
+    const rect = peachWrap.getBoundingClientRect();
     const noteObj = {
       target: chosenTarget,
       targetTime: targetHitTime,
       element: ring,
-      x: targetX,
-      y: targetY,
+      x: rect.left + localX,
+      y: rect.top + localY,
       hit: false
     };
     activeNotes.push(noteObj);
