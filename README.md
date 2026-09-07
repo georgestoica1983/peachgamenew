@@ -1,6 +1,6 @@
 # Peach Sensory Symphony 🍑🎶 • Modul Duel 1v1
 
-> Un joc de ritm, precizie tactilă și conexiune intimă în cuplu, dezvoltat special pentru mobil și browser. Include mod competițional **Duel 1v1 (Pass & Play)**, mize picante progresive, selecție între **Piersică** și **Castravete**, sinteză audio procedurală prin Web Audio API și ceremonie digitală de semnare a mizei.
+> Un joc de ritm, precizie tactilă și conexiune intimă în cuplu, dezvoltat special pentru mobil și browser. Include mod competițional **Duel 1v1 (Pass & Play)**, mize picante progresive, selecție între **Piersică** și **Castravete**, mecanică tactică de **Respirație & Epuizare**, **Pulsul Plăcerii (BPM Dinamic)**, sinteză audio procedurală prin Web Audio API și ceremonie digitală de semnare a mizei.
 
 ---
 
@@ -9,11 +9,39 @@
 ### ⚔️ Modul Duel 1v1 • Pass & Play (Prestatorul vs Otter)
 * **Format pe rând**: Primul jucător (**Prestatorul**) parcurge o piesă completă (4 mișcări muzicale), stabilind un scor țintă.
 * **Ecran de predare a telefonului**: Afișează scorul de bătut și miza pusă în joc, pregătind intrarea celui de-al doilea jucător (**Otter**).
-* **Ceremonie finală de premiere**:
-  * Decernarea coroanei de învingător (👑) și a trofeului.
-  * Comparație directă de scor, combo maxim și acuratețe.
-  * **Dezvăluirea mizei câștigate**: Miza aleasă este afișată oficial.
-  * **Panou de semnat cu degetul**: Învinsul semnează pe ecran pentru acceptarea și onorarea mizei în această seară.
+* **Ceremonie finală de premiere pe podium**:
+  * Decernarea coroanei de învingător (👑) și a titlului de campion al ritmului.
+  * Comparație directă completă: **Scor total**, **Combo maxim**, **Acuratețe** și **Puls maxim atins (BPM)**.
+  * **Dezvăluirea mizei câștigate**: Miza aleasă este afișată oficial pe podium.
+  * **Panou de semnat cu degetul**: Învinsul semnează digital pe ecran pentru acceptarea și onorarea mizei în această seară.
+
+---
+
+### 🫁 Respirație Activă & Sistem de Stamina Tactică
+* **Starea de Epuizare (Out of Breath - Oxigen sub 20%)**:
+  * Dacă oxigenul scade critic, marginea ecranului intră într-o **vignetă roșiatică pulsatorie** (`body.breath-exhausted`).
+  * **Penalizare de scor**: Multiplicatorul activ este redus la jumătate (`0.5x`).
+  * **Risc sporit la greșeli**: Ratarea unei note în starea de epuizare atrage o penalizare de `-150 puncte` și declanșează un puls accelerat de inimă.
+  * Butonul de la baza ecranului pulsează alert în roșu (`urgent`), cerând o acțiune rapidă.
+* **Abilitatea „Pauză de sărut (+35% oxigen)”**:
+  * **Refacere instant**: Oxigenul este reîncărcat imediat (+45%) și starea de epuizare este anulată.
+  * **Bonus temporar „Respiro Senzual”**: Oferă **+1x Multiplicator suplimentar** timp de 6 secunde (`💋 Respiro activ!`).
+  * **Feedback sonor deosebit**: Declanșează un arpegiu romantic de harfă (`playKissRecovery()`) și o vibrație tactilă plăcută.
+
+---
+
+### 💓 „Pulsul Plăcerii” (BPM Dinamic & Reactiv)
+* **Tempo adaptiv în timp real**:
+  * BPM-ul nu mai este o cifră fixă, ci **crește în direct odată cu excitația și dexteritatea jucătorului**:
+    * Fiecare serie de combo crește pulsul (până la +25 BPM).
+    * Rotirile rapide pe Punctul de Plăcere adaugă impuls de viteză (până la +20 BPM).
+    * În momentele intense sau în Fever Mode, pulsul poate atinge **160–185 BPM**!
+* **Pulsare vizuală și auditivă sincronizată**:
+  * Inima din HUD (`💓`) bate vizual exact în tempoul BPM-ului curent.
+  * Personajul interactiv (Piersica sau Castravetele) pulsează organic pe ritmul inimii.
+  * Sintezatorul de tobe Web Audio accelerează lin ritmul fără nicio întrerupere a buclei muzicale.
+* **Statistica de pe podiumul final**:
+  * Comparație a **Pulsului maxim atins** între cei doi parteneri (`💓 Max X BPM`), premiind intensitatea și pasiunea depusă în duel.
 
 ---
 
@@ -63,7 +91,6 @@ Fiecare nivel de dificultate oferă provocări de ritm adaptate și mize progres
 * **Stil de atingere comutabil**:
   * 👆 **Vârful degetului (tap)** – precizie clasică de ritm.
   * 👅 **Vârful limbii (glide & swirl)** – gesturi fluide de alunecare și rotire.
-* **Pauză de sărut (+35% oxigen)**: Buton de refacere a oxigenului pentru a preveni epuizarea respirației în timpul ritmurilor rapide.
 * **Fever Mode Overdrive**: La menținerea unui combo ridicat, ecranul trece în modul Fever cu multiplicatori de scor de **8x** și **16x**.
 
 ---
@@ -74,6 +101,7 @@ Fiecare nivel de dificultate oferă provocări de ritm adaptate și mize progres
   * Lofi chord pads și armonii calde.
   * Arpegii și sunete de feedback cu reverberație.
   * Fanfară triumfală la victoria din duel.
+  * Arpegii speciale pentru refacerea respirației și puls cardiac dinamic.
 
 ---
 
